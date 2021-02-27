@@ -23,6 +23,7 @@ class StudioFragment : Fragment(R.layout.fragment_studio) {
     }
 
     private fun configureTabLayout() {
+        tab_layout_studio.addTab(tab_layout_studio.newTab().setText("Main"))
         tab_layout_studio.addTab(tab_layout_studio.newTab().setText("History"))
         tab_layout_studio.addTab(tab_layout_studio.newTab().setText("Diagram"))
         tab_layout_studio

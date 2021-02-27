@@ -24,6 +24,7 @@ class NeolabsFragment : Fragment(R.layout.fragment_neolabs) {
     }
 
     private fun configureTabLayout() {
+        tab_layout_neolabs.addTab(tab_layout_neolabs.newTab().setText("Main"))
         tab_layout_neolabs.addTab(tab_layout_neolabs.newTab().setText("History"))
         tab_layout_neolabs.addTab(tab_layout_neolabs.newTab().setText("Diagram"))
         tab_layout_neolabs

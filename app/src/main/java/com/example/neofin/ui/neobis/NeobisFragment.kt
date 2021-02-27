@@ -16,6 +16,7 @@ class NeobisFragment : Fragment(R.layout.fragment_neobis) {
     }
 
     private fun configureTabLayout() {
+        tab_layout_neobis.addTab(tab_layout_neobis.newTab().setText("Main"))
         tab_layout_neobis.addTab(tab_layout_neobis.newTab().setText("History"))
         tab_layout_neobis.addTab(tab_layout_neobis.newTab().setText("Diagram"))
         tab_layout_neobis
