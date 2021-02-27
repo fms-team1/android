@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_neobis">
+    app:startDestination="@id/navigation_neobis">
 
     <fragment
         android:id="@+id/navigation_neobis"
@@ -28,8 +28,4 @@
         android:name="com.example.neofin.ui.user.UserFragment"
         android:label="@string/title_user"
         tools:layout="@layout/fragment_user" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.neofin.ui.login.LoginFragment"
-        android:label="LoginFragment" />
 </navigation>
