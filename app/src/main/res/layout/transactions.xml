@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/createdData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="createdData"/>
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="amount"/>
+    <TextView
+        android:id="@+id/user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user"/>
+
+    <TextView
+        android:id="@+id/person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="person"/>
+
+    <TextView
+        android:id="@+id/wallet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wallet"/>
+
+    <TextView
+        android:id="@+id/walletInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="walletInfo"/>
+
+    <TextView
+        android:id="@+id/deletedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="deletedDate"/>
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="comment"/>
+
+</LinearLayout>
