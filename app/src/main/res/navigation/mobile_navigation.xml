@@ -1,31 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/navigation_neobis">
+    app:startDestination="@id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_neobis"
-        android:name="com.example.neofin.ui.neobis.NeobisFragment"
-        android:label="@string/title_neobis"
-        tools:layout="@layout/fragment_neobis" />
+        android:id="@+id/navigation_home"
+        android:name="com.example.neofin.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_addingFragment"
+            app:destination="@id/addingFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_neolabs"
-        android:name="com.example.neofin.ui.neolabs.NeolabsFragment"
-        android:label="@string/title_neolabs"
-        tools:layout="@layout/fragment_neolabs" />
-
-    <fragment
-        android:id="@+id/navigation_studio"
-        android:name="com.example.neofin.ui.studio.StudioFragment"
-        android:label="@string/title_studio"
-        tools:layout="@layout/fragment_studio" />
-
-    <fragment
-        android:id="@+id/navigation_users"
+        android:id="@+id/navigation_user"
         android:name="com.example.neofin.ui.user.UserFragment"
         android:label="@string/title_user"
         tools:layout="@layout/fragment_user" />
+
+    <fragment
+        android:id="@+id/addingFragment"
+        android:name="com.example.neofin.ui.addTransactions.AddingFragment"
+        android:label="@string/title_add"
+        tools:layout="@layout/fragment_adding" >
+        <action
+            android:id="@+id/action_addingFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_journal"
+        android:name="com.example.neofin.ui.journal.JournalFragment"
+        android:label="@string/title_journal"
+        tools:layout="@layout/fragment_journal" >
+        <action
+            android:id="@+id/action_journalFragment_to_journalByIdFragment"
+            app:destination="@id/journalByIdFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/journalByIdFragment"
+        android:name="com.example.neofin.ui.journal.journalById.JournalByIdFragment"
+        android:label="@string/title_journalByIdFragment"
+        tools:layout="@layout/fragment_journal_by_id" />
+
+    <fragment
+        android:id="@+id/navigation_chart"
+        android:name="com.example.neofin.ui.chart.ChartFragment"
+        android:label="@string/title_chart"
+        tools:layout="@layout/fragment_chart" />
 </navigation>

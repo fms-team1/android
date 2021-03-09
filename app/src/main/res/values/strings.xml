@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Neofin</string>
-    <string name="title_neobis">Neobis</string>
-    <string name="title_neolabs">Neolabs</string>
-    <string name="title_studio">Breeze studio</string>
-    <string name="title_user">Пользователь</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="neofin">NEOFIN</string>
+    <string name="title_home">Главная</string>
+    <string name="title_user">Профиль</string>
+    <string name="title_journal">Журнал</string>
+    <string name="title_chart">Диаграммы</string>
+    <string name="title_journalByIdFragment">Просмотр истории</string>
+    <string name="title_add">Добавление</string>
 </resources>

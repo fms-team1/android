@@ -11,47 +11,47 @@ import java.util.concurrent.TimeUnit
 object RetrofitBuilder {
     private var authToken: String = ""
     private val logger: HttpLoggingInterceptor =
-            run {
-                val httpLoggingInterceptor = HttpLoggingInterceptor()
-                httpLoggingInterceptor.apply { httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY }
-            }
+        run {
+            val httpLoggingInterceptor = HttpLoggingInterceptor()
+            httpLoggingInterceptor.apply { httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY }
+        }
     private val RETROFIT_INSTANCE: ApiService by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         retrofit().create(
-                ApiService::class.java
+            ApiService::class.java
         )
     }
     private val authInterceptor = Interceptor { chain ->
         val newUrl = chain.request().url
-                .newBuilder()
-                .build()
-
+            .newBuilder()
+            .build()
 
         val newRequest = chain.request()
-                .newBuilder()
-                .url(newUrl)
-                .build()
+            .newBuilder()
+            .url(newUrl)
+            .build()
 
         chain.proceed(newRequest)
     }
 
     fun getInstance() = RETROFIT_INSTANCE
+
     private val client = OkHttpClient().newBuilder()
-                    .addInterceptor(authInterceptor)
-                    .addInterceptor(logger)
-                    .connectTimeout(30, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
-                    .writeTimeout(30, TimeUnit.SECONDS)
-                    .build()
+        .addInterceptor(authInterceptor)
+        .addInterceptor(logger)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .build()
 
     private fun retrofit() =
-            Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(client)
-                    .build()
+        Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
 
     fun setToken(token: String) {
-        this.authToken = token
+        authToken = token
     }
 
     fun getToken(): String = "Bearer $authToken"
