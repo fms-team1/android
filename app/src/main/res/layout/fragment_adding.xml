@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.addTransactions.AddingFragment"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="14dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/addExpenseBT"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Расход"/>
+
+                <Button
+                    android:id="@+id/addIncomeBT"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Доход"/>
+
+                <Button
+                    android:id="@+id/addTransferBT"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Перевод"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/transferLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <EditText
+                    android:layout_margin="14dp"
+                    android:id="@+id/sumAddTransfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Сумма"
+                    android:inputType="number"/>
+                <EditText
+                    android:layout_margin="14dp"
+                    android:id="@+id/commentAddTransfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Комментарий" />
+                <Spinner
+                    android:layout_margin="14dp"
+                    android:id="@+id/walletAddFrom"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"/>
+                <Spinner
+                    android:layout_margin="14dp"
+                    android:id="@+id/walletAddTo"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"/>
+                <Button
+                    android:id="@+id/sendButtonTransfer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Отправить"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/expenseOrIncome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <Spinner
+                    android:layout_margin="14dp"
+                    android:id="@+id/sectionAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <TextView
+                    android:id="@+id/currentUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"/>
+
+                <EditText
+                    android:layout_margin="14dp"
+                    android:id="@+id/sumAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Сумма"
+                    android:inputType="number"/>
+                <Spinner
+                    android:layout_margin="14dp"
+                    android:id="@+id/categoryAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <!--            <DatePicker-->
+                <!--                android:id="@+id/dateAdd"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"/>-->
+                <!--                android:datePickerMode="spinner"-->
+                <!--                android:calendarViewShown="false"-->
+                <EditText
+                    android:layout_margin="14dp"
+                    android:id="@+id/agentAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Контрагент"/>
+                <EditText
+                    android:layout_margin="14dp"
+                    android:id="@+id/commentAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Примечание"/>
+                <Spinner
+                    android:layout_margin="14dp"
+                    android:id="@+id/walletAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"/>
+                <Button
+                    android:id="@+id/sendButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Отправить"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
