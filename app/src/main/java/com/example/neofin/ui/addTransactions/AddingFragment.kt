@@ -1,5 +1,7 @@
 package com.example.neofin.ui.addTransactions
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -9,7 +11,6 @@ import com.example.neofin.R
 import com.example.neofin.retrofit.RetrofitBuilder
 import com.example.neofin.retrofit.data.addingResponse.AddResponse
 import com.example.neofin.retrofit.data.category.Category
-import com.example.neofin.retrofit.data.currentUser.CurrentUser
 import com.example.neofin.retrofit.data.transactionAdding.AddTransactionOrExpense
 import com.example.neofin.retrofit.data.transactionAdding.AddTransfer
 import com.example.neofin.retrofit.data.wallet.GetWallet
@@ -18,26 +19,60 @@ import com.example.neofin.ui.addTransactions.data.SectionName
 import com.example.neofin.ui.addTransactions.data.WalletIdName
 import com.example.neofin.utils.*
 import kotlinx.android.synthetic.main.fragment_adding.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AddingFragment : Fragment(R.layout.fragment_adding) {
     private var walletId = 0
     private var categoryId = 0
     private var sectionType = ""
-    private var agent = ""
     private var type = ""
     private var walletFrom = 0
     private var walletTo = 0
 
+    private val calendar = Calendar.getInstance()
+    @SuppressLint("SimpleDateFormat")
+    private val sdf = SimpleDateFormat("dd/M/yyyy")
 
+
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
         getWallet()
-        getCurrentUser()
+
+        val currentDate = sdf.format(Date())
+
+        dateAddTextTransfer!!.setOnClickListener {
+            DatePickerDialog(
+                requireContext(),
+                date(dateAddTextTransfer),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
+        dateAddText!!.setOnClickListener {
+            DatePickerDialog(
+                requireContext(),
+                date(dateAddText),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
+        dateAddTextTransfer.text = currentDate
+        dateAddText.text = currentDate
 
         addExpenseBT.setOnClickListener {
             type = "EXPENSE"
@@ -79,13 +114,14 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         }
 
         val sum = sumAdd.text
-        val comment = commentAdd.text.toString()
+        val comment = commentAdd.text
+        val agent = agentAdd.text
         sendButton.setOnClickListener {
-            addExpenseOrIncome(Integer.parseInt(sum.toString()), categoryId, comment, agent, walletId)
+            addExpenseOrIncome(Integer.parseInt(sum.toString()), categoryId, comment.toString(), agent.toString(), walletId)
         }
     }
 
-    private fun getCategory(section: String, type: String) {
+    private fun getCategory(section: String, type: String) = CoroutineScope(Dispatchers.Main).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCategory(token, section, type).enqueue(object : Callback<Category> {
@@ -105,7 +141,6 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                     ) {
                         val categoryIdName: CategoryIdName = parent.selectedItem as CategoryIdName
                         categoryId = categoryIdName.id
-                        toast(requireContext(), "id: ${categoryIdName.id} name: ${categoryIdName.name}")
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>) {
@@ -121,23 +156,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         })
     }
 
-    private fun getCurrentUser() {
-        val retIn = RetrofitBuilder.getInstance()
-        val token = RetrofitBuilder.getToken()
-        retIn.getCurrentUser(token).enqueue(object : Callback<CurrentUser> {
-            override fun onResponse(call: Call<CurrentUser>, response: Response<CurrentUser>) {
-                currentUser.text = response.body()?.name
-                agent = response.body()?.name.toString()
-            }
-
-            override fun onFailure(call: Call<CurrentUser>, t: Throwable) {
-
-            }
-
-        })
-    }
-
-    private fun getWallet() {
+    private fun getWallet() = CoroutineScope(Dispatchers.Main).launch{
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getWallets(token).enqueue(object : Callback<GetWallet> {
@@ -206,7 +225,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         comment: String,
 //        agentId: Int,
         agentName: String,
-        walletId: Int) {
+        walletId: Int) = CoroutineScope(Dispatchers.Main).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val addItems = AddTransactionOrExpense(amount,category, comment, agentName, walletId)
@@ -219,14 +238,14 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
 
             override fun onFailure(call: Call<AddResponse>, t: Throwable) {
                 findNavController().navigate(R.id.action_addingFragment_to_navigation_home)
-                toast(requireContext(), "$t")
                 logs("$t")
             }
 
         })
     }
 
-    private fun addTransfer(amount: Int, comment: String, walletFrom: Int, walletTo: Int) {
+    private fun addTransfer(amount: Int, comment: String, walletFrom: Int, walletTo: Int) =
+        CoroutineScope(Dispatchers.Main).launch{
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val addItems = AddTransfer(amount, comment, walletFrom, walletTo)

@@ -1,0 +1,65 @@
+package com.example.neofin.ui.journal.neobis
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.neofin.R
+import com.example.neofin.adapters.JournalAdapter
+import com.example.neofin.retrofit.RetrofitBuilder
+import com.example.neofin.retrofit.data.journal.JournalItem
+import com.example.neofin.utils.logs
+import kotlinx.android.synthetic.main.fragment_journal.*
+import kotlinx.android.synthetic.main.fragment_neobis_journal.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
+
+    private val adapter by lazy { JournalAdapter() }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupAdapter()
+        getJournal()
+
+        adapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putInt("idJournal", it.id)
+            }
+            Navigation.findNavController(requireView()).navigate(
+                R.id.action_journalFragment_to_journalByIdFragment,
+                bundle
+            )
+        }
+    }
+
+    private fun getJournal() = CoroutineScope(Dispatchers.Main).launch {
+        val retIn = RetrofitBuilder.getInstance()
+        val token = RetrofitBuilder.getToken()
+        retIn.getJournal(token).enqueue(object : Callback<MutableList<JournalItem>> {
+            override fun onResponse(call: Call<MutableList<JournalItem>>, response: Response<MutableList<JournalItem>>) {
+                response.body()?.let {
+                    adapter.differ.submitList(it)
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<JournalItem>>, t: Throwable) {
+                logs(t.toString())
+            }
+
+        })
+    }
+
+    private fun setupAdapter() {
+        journalRV.adapter = adapter
+        journalRV.layoutManager = LinearLayoutManager(requireContext())
+    }
+}

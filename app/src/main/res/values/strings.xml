@@ -7,4 +7,5 @@
     <string name="title_chart">Диаграммы</string>
     <string name="title_journalByIdFragment">Просмотр истории</string>
     <string name="title_add">Добавление</string>
+    <string name="title_filters">Фильтры</string>
 </resources>

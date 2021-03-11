@@ -28,11 +28,17 @@ class JournalsAdapter : RecyclerView.Adapter<JournalsAdapter.MyViewHolder>(){
         val current = myList[position]
         val view = holder.itemView
 
-        if (current.transactionType == "INCOME") {
-            view.imageJournal.setImageResource(R.drawable.ic_income)
-        } else {
-            view.imageJournal.setImageResource(R.drawable.ic_expense)
-        }
+//        when (current.transactionType) {
+//            "INCOME" -> {
+//                view.imageJournal.setImageResource(R.drawable.ic_income)
+//            }
+//            "EXPENSE" -> {
+//                view.imageJournal.setImageResource(R.drawable.ic_expense)
+//            }
+//            else -> {
+//                view.imageJournal.setImageResource(R.drawable.ic_transfer)
+//            }
+//        }
 
         view.nameJournal.text = current.category
         view.dateJournal.text = current.createdDate

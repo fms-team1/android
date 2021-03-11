@@ -1,5 +1,7 @@
 package com.example.neofin.adapters
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,18 +44,28 @@ class JournalAdapter : RecyclerView.Adapter<JournalAdapter.MyViewHolder>() {
 
     private var onItemClickListener: ((JournalItem) -> Unit)? = null
 
+    @SuppressLint("SetTextI18n", "ResourceAsColor")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = differ.currentList[position]
         holder.itemView.apply {
-            if (current.transactionType == "INCOME") {
-                holder.itemView.imageJournal.setImageResource(R.drawable.ic_income)
-            } else {
-                holder.itemView.imageJournal.setImageResource(R.drawable.ic_expense)
-            }
-
+            holder.itemView.sumJournal.text = "${current.amount} с"
             holder.itemView.nameJournal.text = current.category
-            holder.itemView.dateJournal.text = current.createdDate
-            holder.itemView.sumJournal.text = current.amount.toString()
+            holder.itemView.dateJournal.text = current.createdDate.substringBefore('T')
+
+            when (current.transactionType) {
+                "INCOME" -> {
+                    holder.itemView.imageJournal.setImageResource(R.drawable.ic_income2)
+                    holder.itemView.sumJournal.setTextColor(Color.parseColor("#4AAF39"))
+                }
+                "EXPENSE" -> {
+                    holder.itemView.imageJournal.setImageResource(R.drawable.ic_expense2)
+                    holder.itemView.sumJournal.setTextColor(Color.parseColor("#E11616"))
+                }
+                else -> {
+                    holder.itemView.imageJournal.setImageResource(R.drawable.ic_transfer2)
+                    holder.itemView.sumJournal.setTextColor(Color.parseColor("#3B3BB7"))
+                }
+            }
 
             holder.itemView.nameJournal.setOnClickListener {
                 onItemClickListener?.let { it(current) }
