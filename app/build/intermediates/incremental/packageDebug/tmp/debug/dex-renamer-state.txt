@@ -1,0 +1,4 @@
+#Sun Mar 14 01:02:04 KGT 2021
+base.0=/home/chyngyz/Рабочий стол/android-designAdding_Journal/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

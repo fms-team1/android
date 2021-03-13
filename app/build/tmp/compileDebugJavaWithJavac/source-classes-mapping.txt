@@ -1,0 +1,2 @@
+com/example/neofin/BuildConfig.java
+ com.example.neofin.BuildConfig
