@@ -21,13 +21,15 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getJournalById()
+        val id = arguments?.getInt("idJournal", 1)
+
+        getJournalById(id!!)
     }
 
-    private fun getJournalById() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getJournalById(id : Int) = CoroutineScope(Dispatchers.Main).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
-        retIn.getJournalById(token, 1).enqueue(object : Callback<JournalById> {
+        retIn.getJournalById(token, id).enqueue(object : Callback<JournalById> {
             @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<JournalById>, response: Response<JournalById>) {
                 val name = response.body()?.person?.name

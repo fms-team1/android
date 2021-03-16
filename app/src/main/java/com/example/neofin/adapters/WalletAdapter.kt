@@ -24,17 +24,17 @@ class WalletAdapter: RecyclerView.Adapter<WalletAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = myList[position]
 
-        when (current.walletName) {
-            "Наличные" -> {
+        when (current.id) {
+            1 -> {
                 holder.itemView.logoWallet.setImageResource(R.drawable.money)
             }
-            "Demir Bank" -> {
+            2 -> {
                 holder.itemView.logoWallet.setImageResource(R.drawable.demir)
             }
-            "О деньги" -> {
+            5 -> {
                 holder.itemView.logoWallet.setImageResource(R.drawable.o)
             }
-            "Elsom" -> {
+            3 -> {
                 holder.itemView.logoWallet.setImageResource(R.drawable.elsom)
             }
             else -> {
