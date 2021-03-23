@@ -29,6 +29,9 @@ import retrofit2.Response
 class JournalFragment : Fragment(R.layout.fragment_journal) {
 
     private var menu: Menu? = null
+    private var isNeobis: Boolean = false
+    private var isNeolabs: Boolean = false
+    private var isAll: Boolean = false
     private val adapter by lazy { JournalAdapter() }
 
     private val allAdapter by lazy { AllJournalAdapter() }
@@ -39,10 +42,10 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
         journalPb.visibility = View.VISIBLE
         constraintLayout.visibility = View.INVISIBLE
         journalRV.visibility = View.INVISIBLE
+        allJournalRV.visibility = View.INVISIBLE
 
         MainScope().launch(Dispatchers.Main) {
             getJournal()
-//            getJournalBySection("NEOBIS")
             setupAdapter()
             setupAllAdapter()
             neobis.setOnClickListener {
@@ -62,6 +65,9 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
                 journalPb.visibility = View.VISIBLE
                 journalRV.visibility = View.INVISIBLE
                 allJournalRV.visibility = View.INVISIBLE
+                isNeobis = true
+                isNeolabs = false
+                isAll = false
             }
 
             all.setOnClickListener {
@@ -118,6 +124,18 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
                 Navigation.findNavController(requireView()).navigate(
                     R.id.action_journalFragment_to_journalByIdFragment,
                     bundle
+                )
+            }
+
+            filterOpen.setOnClickListener {
+                findNavController().navigate(
+                    R.id.action_navigation_journal_to_filtersFragment
+                )
+            }
+
+            backButton.setOnClickListener {
+                findNavController().navigate(
+                    R.id.action_navigation_journal_to_navigation_home
                 )
             }
         }

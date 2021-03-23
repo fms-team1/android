@@ -1,14 +1,445 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.FiltersFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.filter.FiltersFragment"
+    android:orientation="vertical"
+    android:background="@color/bg_color">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp">
+        <Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/closeButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_close2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginLeft="14dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Фильтры"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="44dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/closeButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginRight="44dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </Toolbar>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginBottom="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:text="Выберите организацию"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textFontWeight="500" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp">
+                <Spinner
+                    android:id="@+id/sectionFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_filter_bg"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingEnd="25dp"
+                    android:paddingRight="25dp"
+                    tools:ignore="RtlSymmetry"/>
 
-</FrameLayout>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/sectionFilter"
+                    app:layout_constraintEnd_toEndOf="@+id/sectionFilter"
+                    app:layout_constraintTop_toTopOf="@+id/sectionFilter" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:text="Выберите денежную операцию"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textFontWeight="500" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp">
+                <Spinner
+                    android:id="@+id/operationFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_filter_bg"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingEnd="25dp"
+                    android:paddingRight="25dp"
+                    tools:ignore="RtlSymmetry"/>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/operationFilter"
+                    app:layout_constraintEnd_toEndOf="@+id/operationFilter"
+                    app:layout_constraintTop_toTopOf="@+id/operationFilter" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:text="Выберите категорию"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textFontWeight="500" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp">
+                <Spinner
+                    android:id="@+id/categoryFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_filter_bg"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingEnd="25dp"
+                    android:paddingRight="25dp"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/ic_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/categoryFilter"
+                    app:layout_constraintEnd_toEndOf="@+id/categoryFilter"
+                    app:layout_constraintTop_toTopOf="@+id/categoryFilter" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:text="Выберите дату"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textFontWeight="500" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp">
+                <Spinner
+                    android:id="@+id/periodFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_filter_bg"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingEnd="25dp"
+                    android:paddingRight="25dp"
+                    tools:ignore="RtlSymmetry"/>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/periodFilter"
+                    app:layout_constraintEnd_toEndOf="@+id/periodFilter"
+                    app:layout_constraintTop_toTopOf="@+id/periodFilter" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/periodLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/montserrat"
+                        android:text="С"
+                        android:textColor="@color/black"
+                        android:textFontWeight="500" />
+
+                    <TextView
+                        android:id="@+id/dateFrom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/spinner_filter_bg"
+                        android:drawableRight="@drawable/ic_date"
+                        android:drawableTint="#358AED"
+                        android:padding="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/montserrat"
+                        android:text="По"
+                        android:textColor="@color/black"
+                        android:textFontWeight="500" />
+
+                    <TextView
+                        android:id="@+id/dateTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/spinner_filter_bg"
+                        android:drawableRight="@drawable/ic_date"
+                        android:drawableTint="#358AED"
+                        android:padding="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:text="Выберите кошелек"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textFontWeight="500" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp">
+                <Spinner
+                    android:id="@+id/walletFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_filter_bg"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingEnd="25dp"
+                    android:paddingRight="25dp"
+                    tools:ignore="RtlSymmetry"/>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/walletFilter"
+                    app:layout_constraintEnd_toEndOf="@+id/walletFilter"
+                    app:layout_constraintTop_toTopOf="@+id/walletFilter" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:text="Выберите контрагента"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textFontWeight="500" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp">
+                <Spinner
+                    android:id="@+id/agentFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_filter_bg"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingEnd="25dp"
+                    android:paddingRight="25dp"
+                    tools:ignore="RtlSymmetry"/>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/agentFilter"
+                    app:layout_constraintEnd_toEndOf="@+id/agentFilter"
+                    app:layout_constraintTop_toTopOf="@+id/agentFilter" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:text="Выберите пользователя"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textFontWeight="500" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp">
+                <Spinner
+                    android:id="@+id/userFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:background="@drawable/spinner_filter_bg"
+                    android:padding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingEnd="25dp"
+                    android:paddingRight="25dp"
+                    tools:ignore="RtlSymmetry"/>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/userFilter"
+                    app:layout_constraintEnd_toEndOf="@+id/userFilter"
+                    app:layout_constraintTop_toTopOf="@+id/userFilter" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:layout_marginTop="14dp"
+                android:id="@+id/acceptFilters"
+                android:layout_width="185dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:backgroundTint="#1778E9"
+                android:fontFamily="@font/montserrat"
+                android:text="Применить"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textFontWeight="600"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

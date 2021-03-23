@@ -141,6 +141,7 @@
                         android:background="@drawable/edit_text_rectangle_small"
                         android:drawableRight="@drawable/ic_date"
                         android:drawableTint="#358AED"
+                        android:gravity="center_vertical"
                         android:padding="10dp" />
                 </LinearLayout>
 
@@ -427,6 +428,7 @@
                                 android:background="@drawable/edit_text_rectangle_small"
                                 android:drawableRight="@drawable/ic_date"
                                 android:drawableTint="#358AED"
+                                android:gravity="center_vertical"
                                 android:padding="10dp" />
                         </LinearLayout>
 

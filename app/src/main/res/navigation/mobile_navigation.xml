@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_navigation_journal_to_filtersFragment"
             app:destination="@id/filtersFragment" />
+        <action
+            android:id="@+id/action_navigation_journal_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
     <fragment
@@ -59,7 +62,11 @@
 
     <fragment
         android:id="@+id/filtersFragment"
-        android:name="com.example.neofin.ui.FiltersFragment"
+        android:name="com.example.neofin.ui.filter.FiltersFragment"
         android:label="@string/title_filters"
-        tools:layout="@layout/fragment_filters" />
+        tools:layout="@layout/fragment_filters" >
+        <action
+            android:id="@+id/action_filtersFragment_to_navigation_journal"
+            app:destination="@id/navigation_journal" />
+    </fragment>
 </navigation>

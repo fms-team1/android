@@ -12,6 +12,10 @@ import com.example.neofin.R
 import com.example.neofin.ui.addTransactions.data.CategoryIdName
 import com.example.neofin.ui.addTransactions.data.SectionName
 import com.example.neofin.ui.addTransactions.data.WalletIdName
+import com.example.neofin.ui.filter.data.AgentIdName
+import com.example.neofin.ui.filter.data.Period
+import com.example.neofin.ui.filter.data.TransactionType
+import com.example.neofin.ui.filter.data.UserIdName
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,15 +31,6 @@ fun toast(context: Context, text: String) {
 
 fun logs(text: String) {
     Log.v("CHOS", text)
-}
-
-fun spinnerCategory(context: Context, arrayList: ArrayList<CategoryIdName>, spinner: Spinner) {
-    val adapter = ArrayAdapter(
-        context,
-        R.layout.spinner, arrayList
-    )
-
-    spinner.adapter = adapter
 }
 
 fun spinnerWallet(context: Context, arrayList: ArrayList<WalletIdName>, spinner: Spinner) {
@@ -56,6 +51,100 @@ fun spinnerSection(context: Context, spinner: Spinner) {
     val adapter = ArrayAdapter(
         context,
         R.layout.spinner, sectionList
+    )
+
+    spinner.adapter = adapter
+
+}
+
+fun spinnerCategory(context: Context, arrayList: ArrayList<CategoryIdName>, spinner: Spinner) {
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner, arrayList
+    )
+
+    spinner.adapter = adapter
+}
+
+fun spinnerAgentFilter(context: Context, arrayList: ArrayList<AgentIdName>, spinner: Spinner) {
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, arrayList
+    )
+
+    spinner.adapter = adapter
+}
+
+fun spinnerUserFilter(context: Context, arrayList: ArrayList<UserIdName>, spinner: Spinner) {
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, arrayList
+    )
+
+    spinner.adapter = adapter
+}
+
+fun spinnerWalletFilter(context: Context, arrayList: ArrayList<WalletIdName>, spinner: Spinner) {
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, arrayList
+    )
+
+    spinner.adapter = adapter
+}
+
+fun spinnerSectionFilter(context: Context, spinner: Spinner) {
+    val sectionList: ArrayList<SectionName> = ArrayList()
+
+    sectionList.add(SectionName("NEOBIS", "Neobis"))
+    sectionList.add(SectionName("NEOLABS", "Neolabs"))
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, sectionList
+    )
+
+    spinner.adapter = adapter
+
+}
+
+fun spinnerCategoryFilter(context: Context, arrayList: ArrayList<CategoryIdName>, spinner: Spinner) {
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, arrayList
+    )
+
+    spinner.adapter = adapter
+}
+
+
+fun spinnerTransaction(context: Context, spinner: Spinner) {
+    val transactionList: ArrayList<TransactionType> = ArrayList()
+
+    transactionList.add(TransactionType("INCOME", "Доход"))
+    transactionList.add(TransactionType("EXPENSE", "Расход"))
+    transactionList.add(TransactionType("TRANSFER", "Перевод"))
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, transactionList
+    )
+
+    spinner.adapter = adapter
+
+}
+
+fun spinnerPeriodFilter(context: Context, spinner: Spinner, periodFromTo : String) {
+    val period: ArrayList<Period> = ArrayList()
+
+    period.add(Period(getWeek(), "Неделя"))
+    period.add(Period(getMonth(), "Месяц"))
+    period.add(Period(getYear(), "Год"))
+    period.add(Period(periodFromTo, "За период"))
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, period
     )
 
     spinner.adapter = adapter
