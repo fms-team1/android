@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Neofin</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_home">Главная</string>
+    <string name="title_user">Профиль</string>
+    <string name="title_journal">Журнал</string>
+    <string name="title_chart">Диаграммы</string>
+    <string name="title_journalByIdFragment">Просмотр истории</string>
+    <string name="title_add">Добавление</string>
+    <string name="title_filters">Фильтры</string>
+    <string name="title_activity_journal">JournalActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+</resources>
