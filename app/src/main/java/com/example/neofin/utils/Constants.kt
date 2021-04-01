@@ -13,4 +13,5 @@ object Constants {
     const val GET_WALLETS = "/wallet/getAllActiveWallets"
     const val GET_CURRENT_USER = "/user/getCurrentUser"
     const val GET_JOURNAL_BY_SECTION = "/journal/getByNeoSection"
+    const val GET_FILTERED = "/transaction/getByGlobalFiltration"
 }

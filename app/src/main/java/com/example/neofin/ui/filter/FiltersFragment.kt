@@ -34,11 +34,12 @@ import kotlin.collections.ArrayList
 
 
 class FiltersFragment : Fragment(R.layout.fragment_filters) {
-    private var walletId = 0
-    private var categoryId = 0
-    private var type = ""
-    private var section = ""
-    private var datePeriod = ""
+    var walletId = 0
+    var categoryId = 0
+    var type = ""
+    var section = ""
+    var datePeriod = ""
+    var isPeriod = false
     private val calendar = Calendar.getInstance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,12 +52,16 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         getTransactionSpinner()
         getWallet()
         getCategory(section, type)
-        getPeriod("${dateFrom}/${dateTo}")
+        getPeriod()
 
         closeButton.setOnClickListener {
             findNavController().navigate(
                 R.id.navigation_journal
             )
+        }
+
+        acceptFilters.setOnClickListener {
+            toast(requireContext(), datePeriod)
         }
     }
 
@@ -77,8 +82,8 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         }
     }
 
-    private fun getPeriod(date: String) = CoroutineScope(Dispatchers.Main).launch {
-        spinnerPeriodFilter(requireContext(), periodFilter, date)
+    private fun getPeriod() = CoroutineScope(Dispatchers.Main).launch {
+        spinnerPeriodFilter(requireContext(), periodFilter)
         periodFilter.onItemSelectedListener = object  :
             AdapterView.OnItemSelectedListener {
             @RequiresApi(Build.VERSION_CODES.N)
@@ -89,6 +94,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 val period: Period = parent.selectedItem as Period
                 datePeriod = period.period
                 if (period.name == "За период") {
+                    isPeriod = true
                     periodLayout.visibility = View.VISIBLE
 
                     dateFrom.setOnClickListener {

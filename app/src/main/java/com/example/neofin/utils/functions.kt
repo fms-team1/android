@@ -134,13 +134,13 @@ fun spinnerTransaction(context: Context, spinner: Spinner) {
 
 }
 
-fun spinnerPeriodFilter(context: Context, spinner: Spinner, periodFromTo : String) {
+fun spinnerPeriodFilter(context: Context, spinner: Spinner) {
     val period: ArrayList<Period> = ArrayList()
 
     period.add(Period(getWeek(), "Неделя"))
     period.add(Period(getMonth(), "Месяц"))
     period.add(Period(getYear(), "Год"))
-    period.add(Period(periodFromTo, "За период"))
+    period.add(Period("", "За период"))
 
     val adapter = ArrayAdapter(
         context,
