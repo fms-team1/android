@@ -4,6 +4,7 @@ import com.example.neofin.retrofit.data.addingResponse.AddResponse
 import com.example.neofin.retrofit.data.category.Category
 import com.example.neofin.retrofit.data.currentUser.CurrentUser
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournal
+import com.example.neofin.retrofit.data.filteredJournal.FilteredJournalItem
 import com.example.neofin.retrofit.data.journal.AllJournalItem
 import com.example.neofin.retrofit.data.journal.JournalItem
 import com.example.neofin.retrofit.data.journalById.JournalById
@@ -70,12 +71,12 @@ interface ApiService {
     @GET(Constants.GET_FILTERED)
     fun getFiltered(
         @Header("Authorization") token: String,
-        @Query("categoryId") categoryId: Int,
-        @Query("counterpartyId") counterpartyId: Int,
-        @Query("endDate") endDate: String,
-        @Query("startDate") startDate: String,
-        @Query("transactionType") transactionType: String,
-        @Query("transferWalletId") transferWalletId: Int,
-        @Query("userId") userId: Int,
-        @Query("walletId") walletId: Int) : Call<FilteredJournal>
+        @Query("categoryId") categoryId: Int?,
+        @Query("counterpartyId") counterpartyId: Int?,
+        @Query("endDate") endDate: String?,
+        @Query("startDate") startDate: String?,
+        @Query("transactionType") transactionType: String?,
+        @Query("transferWalletId") transferWalletId: Int?,
+        @Query("userId") userId: Int?,
+        @Query("walletId") walletId: Int?) : Call<MutableList<FilteredJournalItem>>
 }

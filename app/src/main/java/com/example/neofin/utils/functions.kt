@@ -54,7 +54,6 @@ fun spinnerSection(context: Context, spinner: Spinner) {
     )
 
     spinner.adapter = adapter
-
 }
 
 fun spinnerCategory(context: Context, arrayList: ArrayList<CategoryIdName>, spinner: Spinner) {
@@ -96,6 +95,7 @@ fun spinnerWalletFilter(context: Context, arrayList: ArrayList<WalletIdName>, sp
 fun spinnerSectionFilter(context: Context, spinner: Spinner) {
     val sectionList: ArrayList<SectionName> = ArrayList()
 
+    sectionList.add(SectionName("", "Организация"))
     sectionList.add(SectionName("NEOBIS", "Neobis"))
     sectionList.add(SectionName("NEOLABS", "Neolabs"))
 
@@ -121,6 +121,7 @@ fun spinnerCategoryFilter(context: Context, arrayList: ArrayList<CategoryIdName>
 fun spinnerTransaction(context: Context, spinner: Spinner) {
     val transactionList: ArrayList<TransactionType> = ArrayList()
 
+    transactionList.add(TransactionType("", "Операция"))
     transactionList.add(TransactionType("INCOME", "Доход"))
     transactionList.add(TransactionType("EXPENSE", "Расход"))
     transactionList.add(TransactionType("TRANSFER", "Перевод"))
@@ -137,10 +138,11 @@ fun spinnerTransaction(context: Context, spinner: Spinner) {
 fun spinnerPeriodFilter(context: Context, spinner: Spinner) {
     val period: ArrayList<Period> = ArrayList()
 
+    period.add(Period("", "Период"))
     period.add(Period(getWeek(), "Неделя"))
     period.add(Period(getMonth(), "Месяц"))
     period.add(Period(getYear(), "Год"))
-    period.add(Period("", "За период"))
+    period.add(Period("period", "За период"))
 
     val adapter = ArrayAdapter(
         context,

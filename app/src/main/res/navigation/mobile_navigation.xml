@@ -69,4 +69,9 @@
             android:id="@+id/action_filtersFragment_to_navigation_journal"
             app:destination="@id/navigation_journal" />
     </fragment>
+    <fragment
+        android:id="@+id/filteredJournalFragment"
+        android:name="com.example.neofin.ui.filteredJournal.FilteredJournalFragment"
+        android:label="fragment_filtered_journal"
+        tools:layout="@layout/fragment_filtered_journal" />
 </navigation>
