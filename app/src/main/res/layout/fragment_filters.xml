@@ -52,10 +52,10 @@
         </Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp">
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginBottom="20dp">-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -287,37 +287,6 @@
                 android:layout_marginStart="14dp"
                 android:layout_marginLeft="14dp">
                 <Spinner
-                    android:id="@+id/agentFilter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:background="@drawable/spinner_filter_bg"
-                    android:padding="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:paddingEnd="25dp"
-                    android:paddingRight="25dp"
-                    tools:ignore="RtlSymmetry"/>
-
-                <ImageView
-                    android:id="@+id/icAgent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_down"
-                    app:layout_constraintBottom_toBottomOf="@+id/agentFilter"
-                    app:layout_constraintEnd_toEndOf="@+id/agentFilter"
-                    app:layout_constraintTop_toTopOf="@+id/agentFilter" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="14dp"
-                android:layout_marginLeft="14dp">
-                <Spinner
                     android:id="@+id/userFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -341,6 +310,49 @@
                     app:layout_constraintEnd_toEndOf="@+id/userFilter"
                     app:layout_constraintTop_toTopOf="@+id/userFilter" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginLeft="14dp">
+
+                <SearchView
+                    android:id="@+id/searchAgent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/spinner_filter_bg"/>
+
+                <TextView
+                    android:id="@+id/hintSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Контрагент"
+                    android:textSize="16sp"
+                    android:layout_marginStart="54dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/searchAgent"
+                    app:layout_constraintStart_toStartOf="@+id/searchAgent"
+                    app:layout_constraintTop_toTopOf="@+id/searchAgent"
+                    android:layout_marginLeft="54dp"
+                    android:visibility="visible"/>
+
+                <ListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/searchAgent"
+                    android:visibility="gone"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <Button
                 android:layout_marginTop="30dp"
                 android:id="@+id/acceptFilters"
@@ -370,5 +382,5 @@
                 android:textColor="#E11616"
                 android:textFontWeight="500" />
         </LinearLayout>
-    </ScrollView>
+<!--    </ScrollView>-->
 </LinearLayout>

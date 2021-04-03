@@ -1,10 +1,12 @@
 package com.example.neofin.retrofit
 
 import com.example.neofin.retrofit.data.addingResponse.AddResponse
+import com.example.neofin.retrofit.data.allUsers.AllUsers
 import com.example.neofin.retrofit.data.category.Category
 import com.example.neofin.retrofit.data.currentUser.CurrentUser
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournal
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournalItem
+import com.example.neofin.retrofit.data.getAllAgents.AllAgents
 import com.example.neofin.retrofit.data.journal.AllJournalItem
 import com.example.neofin.retrofit.data.journal.JournalItem
 import com.example.neofin.retrofit.data.journalById.JournalById
@@ -15,6 +17,7 @@ import com.example.neofin.retrofit.data.transactionAdding.AddTransactionOrExpens
 import com.example.neofin.retrofit.data.transactionAdding.AddTransfer
 import com.example.neofin.retrofit.data.wallet.GetWallet
 import com.example.neofin.utils.Constants
+import okhttp3.Response
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -23,13 +26,17 @@ interface ApiService {
     @POST(Constants.LOGIN_URL)
     fun login(@Body request: LoginRequest): Call<TokenResponse>
 
+//    @Headers("Content-Type: application/json")
+//    @POST(Constants.ADD_INCOME_EXPENSE)
+//    fun addIncomeOrExpense(@Header("Authorization") token: String, @Body request: AddTransactionOrExpense): Call<AddResponse>
+
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_INCOME_EXPENSE)
-    fun addIncomeOrExpense(@Header("Authorization") token: String, @Body request: AddTransactionOrExpense): Call<AddResponse>
+    fun addIncomeOrExpense(@Header("Authorization") token: String, @Body request: AddTransactionOrExpense): Call<Void>
 
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_TRANSFER)
-    fun addTransfer(@Header("Authorization") token: String, @Body request: AddTransfer): Call<String>
+    fun addTransfer(@Header("Authorization") token: String, @Body request: AddTransfer): Call<Void>
 
     @Headers("Content-Type: application/json")
     @GET(Constants.HOME_URL)
@@ -57,15 +64,23 @@ interface ApiService {
     fun getCurrentUser(@Header("Authorization") token: String): Call<CurrentUser>
 
     @Headers("Content-Type: application/json")
+    @GET(Constants.GET_ALL_USERS)
+    fun getAllUsers(@Header("Authorization") token: String): Call<AllUsers>
+
+    @Headers("Content-Type: application/json")
     @GET(Constants.GET_WALLETS)
     fun getWallets(@Header("Authorization") token: String): Call<GetWallet>
+
+    @Headers("Content-Type: application/json")
+    @GET(Constants.GET_ALL_AGENTS)
+    fun getAllAgents(@Header("Authorization") token: String): Call<AllAgents>
 
     @Headers("Content-Type: application/json")
     @GET(Constants.CATEGORY_ALL)
     fun getCategory(
         @Header("Authorization") token: String,
-        @Query("neoSection") section: String,
-        @Query("transactionType") type: String): Call<Category>
+        @Query("neoSectionId") section: Int,
+        @Query("transactionTypeId") type: Int): Call<Category>
 
     @Headers("Content-Type: application/json")
     @GET(Constants.GET_FILTERED)
@@ -74,8 +89,9 @@ interface ApiService {
         @Query("categoryId") categoryId: Int?,
         @Query("counterpartyId") counterpartyId: Int?,
         @Query("endDate") endDate: String?,
+        @Query("neoSectionId") neoSectionId: Int?,
         @Query("startDate") startDate: String?,
-        @Query("transactionType") transactionType: String?,
+        @Query("transactionTypeId") transactionType: Int?,
         @Query("transferWalletId") transferWalletId: Int?,
         @Query("userId") userId: Int?,
         @Query("walletId") walletId: Int?) : Call<MutableList<FilteredJournalItem>>

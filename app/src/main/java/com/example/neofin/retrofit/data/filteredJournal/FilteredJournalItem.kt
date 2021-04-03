@@ -11,6 +11,7 @@ data class FilteredJournalItem(
     val createdDate: String,
     val id: Int,
     val neoSection: String,
+    val transactionTypeId: Int,
     val transactionType: String,
     val transferWalletId: Int,
     val transferWalletName: String,

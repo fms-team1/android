@@ -14,4 +14,6 @@ object Constants {
     const val GET_CURRENT_USER = "/user/getCurrentUser"
     const val GET_JOURNAL_BY_SECTION = "/journal/getByNeoSection"
     const val GET_FILTERED = "/transaction/getByGlobalFiltration"
+    const val GET_ALL_USERS = "/user/getAllUsers"
+    const val GET_ALL_AGENTS = "/people/getAllCounterparties"
 }

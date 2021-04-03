@@ -3,7 +3,9 @@ package com.example.neofin.utils
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
@@ -16,6 +18,7 @@ import com.example.neofin.ui.filter.data.AgentIdName
 import com.example.neofin.ui.filter.data.Period
 import com.example.neofin.ui.filter.data.TransactionType
 import com.example.neofin.ui.filter.data.UserIdName
+import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -33,6 +36,19 @@ fun logs(text: String) {
     Log.v("CHOS", text)
 }
 
+fun snackbar(view: View, text: String, color: Int) {
+    val snackBar = Snackbar.make(view, text, Snackbar.LENGTH_SHORT
+    ).setAction("Action", null)
+    snackBar.setActionTextColor(Color.WHITE)
+    val snackBarView = snackBar.view
+    snackBarView.setBackgroundColor(color)
+    val textView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+    textView.setTextColor(Color.WHITE)
+    textView.textSize = 16F
+    textView.maxLines = 6
+    snackBar.show()
+}
+
 fun spinnerWallet(context: Context, arrayList: ArrayList<WalletIdName>, spinner: Spinner) {
     val adapter = ArrayAdapter(
         context,
@@ -45,8 +61,9 @@ fun spinnerWallet(context: Context, arrayList: ArrayList<WalletIdName>, spinner:
 fun spinnerSection(context: Context, spinner: Spinner) {
     val sectionList: ArrayList<SectionName> = ArrayList()
 
-    sectionList.add(SectionName("NEOBIS", "Neobis"))
-    sectionList.add(SectionName("NEOLABS", "Neolabs"))
+    sectionList.add(SectionName(-1, "Выберите организацию"))
+    sectionList.add(SectionName(0, "Neobis"))
+    sectionList.add(SectionName(1, "Neolabs"))
 
     val adapter = ArrayAdapter(
         context,
@@ -95,9 +112,9 @@ fun spinnerWalletFilter(context: Context, arrayList: ArrayList<WalletIdName>, sp
 fun spinnerSectionFilter(context: Context, spinner: Spinner) {
     val sectionList: ArrayList<SectionName> = ArrayList()
 
-    sectionList.add(SectionName("", "Организация"))
-    sectionList.add(SectionName("NEOBIS", "Neobis"))
-    sectionList.add(SectionName("NEOLABS", "Neolabs"))
+    sectionList.add(SectionName(-1, "Организация"))
+    sectionList.add(SectionName(0, "Neobis"))
+    sectionList.add(SectionName(1, "Neolabs"))
 
     val adapter = ArrayAdapter(
         context,
@@ -121,10 +138,10 @@ fun spinnerCategoryFilter(context: Context, arrayList: ArrayList<CategoryIdName>
 fun spinnerTransaction(context: Context, spinner: Spinner) {
     val transactionList: ArrayList<TransactionType> = ArrayList()
 
-    transactionList.add(TransactionType("", "Операция"))
-    transactionList.add(TransactionType("INCOME", "Доход"))
-    transactionList.add(TransactionType("EXPENSE", "Расход"))
-    transactionList.add(TransactionType("TRANSFER", "Перевод"))
+    transactionList.add(TransactionType(-1, "Операция"))
+    transactionList.add(TransactionType(0, "Доход"))
+    transactionList.add(TransactionType(1, "Расход"))
+    transactionList.add(TransactionType(2, "Перевод"))
 
     val adapter = ArrayAdapter(
         context,

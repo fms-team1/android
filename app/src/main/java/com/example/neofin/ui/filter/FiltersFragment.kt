@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.neofin.R
 import com.example.neofin.retrofit.RetrofitBuilder
+import com.example.neofin.retrofit.data.allUsers.AllUsers
 import com.example.neofin.retrofit.data.category.Category
+import com.example.neofin.retrofit.data.getAllAgents.AllAgents
 import com.example.neofin.retrofit.data.wallet.GetWallet
 import com.example.neofin.ui.addTransactions.data.CategoryIdName
 import com.example.neofin.ui.addTransactions.data.SectionName
@@ -24,7 +27,6 @@ import com.example.neofin.ui.filter.data.TransactionType
 import com.example.neofin.ui.filter.data.UserIdName
 import com.example.neofin.utils.*
 import kotlinx.android.synthetic.main.fragment_filters.*
-import kotlinx.android.synthetic.main.spinner_filter_wallet.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,15 +38,23 @@ import kotlin.collections.ArrayList
 
 
 class FiltersFragment : Fragment(R.layout.fragment_filters) {
-    var walletId = 0
-    var categoryId = 0
-    var type = ""
-    var section = ""
-    var datePeriod = ""
+    var walletId: Int? = null
+    var categoryId: Int? = null
+    var type: Int? = null
+    var section: Int? = null
+    var datePeriod: String? = null
     var isPeriod = false
-    var agent = 0
-    var user = 0
+    var agent: Int? = null
+    var user: Int? = null
     private val calendar = Calendar.getInstance()
+
+    var isCategoryEmpty = true
+    var isAgentEmpty = true
+    var isUserEmpty = true
+    var isWalletEmpty = true
+    var isPeriodEmpty = true
+    var isSectionEmpty = true
+    var isTypeEmpty = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,51 +82,50 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             categoryFilter.setSelection(0)
             operationFilter.setSelection(0)
             userFilter.setSelection(0)
-            agentFilter.setSelection(0)
             categoryLayout.visibility = View.GONE
-            section = ""
-            type = ""
+            section = null
+            type = null
         }
 
         acceptFilters.setOnClickListener {
             val bundle = Bundle().apply {
-                if (walletId == 0) {
+                if (walletId == null) {
                     putBoolean("isEmptyWallet", true)
                 } else {
-                    putInt("walletId", walletId)
+                    walletId?.let { it1 -> putInt("walletId", it1) }
                 }
 
-                if (agent == 0) {
+                if (agent == null) {
                     putBoolean("isEmptyAgent", true)
                 } else {
-                    putInt("agentId", agent)
+                    agent?.let { it1 -> putInt("agentId", it1) }
                 }
 
-                if (user == 0) {
+                if (user == null) {
                     putBoolean("isEmptyUser", true)
                 } else {
-                    putInt("userId", user)
+                    user?.let { it1 -> putInt("userId", it1) }
                 }
 
-                if (categoryId == 0) {
+                if (categoryId == null) {
                     putBoolean("isEmptyCategory", true)
                 } else {
-                    putInt("categoryId", categoryId)
+                    categoryId?.let { it1 -> putInt("categoryId", it1) }
                 }
 
-                if (section == "") {
+                if (section == null) {
                     putBoolean("isEmptySection", true)
                 } else {
-                    putString("section", section)
+                    section?.let { it1 -> putInt("section", it1) }
                 }
 
-                if (type == "") {
+                if (type == null) {
                     putBoolean("isEmptyType", true)
                 } else {
-                    putString("type", type)
+                    type?.let { it1 -> putInt("type", it1) }
                 }
 
-                if (datePeriod == "") {
+                if (datePeriod == null) {
                     putBoolean("isEmptyPeriod", true)
                 } else {
                     if (isPeriod) {
@@ -125,8 +134,8 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         putString("date", datePeriod)
                     }
                 }
-
             }
+//            logs("section $section, agent $agent, user $user, type $type, walletId $walletId, category $categoryId, date $datePeriod")
             findNavController().navigate(
                 R.id.filteredJournalFragment,
                 bundle
@@ -143,21 +152,23 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 view: View, position: Int, id: Long
             ) {
                 val sectionName: SectionName = parent.selectedItem as SectionName
-                if (sectionName.backName != "") {
+                if (sectionName.backName != -1) {
                     section = sectionName.backName
+                    isSectionEmpty = false
                     sectionFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
                     (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
                     icSection.setImageResource(R.drawable.ic_close3)
                     icSection.setOnClickListener {
                         sectionFilter.setSelection(0)
                     }
-                    if (type != "" && section != "") {
+                    if (type != null && section != null) {
                         categoryLayout.visibility = View.VISIBLE
-                        getCategory(section, type)
+                        getCategory(section!!, type!!)
                     }
                 } else {
                     sectionFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
                     icSection.setImageResource(R.drawable.ic_down)
+                    isSectionEmpty = true
                 }
             }
 
@@ -178,6 +189,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 val period: Period = parent.selectedItem as Period
                 if (period.period != "") {
                     datePeriod = period.period
+                    isPeriodEmpty = false
                     if (period.name == "За период") {
                         isPeriod = true
                         periodLayout.visibility = View.VISIBLE
@@ -213,6 +225,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 } else {
                     periodFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
                     icPeriod.setImageResource(R.drawable.ic_down)
+                    isPeriodEmpty = true
                 }
 
             }
@@ -231,11 +244,12 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 view: View, position: Int, id: Long
             ) {
                 val transactionType: TransactionType = parent.selectedItem as TransactionType
-                if (transactionType.id != ""){
+                if (transactionType.id != -1){
+                    isTypeEmpty = false
                     type = transactionType.id
-                    if (type != "" && section != "") {
+                    if (type != null && section != null) {
                         categoryLayout.visibility = View.VISIBLE
-                        getCategory(section, type)
+                        getCategory(section!!, type!!)
                     }
                     operationFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
                     (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
@@ -246,6 +260,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 } else {
                     operationFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
                     icOperation.setImageResource(R.drawable.ic_down)
+                    isTypeEmpty = true
                 }
             }
 
@@ -254,15 +269,15 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         }
     }
 
-    private fun getCategory(section: String, type: String) = CoroutineScope(Dispatchers.Main).launch {
+    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.Main).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCategory(token, section, type).enqueue(object : Callback<Category> {
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
                 val categoriesArray: ArrayList<CategoryIdName> = ArrayList()
-                categoriesArray.add(CategoryIdName(0, "Категория"))
+                categoriesArray.add(CategoryIdName(-1, "Категория"))
                 response.body()?.forEach {
-                    categoriesArray.add(CategoryIdName(it.id, it.category))
+                    categoriesArray.add(CategoryIdName(it.id, it.name))
                 }
                 spinnerCategoryFilter(requireContext(), categoriesArray, categoryFilter)
 
@@ -271,8 +286,10 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         override fun onItemSelected(
                             parent: AdapterView<*>, view: View, position: Int, id: Long
                         ) {
-                            val categoryIdName: CategoryIdName = parent.selectedItem as CategoryIdName
-                            if (categoryIdName.id != 0) {
+                            val categoryIdName: CategoryIdName =
+                                parent.selectedItem as CategoryIdName
+                            if (categoryIdName.id != -1) {
+                                isCategoryEmpty = false
                                 categoryId = categoryIdName.id
                                 categoryFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
                                 (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
@@ -283,6 +300,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             } else {
                                 categoryFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
                                 icCategory.setImageResource(R.drawable.ic_down)
+                                isCategoryEmpty = true
                             }
 
                         }
@@ -306,7 +324,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         retIn.getWallets(token).enqueue(object : Callback<GetWallet> {
             override fun onResponse(call: Call<GetWallet>, response: Response<GetWallet>) {
                 val walletArray: ArrayList<WalletIdName> = ArrayList()
-                walletArray.add(WalletIdName(0, "Кошелек"))
+                walletArray.add(WalletIdName(-1, "Кошелек"))
                 response.body()?.forEach {
                     walletArray.add(WalletIdName(it.id, it.name))
                 }
@@ -319,7 +337,8 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         view: View, position: Int, id: Long
                     ) {
                         val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
-                        if (walletIdName.id != 0) {
+                        if (walletIdName.id != -1) {
+                            isWalletEmpty = false
                             walletId = walletIdName.id
                             walletFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
                             (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
@@ -330,6 +349,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         } else {
                             walletFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
                             icWallet.setImageResource(R.drawable.ic_down)
+                            isWalletEmpty = true
                         }
                     }
 
@@ -346,62 +366,105 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
     }
 
     private fun getAgent() = CoroutineScope(Dispatchers.Main).launch {
-        val agentArray: ArrayList<AgentIdName> = ArrayList()
-        agentArray.add(AgentIdName(0, "Контрагент"))
-        spinnerAgentFilter(requireContext(), agentArray, agentFilter)
-        agentFilter.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                val agentIdName: AgentIdName = parent.selectedItem as AgentIdName
-                if (agentIdName.id != 0) {
-                    agent = agentIdName.id
-                    agentFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                    icAgent.setImageResource(R.drawable.ic_close3)
-                    icAgent.setOnClickListener {
-                        agentFilter.setSelection(0)
-                    }
-                } else {
-                    agentFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
-                    icAgent.setImageResource(R.drawable.ic_down)
+        val retInt = RetrofitBuilder.getInstance()
+        val token = RetrofitBuilder.getToken()
+        retInt.getAllAgents(token).enqueue(object : Callback<AllAgents> {
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(call: Call<AllAgents>, response: Response<AllAgents>) {
+                val agentArray: ArrayList<AgentIdName> = ArrayList()
+                response.body()?.forEach {
+                    agentArray.add(AgentIdName(it.id, "${it.name} ${it.surname}"))
                 }
+                val arrayAdapter =
+                    ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, agentArray)
+                listView.adapter = arrayAdapter
+
+                searchAgent.setOnSearchClickListener {
+                    listView.visibility = View.VISIBLE
+                    hintSearch.visibility = View.GONE
+                }
+
+                searchAgent.setOnCloseListener {
+                    listView.visibility = View.GONE
+                    hintSearch.visibility = View.VISIBLE
+                    false
+                }
+
+                searchAgent.setOnQueryTextListener(object :
+                    android.widget.SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        arrayAdapter.filter.filter(query)
+                        return false
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        arrayAdapter.filter.filter(newText)
+                        return false
+                    }
+                })
+
+                listView.onItemClickListener =
+                    AdapterView.OnItemClickListener { _, _, i, _ ->
+                        agent = arrayAdapter.getItem(i)?.id
+                        isAgentEmpty = false
+                        searchAgent.setQuery("${arrayAdapter.getItem(i)?.name}", true)
+                    }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
+            override fun onFailure(call: Call<AllAgents>, t: Throwable) {
             }
-        }
+        })
     }
 
     private fun getUser() = CoroutineScope(Dispatchers.Main).launch {
-        val userArray: ArrayList<UserIdName> = ArrayList()
-        userArray.add(UserIdName(0, "Пользователь"))
-        spinnerUserFilter(requireContext(), userArray, userFilter)
-        userFilter.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                val userIdName: UserIdName = parent.selectedItem as UserIdName
-                if (userIdName.id != 0) {
-                    user = userIdName.id
-                    userFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                    icUser.setImageResource(R.drawable.ic_close3)
-                    icUser.setOnClickListener {
-                        userFilter.setSelection(0)
+        val retIn = RetrofitBuilder.getInstance()
+        val token = RetrofitBuilder.getToken()
+        retIn.getAllUsers(token).enqueue(object : Callback<AllUsers> {
+            override fun onResponse(call: Call<AllUsers>, response: Response<AllUsers>) {
+                val userArray: ArrayList<UserIdName> = ArrayList()
+                userArray.add(UserIdName(-1, "Пользователь"))
+                response.body()?.forEach {
+                    userArray.add(UserIdName(it.id, "${it.name} ${it.surname}"))
+                }
+                spinnerUserFilter(requireContext(), userArray, userFilter)
+                userFilter.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        val userIdName: UserIdName = parent.selectedItem as UserIdName
+                        if (userIdName.id != -1) {
+                            user = userIdName.id
+                            isUserEmpty = false
+                            userFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
+                            (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                            icUser.setImageResource(R.drawable.ic_close3)
+                            icUser.setOnClickListener {
+                                userFilter.setSelection(0)
+                            }
+                        } else {
+                            userFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
+                            icUser.setImageResource(R.drawable.ic_down)
+                            isUserEmpty = true
+                        }
                     }
-                } else {
-                    userFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
-                    icUser.setImageResource(R.drawable.ic_down)
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                    }
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
+            override fun onFailure(call: Call<AllUsers>, t: Throwable) {
+
             }
-        }
+
+        })
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        arguments?.clear()
     }
 }

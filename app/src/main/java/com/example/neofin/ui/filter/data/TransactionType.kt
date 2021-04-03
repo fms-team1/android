@@ -1,7 +1,7 @@
 package com.example.neofin.ui.filter.data
 
 
-class TransactionType(var id: String, var name: String) {
+class TransactionType(var id: Int, var name: String) {
 
     override fun toString(): String {
         return name

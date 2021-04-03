@@ -5,15 +5,12 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.neofin.R
 import com.example.neofin.retrofit.RetrofitBuilder
-import com.example.neofin.retrofit.data.addingResponse.AddResponse
 import com.example.neofin.retrofit.data.category.Category
 import com.example.neofin.retrofit.data.transactionAdding.AddTransactionOrExpense
 import com.example.neofin.retrofit.data.transactionAdding.AddTransfer
@@ -38,8 +35,8 @@ import kotlin.collections.ArrayList
 class AddingFragment : Fragment(R.layout.fragment_adding) {
     private var walletId = 0
     private var categoryId = 0
-    private var sectionType = ""
-    private var type = "EXPENSE"
+    private var sectionType = -1
+    private var type = 1
     private var walletFrom = 0
     private var walletTo = 0
 
@@ -85,21 +82,23 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
             dateAddText.text = currentDate
 
             addExpenseBT.setOnClickListener {
-                type = "EXPENSE"
+                type = 1
                 expenseOrIncome.visibility = View.VISIBLE
                 transferLayout.visibility = View.GONE
                 addExpenseBT.setTextColor(Color.parseColor("#1778E9"))
                 addIncomeBT.setTextColor(Color.parseColor("#000000"))
                 addTransferBT.setTextColor(Color.parseColor("#000000"))
+                sectionAdd.setSelection(0)
             }
 
             addIncomeBT.setOnClickListener {
-                type = "INCOME"
+                type = 0
                 expenseOrIncome.visibility = View.VISIBLE
                 transferLayout.visibility = View.GONE
                 addIncomeBT.setTextColor(Color.parseColor("#1778E9"))
                 addTransferBT.setTextColor(Color.parseColor("#000000"))
                 addExpenseBT.setTextColor(Color.parseColor("#000000"))
+                sectionAdd.setSelection(0)
             }
 
 
@@ -111,8 +110,15 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                     view: View, position: Int, id: Long
                 ) {
                     val sectionName: SectionName = parent.selectedItem as SectionName
-                    sectionType = sectionName.backName
-                    getCategory(sectionType, type)
+                    if (sectionName.backName != -1) {
+                        categoryLayout.visibility = View.VISIBLE
+                        sectionType = sectionName.backName
+                        getCategory(sectionType, type)
+                    } else {
+                        categoryLayout.visibility = View.GONE
+                        sectionType = -1
+                    }
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -145,7 +151,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
             val agent = agentAdd.text
             sendButton.setOnClickListener {
                 addExpenseOrIncome(
-                    Integer.parseInt(sum.toString()),
+                    Integer.parseInt(sum.toString().trim()),
                     categoryId,
                     comment.toString(),
                     agent.toString(),
@@ -156,17 +162,17 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         } catch (e: Exception){
             logs(e.toString())
         }
-
     }
 
-    private fun getCategory(section: String, type: String) = CoroutineScope(Dispatchers.Main).launch {
+    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.Main).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCategory(token, section, type).enqueue(object : Callback<Category> {
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
                 val categoriesArray: ArrayList<CategoryIdName> = ArrayList()
+                categoriesArray.add(CategoryIdName(-1, "Выбеите категорию"))
                 response.body()?.forEach {
-                    categoriesArray.add(CategoryIdName(it.id, it.category))
+                    categoriesArray.add(CategoryIdName(it.id, it.name))
                 }
                 spinnerCategory(requireContext(), categoriesArray, categoryAdd)
 
@@ -200,6 +206,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         retIn.getWallets(token).enqueue(object : Callback<GetWallet> {
             override fun onResponse(call: Call<GetWallet>, response: Response<GetWallet>) {
                 val walletArray: ArrayList<WalletIdName> = ArrayList()
+                walletArray.add(WalletIdName(-1, "Выберите кошелек"))
                 response.body()?.forEach {
                     walletArray.add(WalletIdName(it.id, it.name))
                 }
@@ -269,16 +276,17 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val addItems = AddTransactionOrExpense(amount, category, comment, agentName, date, walletId)
-        retIn.addIncomeOrExpense(token, addItems).enqueue(object : Callback<AddResponse> {
-            override fun onResponse(call: Call<AddResponse>, response: Response<AddResponse>) {
-                if (response.isSuccessful) {
-                    toast(requireContext(), "Successfully added")
+        retIn.addIncomeOrExpense(token, addItems).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.code() == 404) {
+                    snackbar(requireView(), "Недостаточно средст на данном кошелке!", Color.parseColor("#E11616"))
+                } else if (response.code() == 200) {
+                    snackbar(requireView(), "Транзакция добавлена успешна!", Color.parseColor("#4AAF39"))
+                    findNavController().navigate(R.id.action_addingFragment_to_navigation_home)
                 }
             }
 
-            override fun onFailure(call: Call<AddResponse>, t: Throwable) {
-                toast(requireContext(), "Добавлено")
-                findNavController().navigate(R.id.action_addingFragment_to_navigation_home)
+            override fun onFailure(call: Call<Void>, t: Throwable) {
                 logs("$t")
             }
 
@@ -290,29 +298,29 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val addItems = AddTransfer(amount, comment, walletFrom, walletTo)
-        retIn.addTransfer(token, addItems).enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                findNavController().navigate(R.id.action_addingFragment_to_navigation_home)
+        retIn.addTransfer(token, addItems).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200) {
-                    toast(requireContext(), "Successfully added")
+                    snackbar(requireView(), "Транзакция добавлена успешна!", Color.parseColor("#4AAF39"))
+                    findNavController().navigate(R.id.action_addingFragment_to_navigation_home)
+                } else {
+                    snackbar(requireView(), "Ошибка при добавлении транзакции!", Color.parseColor("#E11616"))
                 }
             }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                findNavController().navigate(R.id.action_addingFragment_to_navigation_home)
+            override fun onFailure(call: Call<Void>, t: Throwable) {
                 logs(t.toString())
-                toast(requireContext(), "Добавлено")
             }
 
         })
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private val spinnerOnTouch = OnTouchListener { v, event ->
-        if (event.action == MotionEvent.ACTION_UP) {
-            expenseOrIncome.visibility = View.VISIBLE
-        }
-        false
-    }
+//    @SuppressLint("ClickableViewAccessibility")
+//    private val spinnerOnTouch = OnTouchListener { v, event ->
+//        if (event.action == MotionEvent.ACTION_UP) {
+//            expenseOrIncome.visibility = View.VISIBLE
+//        }
+//        false
+//    }
 
 }

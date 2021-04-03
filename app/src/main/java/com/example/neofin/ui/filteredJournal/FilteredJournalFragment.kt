@@ -25,9 +25,10 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
     var userId: Int? = null
     var agentId: Int? = null
     var walletId: Int? = null
-    var section: String? = null
-    var type: String? = null
+    var section: Int? = null
+    var type: Int? = null
     var date: String? = null
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +44,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
                 R.id.filtersFragment
             )
         }
+
         val isCategoryEmpty = arguments?.getBoolean("isEmptyCategory")
         val isAgentEmpty = arguments?.getBoolean("isEmptyAgent")
         val isUserEmpty = arguments?.getBoolean("isEmptyUser")
@@ -51,39 +53,44 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         val isSectionEmpty = arguments?.getBoolean("isEmptySection")
         val isTypeEmpty = arguments?.getBoolean("isEmptyType")
 
-        when {
-            isCategoryEmpty != true -> {
-                categoryId = arguments?.getInt("categoryId")
-            }
-            isAgentEmpty != true -> {
-                agentId = arguments?.getInt("userId")
-            }
-            isUserEmpty != true -> {
-                userId = arguments?.getInt("userId")
-            }
-            isWalletEmpty != true -> {
-                walletId = arguments?.getInt("walletId")
-            }
-            isSectionEmpty != true -> {
-                section = arguments?.getString("section")
-            }
-            isPeriodEmpty != true -> {
-                date = arguments?.getString("date")
-            }
-            isTypeEmpty != true -> {
-                type = arguments?.getString("type")
-            }
+        if (isCategoryEmpty != true) {
+            categoryId = arguments?.getInt("categoryId")
         }
 
-        getFilteredJournal(categoryId, agentId, date?.substringAfter(' '),
+        if (isAgentEmpty != true) {
+            agentId = arguments?.getInt("agentId")
+        }
+
+        if (isUserEmpty != true) {
+            userId = arguments?.getInt("userId")
+        }
+
+        if (isWalletEmpty != true) {
+            walletId = arguments?.getInt("walletId")
+        }
+
+        if (isSectionEmpty != true) {
+            section = arguments?.getInt("section")
+        }
+
+        if (isPeriodEmpty != true) {
+            date = arguments?.getString("date")
+        }
+
+        if (isTypeEmpty != true) {
+            type = arguments?.getInt("type")
+        }
+
+        getFilteredJournal(categoryId, agentId, date?.substringAfter(' '), section,
             date?.substringBefore(' '), type, walletId, userId, walletId)
+        arguments?.clear()
     }
 
-    private fun getFilteredJournal(category: Int?, agent : Int?, endDate: String?, startDate: String?,
-                                   type: String?, walletTo : Int?, user : Int?, walletFrom : Int?){
+    private fun getFilteredJournal(category: Int?, agent : Int?, endDate: String?, section: Int?,startDate: String?,
+                                   type: Int?, walletTo : Int?, user : Int?, walletFrom : Int?){
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
-        retIn.getFiltered(token, category, agent, endDate, startDate,
+        retIn.getFiltered(token, category, agent, endDate, section,startDate,
             type, walletTo, user, walletFrom).enqueue(object : Callback<MutableList<FilteredJournalItem>> {
             override fun onResponse(
                 call: Call<MutableList<FilteredJournalItem>>,
@@ -96,7 +103,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
             }
 
             override fun onFailure(call: Call<MutableList<FilteredJournalItem>>, t: Throwable) {
-                TODO("Not yet implemented")
+
             }
         })
     }
@@ -105,4 +112,11 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         filteredRecycler.adapter = adapter
         filteredRecycler.layoutManager = LinearLayoutManager(requireContext())
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        this.arguments?.clear()
+    }
+
+
 }
