@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/navigation_journal"
-        android:name="com.example.neofin.ui.journal.JournalFragment"
+        android:name="com.example.neofin.ui.journal.NewJournalFragment"
         android:label="@string/title_journal"
         tools:layout="@layout/fragment_journal" >
         <action
