@@ -6,19 +6,14 @@ import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.neofin.R
 import com.example.neofin.ui.addTransactions.data.CategoryIdName
 import com.example.neofin.ui.addTransactions.data.SectionName
 import com.example.neofin.ui.addTransactions.data.WalletIdName
-import com.example.neofin.ui.filter.data.AgentIdName
-import com.example.neofin.ui.filter.data.Period
-import com.example.neofin.ui.filter.data.TransactionType
-import com.example.neofin.ui.filter.data.UserIdName
+import com.example.neofin.ui.filter.data.*
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_filters.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,6 +22,7 @@ import kotlin.collections.ArrayList
 private val calendar = Calendar.getInstance()
 @SuppressLint("SimpleDateFormat")
 private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+private val spinner: Spinner? = null
 
 fun toast(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
@@ -82,7 +78,7 @@ fun spinnerCategory(context: Context, arrayList: ArrayList<CategoryIdName>, spin
     spinner.adapter = adapter
 }
 
-fun spinnerAgentFilter(context: Context, arrayList: ArrayList<AgentIdName>, spinner: Spinner) {
+fun spinnerUserFilter(context: Context, arrayList: ArrayList<UserIdName>, spinner: Spinner) {
     val adapter = ArrayAdapter(
         context,
         R.layout.spinner_filter, arrayList
@@ -91,7 +87,16 @@ fun spinnerAgentFilter(context: Context, arrayList: ArrayList<AgentIdName>, spin
     spinner.adapter = adapter
 }
 
-fun spinnerUserFilter(context: Context, arrayList: ArrayList<UserIdName>, spinner: Spinner) {
+fun spinnerWalletFilterTo(context: Context, arrayList: ArrayList<WalletIdNameTo>, spinner: Spinner) {
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, arrayList
+    )
+
+    spinner.adapter = adapter
+}
+
+fun spinnerWalletFilterFrom(context: Context, arrayList: ArrayList<WalletIdNameFrom>, spinner: Spinner) {
     val adapter = ArrayAdapter(
         context,
         R.layout.spinner_filter, arrayList

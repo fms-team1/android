@@ -1,5 +1,6 @@
 package com.example.neofin.ui.filteredJournal
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.example.neofin.retrofit.RetrofitBuilder
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournal
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournalItem
 import com.example.neofin.utils.logs
+import com.example.neofin.utils.snackbar
 import kotlinx.android.synthetic.main.fragment_filtered_journal.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,6 +27,8 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
     var userId: Int? = null
     var agentId: Int? = null
     var walletId: Int? = null
+    var walletIdTo: Int? = null
+    var walletIdFrom: Int? = null
     var section: Int? = null
     var type: Int? = null
     var date: String? = null
@@ -39,12 +43,6 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
 
         setupAdapter()
 
-        closeBT.setOnClickListener {
-            findNavController().navigate(
-                R.id.filtersFragment
-            )
-        }
-
         val isCategoryEmpty = arguments?.getBoolean("isEmptyCategory")
         val isAgentEmpty = arguments?.getBoolean("isEmptyAgent")
         val isUserEmpty = arguments?.getBoolean("isEmptyUser")
@@ -52,6 +50,17 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         val isPeriodEmpty = arguments?.getBoolean("isEmptyPeriod")
         val isSectionEmpty = arguments?.getBoolean("isEmptySection")
         val isTypeEmpty = arguments?.getBoolean("isEmptyType")
+        val isNotTransfer = arguments?.getBoolean("isNotTransfer")
+
+//        walletIdTo = arguments?.getInt("walletIdTo")
+//        walletIdFrom = arguments?.getInt("walletIdFrom")
+//        val categoryId = arguments?.getInt("categoryId")
+//        val agentId = arguments?.getInt("agentId")
+//        val userId = arguments?.getInt("userId")
+//        val walletId = arguments?.getInt("walletId")
+//        val section = arguments?.getInt("section")
+//        val date = arguments?.getString("date")
+//        val type = arguments?.getInt("type")
 
         if (isCategoryEmpty != true) {
             categoryId = arguments?.getInt("categoryId")
@@ -81,9 +90,23 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
             type = arguments?.getInt("type")
         }
 
-        getFilteredJournal(categoryId, agentId, date?.substringAfter(' '), section,
-            date?.substringBefore(' '), type, walletId, userId, walletId)
-        arguments?.clear()
+        if (isNotTransfer != true) {
+            walletIdTo = arguments?.getInt("walletIdTo")
+            walletIdFrom = arguments?.getInt("walletIdFrom")
+            getFilteredJournal(null, null, date?.substringAfter(' '), null,
+                date?.substringBefore(' '), type, walletIdTo, userId, walletIdFrom)
+        } else {
+            getFilteredJournal(categoryId, agentId, date?.substringAfter(' '), section,
+                date?.substringBefore(' '), type, null, userId, walletId)
+        }
+
+        closeBT.setOnClickListener {
+            findNavController().navigate(
+                R.id.filtersFragment
+            )
+            arguments?.clear()
+            status.visibility = View.GONE
+        }
     }
 
     private fun getFilteredJournal(category: Int?, agent : Int?, endDate: String?, section: Int?,startDate: String?,
@@ -99,6 +122,11 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
                 response.body()?.let {
                     adapter.differ.submitList(it)
                     adapter.notifyDataSetChanged()
+                    if (adapter.itemCount == 0) {
+                        status.text = "По вашим запросам ничего не найдено!"
+                        status.visibility = View.VISIBLE
+                    }
+
                 }
             }
 
