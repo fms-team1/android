@@ -1,4 +1,4 @@
-package com.example.neofin.retrofit.data.getCurrentUser
+package com.example.neofin.retrofit.data.currentUser
 
 data class Group(
     val id: Int,

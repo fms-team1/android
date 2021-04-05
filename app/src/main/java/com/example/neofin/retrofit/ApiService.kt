@@ -24,7 +24,8 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_INCOME_EXPENSE)
-    fun addIncomeOrExpense(@Header("Authorization") token: String, @Body request: AddTransactionOrExpense): Call<AddResponse>
+    fun addIncomeOrExpense(@Header("Authorization") token: String,
+                           @Body request: AddTransactionOrExpense): Call<AddResponse>
 
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_TRANSFER)
@@ -37,7 +38,7 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @PUT(Constants.CHANGE_PASSWORD)
     fun changePassword(@Header("Authorization") token: String,
-                       @Body request: changePassword): Call<String>
+                       @Body request : changePassword) : Call<Void>
 
 
     @Headers("Content-Type: application/json")

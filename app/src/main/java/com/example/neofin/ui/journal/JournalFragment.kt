@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -39,6 +40,10 @@ class JournalFragment : Fragment(R.layout.fragment_journal) {
         journalPb.visibility = View.VISIBLE
         constraintLayout.visibility = View.INVISIBLE
         journalRV.visibility = View.INVISIBLE
+
+        val toolbar = (activity as AppCompatActivity).supportActionBar
+        toolbar?.setDisplayHomeAsUpEnabled(false)
+        toolbar?.hide()
 
         MainScope().launch(Dispatchers.Main) {
             getJournal()
