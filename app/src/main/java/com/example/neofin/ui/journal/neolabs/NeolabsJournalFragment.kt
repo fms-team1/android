@@ -10,6 +10,7 @@ import com.example.neofin.adapters.JournalAdapter
 import com.example.neofin.retrofit.RetrofitBuilder
 import com.example.neofin.retrofit.data.journal.JournalItem
 import com.example.neofin.utils.logs
+import kotlinx.android.synthetic.main.fragment_neobis_journal.*
 import kotlinx.android.synthetic.main.fragment_neolabs_journal.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,12 @@ class NeolabsJournalFragment : Fragment(R.layout.fragment_neolabs_journal) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (neolabsJournalPB != null) {
+            neolabsJournalPB.visibility = View.VISIBLE
+        } else {
+            logs("Error FilteredJournal, PB")
+        }
 
         setupAdapter()
         getJournalBySection()
@@ -48,13 +55,19 @@ class NeolabsJournalFragment : Fragment(R.layout.fragment_neolabs_journal) {
                 call: Call<MutableList<JournalItem>>,
                 response: Response<MutableList<JournalItem>>
             ) {
-                response.body()?.let {
-                    adapter.differ.submitList(it)
-                    adapter.notifyDataSetChanged()
+                neolabsJournalPB.visibility = View.INVISIBLE
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        adapter.differ.submitList(it)
+                        adapter.notifyDataSetChanged()
+                    }
+                } else {
+                    logs("Error in NeolabsJournalFr, getJournal")
                 }
             }
 
             override fun onFailure(call: Call<MutableList<JournalItem>>, t: Throwable) {
+                neolabsJournalPB.visibility = View.INVISIBLE
                 logs(t.toString())
             }
 

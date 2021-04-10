@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.filteredJournal.FilteredJournalFragment"
     android:orientation="vertical">
+    <ProgressBar
+        android:id="@+id/filteredJournalPB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
     <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"

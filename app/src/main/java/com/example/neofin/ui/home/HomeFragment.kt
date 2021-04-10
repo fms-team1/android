@@ -37,48 +37,46 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val toolbar = (activity as AppCompatActivity).supportActionBar
         toolbar?.setDisplayHomeAsUpEnabled(false)
         toolbar?.hide()
-
-        scrollView.visibility = View.INVISIBLE
-        homePb.visibility = View.VISIBLE
-
-        year.setOnClickListener {
-            yearTV.setTextColor(Color.parseColor("#1778E9"))
-            monthTV.setTextColor(Color.parseColor("#6B6666"))
-            weekTV.setTextColor(Color.parseColor("#6B6666"))
-            getHomePageByPeriod(getYear())
-            scrollView.visibility = View.VISIBLE
-            scrollView.visibility = View.INVISIBLE
-            homePb.visibility = View.VISIBLE
-        }
-
-        month.setOnClickListener {
-            yearTV.setTextColor(Color.parseColor("#6B6666"))
-            monthTV.setTextColor(Color.parseColor("#1778E9"))
-            weekTV.setTextColor(Color.parseColor("#6B6666"))
-            getHomePageByPeriod(getMonth())
-            scrollView.visibility = View.VISIBLE
-            scrollView.visibility = View.INVISIBLE
-            homePb.visibility = View.VISIBLE
-        }
-
-        week.setOnClickListener {
-            yearTV.setTextColor(Color.parseColor("#6B6666"))
-            monthTV.setTextColor(Color.parseColor("#6B6666"))
-            weekTV.setTextColor(Color.parseColor("#1778E9"))
-            getHomePageByPeriod(getWeek())
-            scrollView.visibility = View.VISIBLE
-            scrollView.visibility = View.INVISIBLE
-            homePb.visibility = View.VISIBLE
-        }
-
         try {
+            scrollView.visibility = View.INVISIBLE
+            homePb.visibility = View.VISIBLE
+
+            year.setOnClickListener {
+                yearTV.setTextColor(Color.parseColor("#1778E9"))
+                monthTV.setTextColor(Color.parseColor("#6B6666"))
+                weekTV.setTextColor(Color.parseColor("#6B6666"))
+                getHomePageByPeriod(getYear())
+                scrollView.visibility = View.VISIBLE
+                scrollView.visibility = View.INVISIBLE
+                homePb.visibility = View.VISIBLE
+            }
+
+            month.setOnClickListener {
+                yearTV.setTextColor(Color.parseColor("#6B6666"))
+                monthTV.setTextColor(Color.parseColor("#1778E9"))
+                weekTV.setTextColor(Color.parseColor("#6B6666"))
+                getHomePageByPeriod(getMonth())
+                scrollView.visibility = View.VISIBLE
+                scrollView.visibility = View.INVISIBLE
+                homePb.visibility = View.VISIBLE
+            }
+
+            week.setOnClickListener {
+                yearTV.setTextColor(Color.parseColor("#6B6666"))
+                monthTV.setTextColor(Color.parseColor("#6B6666"))
+                weekTV.setTextColor(Color.parseColor("#1778E9"))
+                getHomePageByPeriod(getWeek())
+                scrollView.visibility = View.VISIBLE
+                scrollView.visibility = View.INVISIBLE
+                homePb.visibility = View.VISIBLE
+            }
+
             setupWalletRV()
             setupRecyclerview()
             getHomePage()
         } catch (e: Exception) {
-            logs("Error")
+            logs("Error in Home, onViewCreated")
         }
-
     }
 
     private fun getHomePage() = CoroutineScope(Dispatchers.Main).launch {
@@ -114,11 +112,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             }
                         }
                     } else {
-                        logs("Error")
+                        logs("Error in HomeFragment, getHomePage")
                     }
-
                 }
-
                 override fun onFailure(call: Call<Transaction>, t: Throwable) {
                     scrollView.visibility = View.INVISIBLE
                     homePb.visibility = View.INVISIBLE
@@ -164,7 +160,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             }
                         }
                     } else {
-                        logs("Error")
+                        logs("Error in Home, HomePageByPeriod")
                     }
 
                 }

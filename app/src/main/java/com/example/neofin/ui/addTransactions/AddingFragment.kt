@@ -49,6 +49,8 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
+            val currentDate = sdf.format(Date())
+
             backBT.setOnClickListener {
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 startActivity(intent)
@@ -56,30 +58,9 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
 
             getWallet()
 
-            val currentDate = sdf.format(Date())
+            getSection()
 
-            dateAddTextTransfer!!.setOnClickListener {
-                DatePickerDialog(
-                    requireContext(),
-                    date(dateAddTextTransfer),
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                ).show()
-            }
-
-            dateAddText!!.setOnClickListener {
-                DatePickerDialog(
-                    requireContext(),
-                    date(dateAddText),
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                ).show()
-            }
-
-            dateAddTextTransfer.text = currentDate
-            dateAddText.text = currentDate
+            setupDatePicker()
 
             addExpenseBT.setOnClickListener {
                 type = 1
@@ -101,31 +82,8 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                 sectionAdd.setSelection(0)
             }
 
-
-            spinnerSection(requireContext(), sectionAdd)
-            sectionAdd.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
-                ) {
-                    val sectionName: SectionName = parent.selectedItem as SectionName
-                    if (sectionName.backName != -1) {
-                        categoryLayout.visibility = View.VISIBLE
-                        sectionType = sectionName.backName
-                        getCategory(sectionType, type)
-                    } else {
-                        categoryLayout.visibility = View.GONE
-                        sectionType = -1
-                    }
-
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                }
-            }
-
-
+            dateAddTextTransfer.text = currentDate
+            dateAddText.text = currentDate
 
             val sumTransfer = sumAddTransfer.text
             val commentTransfer = commentAddTransfer.text
@@ -164,34 +122,84 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         }
     }
 
+    private fun setupDatePicker() {
+        dateAddTextTransfer.setOnClickListener {
+            DatePickerDialog(
+                requireContext(),
+                date(dateAddTextTransfer),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
+        dateAddText.setOnClickListener {
+            DatePickerDialog(
+                requireContext(),
+                date(dateAddText),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+    }
+
+    private fun getSection(){
+        spinnerSection(requireContext(), sectionAdd)
+        sectionAdd.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                val sectionName: SectionName = parent.selectedItem as SectionName
+                if (sectionName.backName != -1) {
+                    categoryLayout.visibility = View.VISIBLE
+                    sectionType = sectionName.backName
+                    getCategory(sectionType, type)
+                } else {
+                    categoryLayout.visibility = View.GONE
+                    sectionType = -1
+                }
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+    }
+
     private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.Main).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCategory(token, section, type).enqueue(object : Callback<Category> {
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
-                val categoriesArray: ArrayList<CategoryIdName> = ArrayList()
-                categoriesArray.add(CategoryIdName(-1, "Выбеите категорию"))
-                response.body()?.forEach {
-                    categoriesArray.add(CategoryIdName(it.id, it.name))
-                }
-                spinnerCategory(requireContext(), categoriesArray, categoryAdd)
-
-                categoryAdd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        id: Long
-                    ) {
-                        val categoryIdName: CategoryIdName = parent.selectedItem as CategoryIdName
-                        categoryId = categoryIdName.id
+                if (response.isSuccessful) {
+                    val categoriesArray: ArrayList<CategoryIdName> = ArrayList()
+                    categoriesArray.add(CategoryIdName(-1, "Выбеите категорию"))
+                    response.body()?.forEach {
+                        categoriesArray.add(CategoryIdName(it.id, it.name))
                     }
+                    spinnerCategory(requireContext(), categoriesArray, categoryAdd)
 
-                    override fun onNothingSelected(parent: AdapterView<*>) {
+                    categoryAdd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>,
+                            view: View,
+                            position: Int,
+                            id: Long
+                        ) {
+                            val categoryIdName: CategoryIdName = parent.selectedItem as CategoryIdName
+                            categoryId = categoryIdName.id
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>) {
+                        }
                     }
+                } else {
+                    logs("Error in AddingFragment, getCategory")
                 }
             }
-
 
             override fun onFailure(call: Call<Category>, t: Throwable) {
                 logs(t.toString())
@@ -205,55 +213,63 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         val token = RetrofitBuilder.getToken()
         retIn.getWallets(token).enqueue(object : Callback<GetWallet> {
             override fun onResponse(call: Call<GetWallet>, response: Response<GetWallet>) {
-                val walletArray: ArrayList<WalletIdName> = ArrayList()
-                walletArray.add(WalletIdName(-1, "Выберите кошелек"))
-                response.body()?.forEach {
-                    walletArray.add(WalletIdName(it.id, it.name))
-                }
-                spinnerWallet(requireContext(), walletArray, walletAdd)
-                spinnerWallet(requireContext(), walletArray, walletAddFrom)
-                spinnerWallet(requireContext(), walletArray, walletAddTo)
-
-                walletAdd.onItemSelectedListener = object :
-                    AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,
-                        view: View, position: Int, id: Long
-                    ) {
-                        val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
-                        walletId = walletIdName.id
+                if (response.isSuccessful) {
+                    val walletArray: ArrayList<WalletIdName> = ArrayList()
+                    walletArray.add(WalletIdName(-1, "Выберите кошелек"))
+                    response.body()?.forEach {
+                        walletArray.add(WalletIdName(it.id, it.name))
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>) {
+                    try {
+                        spinnerWallet(requireContext(), walletArray, walletAdd)
+                        spinnerWallet(requireContext(), walletArray, walletAddFrom)
+                        spinnerWallet(requireContext(), walletArray, walletAddTo)
+                    } catch (e: Exception) {
+                        logs("ErrorAdding, wallets")
                     }
-                }
+                    walletAdd.onItemSelectedListener = object :
+                        AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>,
+                            view: View, position: Int, id: Long
+                        ) {
+                            val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
+                            walletId = walletIdName.id
+                        }
 
-                walletAddFrom.onItemSelectedListener = object :
-                    AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,
-                        view: View, position: Int, id: Long
-                    ) {
-                        val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
-                        walletFrom = walletIdName.id
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>) {
-                    }
-                }
-
-                walletAddTo.onItemSelectedListener = object :
-                    AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,
-                        view: View, position: Int, id: Long
-                    ) {
-                        val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
-                        walletTo = walletIdName.id
+                        override fun onNothingSelected(parent: AdapterView<*>) {
+                        }
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>) {
+                    walletAddFrom.onItemSelectedListener = object :
+                        AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>,
+                            view: View, position: Int, id: Long
+                        ) {
+                            val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
+                            walletFrom = walletIdName.id
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>) {
+                        }
                     }
+
+                    walletAddTo.onItemSelectedListener = object :
+                        AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>,
+                            view: View, position: Int, id: Long
+                        ) {
+                            val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
+                            walletTo = walletIdName.id
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>) {
+                        }
+                    }
+                } else {
+                    logs("Error in AddingFragment, getWallet")
                 }
             }
 
@@ -314,13 +330,4 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
 
         })
     }
-
-//    @SuppressLint("ClickableViewAccessibility")
-//    private val spinnerOnTouch = OnTouchListener { v, event ->
-//        if (event.action == MotionEvent.ACTION_UP) {
-//            expenseOrIncome.visibility = View.VISIBLE
-//        }
-//        false
-//    }
-
 }

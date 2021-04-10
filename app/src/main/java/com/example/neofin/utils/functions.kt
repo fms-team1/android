@@ -212,7 +212,7 @@ fun date(text: TextView) : DatePickerDialog.OnDateSetListener {
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
         val myFormat = "yyyy-MM-dd"
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        text!!.text = sdf.format(calendar.time)
+        text.text = sdf.format(calendar.time)
     }
 }
 

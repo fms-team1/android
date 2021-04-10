@@ -126,7 +126,6 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         for (i in test.indices) {
             val label = test[i].name
             val balance = test[i].amount
-            logs("$label: $balance")
             entriesBar.add(BarEntry(i.toFloat(), balance.toFloat()))
             labelsBar.add(label)
         }
@@ -212,7 +211,11 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
                         neolabs = response.body()?.totalBalance!!
 
                     }
-                    setupPieChart()
+                    if (pieDiagram != null) {
+                        setupPieChart()
+                    } else {
+                        logs("pieDiagram is null")
+                    }
                 } else {
                     logs("Error in Charts, getSectionAnalytics")
                 }

@@ -10,6 +10,7 @@ import com.example.neofin.adapters.JournalAdapter
 import com.example.neofin.retrofit.RetrofitBuilder
 import com.example.neofin.retrofit.data.journal.JournalItem
 import com.example.neofin.utils.logs
+import kotlinx.android.synthetic.main.fragment_all_journal.*
 import kotlinx.android.synthetic.main.fragment_neobis_journal.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,13 @@ class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
 
         setupAdapter()
 
-        getJournalBySection("NEOBIS")
+        getJournalBySection()
+
+        if (neobisJournalPB != null) {
+            neobisJournalPB.visibility = View.VISIBLE
+        } else {
+            logs("Error FilteredJournal, PB")
+        }
 
         adapter.setOnItemClickListener {
             val bundle = Bundle().apply {
@@ -41,22 +48,27 @@ class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
         }
     }
 
-    private fun getJournalBySection(section: String) = CoroutineScope(Dispatchers.Main).launch {
+    private fun getJournalBySection() = CoroutineScope(Dispatchers.Main).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
-        retIn.getJournalBySection(token, section).enqueue(object :
+        retIn.getJournalBySection(token, "NEOBIS").enqueue(object :
             Callback<MutableList<JournalItem>> {
             override fun onResponse(
                 call: Call<MutableList<JournalItem>>,
                 response: Response<MutableList<JournalItem>>
             ) {
-                response.body()?.let {
-                    adapter.differ.submitList(it)
-                    adapter.notifyDataSetChanged()
+                neobisJournalPB.visibility = View.INVISIBLE
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        adapter.differ.submitList(it)
+                        adapter.notifyDataSetChanged()
+                    }
+                } else {
+                    logs("Error in NeobisJournalFr, getJournal")
                 }
             }
-
             override fun onFailure(call: Call<MutableList<JournalItem>>, t: Throwable) {
+                neobisJournalPB.visibility = View.INVISIBLE
                 logs(t.toString())
             }
 

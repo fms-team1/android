@@ -11,6 +11,7 @@ import com.example.neofin.retrofit.RetrofitBuilder
 import com.example.neofin.retrofit.data.journal.AllJournalItem
 import com.example.neofin.utils.logs
 import kotlinx.android.synthetic.main.fragment_all_journal.*
+import kotlinx.android.synthetic.main.fragment_filtered_journal.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +24,12 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (allJournalPB != null) {
+            allJournalPB.visibility = View.VISIBLE
+        } else {
+            logs("Error FilteredJournal, PB")
+        }
 
         setupAllAdapter()
         getJournal()
@@ -43,14 +50,20 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
         val token = RetrofitBuilder.getToken()
         retIn.getJournal(token).enqueue(object : Callback<MutableList<AllJournalItem>> {
             override fun onResponse(call: Call<MutableList<AllJournalItem>>, response: Response<MutableList<AllJournalItem>>) {
-                response.body()?.let {
-                    allAdapter.differ.submitList(it)
-                    allAdapter.notifyDataSetChanged()
+                if (response.isSuccessful) {
+                    allJournalPB.visibility = View.INVISIBLE
+                    response.body()?.let {
+                        allAdapter.differ.submitList(it)
+                        allAdapter.notifyDataSetChanged()
+                    }
+                } else {
+                    logs("Error in AllJournalFr, getJournal")
                 }
             }
 
             override fun onFailure(call: Call<MutableList<AllJournalItem>>, t: Throwable) {
                 logs(t.toString())
+                allJournalPB.visibility = View.INVISIBLE
             }
 
         })

@@ -41,8 +41,9 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
     var categoryId: Int? = null
     var type: Int? = null
     var section: Int? = null
-    var datePeriod: String? = null
+    var date: String? = null
     var isPeriod = false
+    var isPeriodTransfer = false
     var agent: Int? = null
     var user: Int? = null
 
@@ -56,12 +57,16 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         toolbar?.setDisplayHomeAsUpEnabled(false)
         toolbar?.hide()
 
-        getSection()
-        getTransactionSpinner()
-        getWallet()
-        getPeriod()
-        getUser()
-        getAgent()
+        try {
+            getSection()
+            getTransactionSpinner()
+            getWallet()
+            getPeriod()
+            getUser()
+            getAgent()
+        } catch (e: Exception) {
+            logs("FiltersFragment: $e")
+        }
 
         closeButton.setOnClickListener {
             findNavController().navigate(
@@ -119,13 +124,19 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                     type?.let { it1 -> putInt("type", it1) }
                 }
 
-                if (datePeriod == null) {
+                if (date == null) {
                     putBoolean("isEmptyPeriod", true)
                 } else {
-                    if (isPeriod) {
-                        putString("date", "${dateTo.text} ${dateFrom.text}")
-                    } else {
-                        putString("date", datePeriod)
+                    when {
+                        isPeriod -> {
+                            putString("date", "${dateFrom.text} ${dateTo.text}")
+                        }
+                        isPeriodTransfer -> {
+                            putString("date", "${dateFromTransfer.text} ${dateToTransfer.text}")
+                        }
+                        else -> {
+                            putString("date", date)
+                        }
                     }
                 }
 
@@ -134,14 +145,8 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 } else {
                     walletIdTo?.let { it1 -> putInt("walletIdTo", it1) }
                     walletIdFrom?.let { it1 -> putInt("walletIdFrom", it1) }
-                    if (isPeriod) {
-                        putString("dateTransfer", "${dateToTransfer.text} ${dateFromTransfer.text}")
-                    } else {
-                        putString("dateTransfer", datePeriod)
-                    }
                 }
             }
-//            logs("section $section, agent $agent, user $user, type $type, walletId $walletId, category $categoryId, date $datePeriod")
             findNavController().navigate(
                 R.id.filteredJournalFragment,
                 bundle
@@ -196,7 +201,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             ) {
                 val period: Period = parent.selectedItem as Period
                 if (period.period != "") {
-                    datePeriod = period.period
+                    date = period.period
                     if (period.name == "За период") {
                         isPeriod = true
                         periodLayout.visibility = View.VISIBLE
@@ -249,9 +254,9 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             ) {
                 val period: Period = parent.selectedItem as Period
                 if (period.period != "") {
-                    datePeriod = period.period
+                    date = period.period
                     if (period.name == "За период") {
-                        isPeriod = true
+                        isPeriodTransfer = true
                         periodLayoutTransfer.visibility = View.VISIBLE
 
                         dateFromTransfer.setOnClickListener {
@@ -376,13 +381,13 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                                     categoryFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
                                     icCategory.setImageResource(R.drawable.ic_down)
                                 }
-
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>) {
                             }
                         }
-
+                } else {
+                    logs("Error in FiltersFragment, getCategory")
                 }
             }
 
@@ -496,6 +501,8 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         }
                     }
 
+                } else {
+                    logs("Error in FiltersFragment, getWallet")
                 }
             }
 
@@ -523,7 +530,11 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             android.R.layout.simple_list_item_1,
                             agentArray
                         )
-                    listView.adapter = arrayAdapter
+                    if (listView != null) {
+                        listView.adapter = arrayAdapter
+                    } else {
+                        logs("listView, FiltersFragment")
+                    }
 
                     searchAgent.setOnSearchClickListener {
                         listView.visibility = View.VISIBLE
@@ -555,6 +566,8 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             searchAgent.setQuery("${arrayAdapter.getItem(i)?.name}", true)
                             listView.visibility = View.GONE
                         }
+                } else {
+                    logs("Error in FiltersFragment, getAgent")
                 }
 
             }
@@ -627,6 +640,8 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         override fun onNothingSelected(parent: AdapterView<*>) {
                         }
                     }
+                } else{
+                    logs("Error in FiltersFragment, getUser")
                 }
 
             }
