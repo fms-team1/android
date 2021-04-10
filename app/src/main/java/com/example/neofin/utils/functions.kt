@@ -22,7 +22,6 @@ import kotlin.collections.ArrayList
 private val calendar = Calendar.getInstance()
 @SuppressLint("SimpleDateFormat")
 private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-private val spinner: Spinner? = null
 
 fun toast(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
@@ -169,6 +168,37 @@ fun spinnerPeriodFilter(context: Context, spinner: Spinner) {
     val adapter = ArrayAdapter(
         context,
         R.layout.spinner_filter, period
+    )
+
+    spinner.adapter = adapter
+
+}
+
+fun spinnerPeriodAnalytics(context: Context, spinner: Spinner) {
+    val period: ArrayList<Period> = ArrayList()
+
+    period.add(Period(getWeek(), "Неделя"))
+    period.add(Period(getMonth(), "Месяц"))
+    period.add(Period(getYear(), "Год"))
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, period
+    )
+
+    spinner.adapter = adapter
+
+}
+
+fun spinnerTransactionAnalytics(context: Context, spinner: Spinner) {
+    val transactionList: ArrayList<TransactionType> = ArrayList()
+
+    transactionList.add(TransactionType(0, "Доход"))
+    transactionList.add(TransactionType(1, "Расход"))
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, transactionList
     )
 
     spinner.adapter = adapter

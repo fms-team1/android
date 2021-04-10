@@ -16,4 +16,5 @@ object Constants {
     const val GET_FILTERED = "/transaction/getByGlobalFiltration"
     const val GET_ALL_USERS = "/user/getAllUsers"
     const val GET_ALL_AGENTS = "/people/getAllCounterparties"
+    const val GET_ANALYTICS = "/transaction/getAnalytics"
 }

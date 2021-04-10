@@ -2,6 +2,7 @@ package com.example.neofin.retrofit
 
 import com.example.neofin.retrofit.data.addingResponse.AddResponse
 import com.example.neofin.retrofit.data.allUsers.AllUsers
+import com.example.neofin.retrofit.data.analytics.Analytics
 import com.example.neofin.retrofit.data.category.Category
 import com.example.neofin.retrofit.data.currentUser.CurrentUser
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournal
@@ -25,10 +26,6 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST(Constants.LOGIN_URL)
     fun login(@Body request: LoginRequest): Call<TokenResponse>
-
-//    @Headers("Content-Type: application/json")
-//    @POST(Constants.ADD_INCOME_EXPENSE)
-//    fun addIncomeOrExpense(@Header("Authorization") token: String, @Body request: AddTransactionOrExpense): Call<AddResponse>
 
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_INCOME_EXPENSE)
@@ -95,4 +92,13 @@ interface ApiService {
         @Query("transferWalletId") transferWalletId: Int?,
         @Query("userId") userId: Int?,
         @Query("walletId") walletId: Int?) : Call<MutableList<FilteredJournalItem>>
+
+    @Headers("Content-Type: application/json")
+    @GET(Constants.GET_ANALYTICS)
+    fun getAnalytics(
+        @Header("Authorization") token: String,
+        @Query("endDate") endDate: String,
+        @Query("neoSectionId") neoSectionId: Int,
+        @Query("startDate") startDate: String,
+        @Query("transactionTypeId") transactionType: Int) : Call<Analytics>
 }

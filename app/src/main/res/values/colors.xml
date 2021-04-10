@@ -13,4 +13,7 @@
     <color name="transfer">#3B3BB7</color>
     <color name="bg_color">#F1F0FF</color>
 
+    <color name="diagram">#1778E9</color>
+    <color name="diagram2">#094387</color>
+
 </resources>

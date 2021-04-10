@@ -32,6 +32,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
     var section: Int? = null
     var type: Int? = null
     var date: String? = null
+    var dateTransfer: String? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -93,11 +94,12 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         if (isNotTransfer != true) {
             walletIdTo = arguments?.getInt("walletIdTo")
             walletIdFrom = arguments?.getInt("walletIdFrom")
-            getFilteredJournal(null, null, date?.substringAfter(' '), null,
-                date?.substringBefore(' '), type, walletIdTo, userId, walletIdFrom)
+            dateTransfer = arguments?.getString("dateTransfer")
+            getFilteredJournal(null, null, dateTransfer?.substringBefore(' '), null,
+                dateTransfer?.substringAfter(' '), type, walletIdTo, userId, walletIdFrom)
         } else {
-            getFilteredJournal(categoryId, agentId, date?.substringAfter(' '), section,
-                date?.substringBefore(' '), type, null, userId, walletId)
+            getFilteredJournal(categoryId, agentId, date?.substringBefore(' '), section,
+                date?.substringAfter(' '), type, null, userId, walletId)
         }
 
         closeBT.setOnClickListener {
