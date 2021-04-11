@@ -1,14 +1,17 @@
 package com.example.neofin.ui.journal.journalById
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.neofin.R
 import com.example.neofin.retrofit.RetrofitBuilder
+import com.example.neofin.retrofit.data.journal.Journal
 
 import com.example.neofin.retrofit.data.journalById2.JournalById
+import com.example.neofin.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_journal_by_id.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +32,12 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
         val id = arguments?.getInt("idJournal", 1)
 
         getJournalById(id!!)
+
+        back.setOnClickListener {
+            requireActivity().run {
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+        }
     }
 
     private fun getJournalById(id : Int) = CoroutineScope(Dispatchers.Main).launch {
@@ -51,6 +60,9 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
 
 
                 comment.text = response.body()?.comment
+                if(response.body()?.comment == null){
+                    comment.text = "Нет примечаний"
+                }
 
                 when (response.body()?.transactionType) {
                     "INCOME" -> {

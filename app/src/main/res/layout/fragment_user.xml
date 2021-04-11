@@ -7,6 +7,17 @@
     android:background="@color/bg_color"
     tools:context=".ui.user.UserFragment">
 
+    <ImageView
+        android:id="@+id/back_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/back_user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="650dp"
@@ -210,7 +221,7 @@
 
 
     <ImageView
-
+        android:id="@+id/addUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="316dp"

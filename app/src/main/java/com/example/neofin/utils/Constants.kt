@@ -14,4 +14,5 @@ object Constants {
     const val GET_CURRENT_USER = "/user/getCurrentUser"
     const val GET_JOURNAL_BY_SECTION = "/journal/getByNeoSection"
     const val CHANGE_PASSWORD ="/user/changePassword"
+    const val ADD_USER = "/registration/newAccountant"
 }

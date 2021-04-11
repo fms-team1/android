@@ -38,7 +38,7 @@ import kotlin.collections.ArrayList
 class AddingFragment : Fragment(R.layout.fragment_adding) {
     private var walletId = 0
     private var categoryId = 0
-    private var sectionType = "NEOBIS"
+    private var sectionType = 0
     private var type = "EXPENSE"
     private var walletFrom = 0
     private var walletTo = 0
@@ -159,7 +159,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
 
     }
 
-    private fun getCategory(section: String, type: String) = CoroutineScope(Dispatchers.Main).launch {
+    private fun getCategory(section: Int, type: String) = CoroutineScope(Dispatchers.Main).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCategory(token, section, type).enqueue(object : Callback<Category> {

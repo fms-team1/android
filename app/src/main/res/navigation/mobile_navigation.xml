@@ -20,7 +20,26 @@
         android:id="@+id/navigation_user"
         android:name="com.example.neofin.ui.user.UserFragment"
         android:label="@string/title_user"
-        tools:layout="@layout/fragment_user" />
+        tools:layout="@layout/fragment_user"/>
+
+    <fragment
+        android:id="@+id/UpdatePasswordFragment"
+        android:name="com.example.neofin.ui.user.UpdatePasswordFragment"
+        android:label="обновить пароль"
+        tools:layout="@layout/update_password" >
+        <action
+            android:id="@+id/action_UpdatePasswordFragment_to_navigation_user"
+            app:destination="@id/navigation_user" />
+    </fragment>
+    <fragment
+        android:id="@+id/AddNewUserFragment"
+        android:name="com.example.neofin.ui.user.AddNewUserFragment"
+        android:label="добавить пользователя"
+        tools:layout="@layout/add_users">
+        <action
+            android:id="@+id/action_AddNewUserFragment_to_navigation_user"
+            app:destination="@id/navigation_user" />
+    </fragment>
 
     <fragment
         android:id="@+id/addingFragment"

@@ -50,8 +50,8 @@ fun spinnerWallet(context: Context, arrayList: ArrayList<WalletIdName>, spinner:
 fun spinnerSection(context: Context, spinner: Spinner) {
     val sectionList: ArrayList<SectionName> = ArrayList()
 
-    sectionList.add(SectionName("NEOBIS", "Neobis"))
-    sectionList.add(SectionName("NEOLABS", "Neolabs"))
+    sectionList.add(SectionName(0, "Neobis"))
+    sectionList.add(SectionName(1, "Neolabs"))
 
     val adapter = ArrayAdapter(
         context,

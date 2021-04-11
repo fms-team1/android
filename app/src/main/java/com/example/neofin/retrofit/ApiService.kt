@@ -1,5 +1,6 @@
 package com.example.neofin.retrofit
 
+import com.example.neofin.retrofit.data.addNewAccount.addNewUser
 import com.example.neofin.retrofit.data.addingResponse.AddResponse
 import com.example.neofin.retrofit.data.category.Category
 import com.example.neofin.retrofit.data.changePassword.changePassword
@@ -42,6 +43,11 @@ interface ApiService {
 
 
     @Headers("Content-Type: application/json")
+    @POST(Constants.ADD_USER)
+    fun addUser(@Header("Authorization") token: String, @Body request: addNewUser): Call<Void>
+
+
+    @Headers("Content-Type: application/json")
     @GET(Constants.HOME_URL_BY_PERIOD)
     fun getHomePageByPeriod(@Header("Authorization") token: String,
                             @Path("period") period : String): Call<Transaction>
@@ -70,7 +76,7 @@ interface ApiService {
     @GET(Constants.CATEGORY_ALL)
     fun getCategory(
         @Header("Authorization") token: String,
-        @Query("neoSection") section: String,
+        @Query("neoSection") section: Int,
         @Query("transactionType") type: String): Call<Category>
 
 }

@@ -1,6 +1,6 @@
 package com.example.neofin.ui.addTransactions.data
 
-class SectionName (var backName: String, var frontName: String) {
+class SectionName (var backName: Int, var frontName: String) {
 
     override fun toString(): String {
         return frontName
@@ -8,7 +8,7 @@ class SectionName (var backName: String, var frontName: String) {
 
     override fun equals(other: Any?): Boolean {
         if (other is SectionName) {
-            if (other.frontName === frontName && other.backName === backName) return true
+            if (other.frontName === frontName && other.backName == backName) return true
         }
         return false
     }
