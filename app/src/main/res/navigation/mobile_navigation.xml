@@ -74,4 +74,28 @@
         android:name="com.example.neofin.ui.filteredJournal.FilteredJournalFragment"
         android:label="fragment_filtered_journal"
         tools:layout="@layout/fragment_filtered_journal" />
+    <fragment
+        android:id="@+id/addNewUserFragment"
+        android:name="com.example.neofin.ui.user.AddNewUserFragment"
+        android:label="AddNewUserFragment" />
+    <fragment
+        android:id="@+id/allJournalFragment"
+        android:name="com.example.neofin.ui.journal.all.AllJournalFragment"
+        android:label="fragment_all_journal"
+        tools:layout="@layout/fragment_all_journal" />
+    <fragment
+        android:id="@+id/neobisJournalFragment"
+        android:name="com.example.neofin.ui.journal.neobis.NeobisJournalFragment"
+        android:label="fragment_neobis_journal"
+        tools:layout="@layout/fragment_neobis_journal" />
+    <fragment
+        android:id="@+id/neolabsJournalFragment"
+        android:name="com.example.neofin.ui.journal.neolabs.NeolabsJournalFragment"
+        android:label="fragment_neolabs_journal"
+        tools:layout="@layout/fragment_neolabs_journal" />
+    <fragment
+        android:id="@+id/updatePasswordFragment"
+        android:name="com.example.neofin.ui.user.UpdatePasswordFragment"
+        android:label="fragment_update_password"
+        tools:layout="@layout/fragment_update_password" />
 </navigation>

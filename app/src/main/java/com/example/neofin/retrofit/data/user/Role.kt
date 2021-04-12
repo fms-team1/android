@@ -1,4 +1,4 @@
-package com.example.neofin.retrofit.data.journalById
+package com.example.neofin.retrofit.data.user
 
 data class Role(
     val id: Int,

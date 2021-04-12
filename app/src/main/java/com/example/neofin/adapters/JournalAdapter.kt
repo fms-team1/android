@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neofin.retrofit.data.journal.JournalItem
 import com.example.neofin.R
+import com.example.neofin.utils.formatDate
+import com.example.neofin.utils.formatDateAdapters
 import kotlinx.android.synthetic.main.journals.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class JournalAdapter : RecyclerView.Adapter<JournalAdapter.MyViewHolder>() {
 
@@ -44,12 +48,12 @@ class JournalAdapter : RecyclerView.Adapter<JournalAdapter.MyViewHolder>() {
 
     private var onItemClickListener: ((JournalItem) -> Unit)? = null
 
-    @SuppressLint("SetTextI18n", "ResourceAsColor")
+    @SuppressLint("SetTextI18n", "ResourceAsColor", "SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = differ.currentList[position]
         holder.itemView.apply {
             holder.itemView.nameJournal.text = current.categoryName
-            holder.itemView.dateJournal.text = current.createdDate.substringBefore('T')
+            holder.itemView.dateJournal.text = formatDateAdapters(current.createdDate.substringBefore('T'))
 
             when (current.transactionType) {
                 "INCOME" -> {

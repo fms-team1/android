@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neofin.R
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournalItem
+import com.example.neofin.utils.formatDate
+import com.example.neofin.utils.formatDateAdapters
 import kotlinx.android.synthetic.main.filtered_item.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FilteredJournalAdapter : RecyclerView.Adapter<FilteredJournalAdapter.MyViewHolder>() {
 
@@ -44,12 +48,12 @@ class FilteredJournalAdapter : RecyclerView.Adapter<FilteredJournalAdapter.MyVie
 
     private var onItemClickListener: ((FilteredJournalItem) -> Unit)? = null
 
-    @SuppressLint("SetTextI18n", "ResourceAsColor")
+    @SuppressLint("SetTextI18n", "ResourceAsColor", "SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = differ.currentList[position]
         holder.itemView.apply {
             holder.itemView.nameFiltered.text = current.categoryName
-            holder.itemView.dateFiltered.text = current.createdDate.substringBefore('T')
+            holder.itemView.dateFiltered.text = formatDateAdapters(current.createdDate.substringBefore('T'))
             holder.itemView.nameSurnameUser.text = "${current.accountantName} ${current.accountantSurname}"
             holder.itemView.nameSurnameAgent.text = "${current.counterpartyName} ${current.counterpartySurname}"
             holder.itemView.walletFiltered.text = current.walletName
@@ -66,12 +70,16 @@ class FilteredJournalAdapter : RecyclerView.Adapter<FilteredJournalAdapter.MyVie
                     holder.itemView.sumFiltered.setTextColor(Color.parseColor("#4AAF39"))
                     holder.itemView.sumFiltered.text = "+ ${current.amount} с"
                     walletNotTransfer.visibility = View.VISIBLE
+                    sectionLayout.visibility = View.VISIBLE
+                    agentLayout.visibility = View.VISIBLE
                 }
                 "EXPENSE" -> {
                     holder.itemView.imageFiltered.setImageResource(R.drawable.ic_expense2)
                     holder.itemView.sumFiltered.setTextColor(Color.parseColor("#E11616"))
                     holder.itemView.sumFiltered.text = "- ${current.amount} с"
                     walletNotTransfer.visibility = View.VISIBLE
+                    sectionLayout.visibility = View.VISIBLE
+                    agentLayout.visibility = View.VISIBLE
                 }
                 else -> {
                     holder.itemView.imageFiltered.setImageResource(R.drawable.ic_transfer2)
@@ -81,6 +89,8 @@ class FilteredJournalAdapter : RecyclerView.Adapter<FilteredJournalAdapter.MyVie
                     holder.itemView.toWallet.text = current.transferWalletName
                     transferWallets.visibility = View.VISIBLE
                     walletNotTransfer.visibility = View.GONE
+                    sectionLayout.visibility = View.GONE
+                    agentLayout.visibility = View.GONE
                 }
             }
 

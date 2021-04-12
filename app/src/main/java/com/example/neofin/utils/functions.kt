@@ -14,6 +14,7 @@ import com.example.neofin.ui.addTransactions.data.WalletIdName
 import com.example.neofin.ui.filter.data.*
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_filters.*
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -210,7 +211,7 @@ fun date(text: TextView) : DatePickerDialog.OnDateSetListener {
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, monthOfYear)
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        val myFormat = "yyyy-MM-dd"
+        val myFormat = "dd.MM.yyyy"
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         text.text = sdf.format(calendar.time)
     }
@@ -250,6 +251,24 @@ fun getYear(): String {
     val dateOutput = sdf.format(date)
 
     return "$dateOutput $currentDate"
+}
+
+@SuppressLint("SimpleDateFormat")
+@Throws(ParseException::class)
+fun formatDate(dateInput: String?): String? {
+    val originalFormat = SimpleDateFormat("dd.MM.yyyy")
+    val targetFormat = SimpleDateFormat("yyyy-MM-dd")
+    val date: Date? = originalFormat.parse(dateInput)
+    return targetFormat.format(date)
+}
+
+@SuppressLint("SimpleDateFormat")
+@Throws(ParseException::class)
+fun formatDateAdapters(dateInput: String?): String? {
+    val originalFormat = SimpleDateFormat("yyyy-MM-dd")
+    val targetFormat = SimpleDateFormat("dd.MM.yyyy")
+    val date: Date? = originalFormat.parse(dateInput)
+    return targetFormat.format(date)
 }
 
 

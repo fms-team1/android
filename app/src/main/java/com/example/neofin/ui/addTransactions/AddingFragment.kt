@@ -41,14 +41,12 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
     private var walletTo = 0
 
     private val calendar = Calendar.getInstance()
-    @SuppressLint("SimpleDateFormat")
-    private val sdf = SimpleDateFormat("yyyy-MM-dd")
-
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
+            val sdf = SimpleDateFormat("dd.MM.yyyy")
             val currentDate = sdf.format(Date())
 
             backBT.setOnClickListener {
@@ -108,14 +106,16 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
             val comment = commentAdd.text
             val agent = agentAdd.text
             sendButton.setOnClickListener {
-                addExpenseOrIncome(
-                    Integer.parseInt(sum.toString().trim()),
-                    categoryId,
-                    comment.toString(),
-                    agent.toString(),
-                    currentDate,
-                    walletId
-                )
+                formatDate(currentDate)?.let { it1 ->
+                    addExpenseOrIncome(
+                        Integer.parseInt(sum.toString().trim()),
+                        categoryId,
+                        comment.toString(),
+                        agent.toString(),
+                        it1,
+                        walletId
+                    )
+                }
             }
         } catch (e: Exception){
             logs(e.toString())
@@ -180,22 +180,27 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                     response.body()?.forEach {
                         categoriesArray.add(CategoryIdName(it.id, it.name))
                     }
-                    spinnerCategory(requireContext(), categoriesArray, categoryAdd)
 
-                    categoryAdd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View,
-                            position: Int,
-                            id: Long
-                        ) {
-                            val categoryIdName: CategoryIdName = parent.selectedItem as CategoryIdName
-                            categoryId = categoryIdName.id
-                        }
+                    if (categoryAdd != null) {
+                        spinnerCategory(requireContext(), categoriesArray, categoryAdd)
+                        categoryAdd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View,
+                                position: Int,
+                                id: Long
+                            ) {
+                                val categoryIdName: CategoryIdName = parent.selectedItem as CategoryIdName
+                                categoryId = categoryIdName.id
+                            }
 
-                        override fun onNothingSelected(parent: AdapterView<*>) {
+                            override fun onNothingSelected(parent: AdapterView<*>) {
+                            }
                         }
+                    } else {
+                        logs("categoryAdd is null")
                     }
+
                 } else {
                     logs("Error in AddingFragment, getCategory")
                 }
@@ -220,54 +225,59 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                         walletArray.add(WalletIdName(it.id, it.name))
                     }
 
-                    try {
+                    if (walletAdd != null) {
                         spinnerWallet(requireContext(), walletArray, walletAdd)
+                        walletAdd.onItemSelectedListener = object :
+                            AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View, position: Int, id: Long
+                            ) {
+                                val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
+                                walletId = walletIdName.id
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
+                            }
+                        }
+                    } else {
+                        logs("walletAdd is null")
+                    }
+
+                    if (walletAddFrom != null && walletAddTo != null) {
                         spinnerWallet(requireContext(), walletArray, walletAddFrom)
                         spinnerWallet(requireContext(), walletArray, walletAddTo)
-                    } catch (e: Exception) {
-                        logs("ErrorAdding, wallets")
+                        walletAddFrom.onItemSelectedListener = object :
+                            AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View, position: Int, id: Long
+                            ) {
+                                val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
+                                walletFrom = walletIdName.id
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
+                            }
+                        }
+
+                        walletAddTo.onItemSelectedListener = object :
+                            AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View, position: Int, id: Long
+                            ) {
+                                val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
+                                walletTo = walletIdName.id
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
+                            }
+                        }
+                    } else {
+                        logs("walletAddFrom and walletAddTo are null")
                     }
-                    walletAdd.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
-                            walletId = walletIdName.id
-                        }
 
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                        }
-                    }
-
-                    walletAddFrom.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
-                            walletFrom = walletIdName.id
-                        }
-
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                        }
-                    }
-
-                    walletAddTo.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
-                            walletTo = walletIdName.id
-                        }
-
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                        }
-                    }
                 } else {
                     logs("Error in AddingFragment, getWallet")
                 }

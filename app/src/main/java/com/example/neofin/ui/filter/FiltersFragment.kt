@@ -1,5 +1,6 @@
 package com.example.neofin.ui.filter
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Build
@@ -30,6 +31,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -51,6 +54,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
     var walletIdTo: Int? = null
     var walletIdFrom: Int? = null
 
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = (activity as AppCompatActivity).supportActionBar
@@ -67,6 +71,12 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         } catch (e: Exception) {
             logs("FiltersFragment: $e")
         }
+
+        val sdf = SimpleDateFormat("dd.MM.yyyy")
+        val currentDate = sdf.format(Date())
+
+        dateFromTransfer.text = currentDate
+        dateFrom.text = currentDate
 
         closeButton.setOnClickListener {
             findNavController().navigate(
@@ -129,10 +139,14 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 } else {
                     when {
                         isPeriod -> {
-                            putString("date", "${dateFrom.text} ${dateTo.text}")
+                            putString("date", "${formatDate(dateFrom.text as String?)} ${formatDate(
+                                dateTo.text as String?
+                            )}")
                         }
                         isPeriodTransfer -> {
-                            putString("date", "${dateFromTransfer.text} ${dateToTransfer.text}")
+                            putString("date", "${formatDate(dateFromTransfer.text as String?)} ${formatDate(
+                                dateToTransfer.text as String?
+                            )}")
                         }
                         else -> {
                             putString("date", date)
@@ -356,36 +370,41 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                     response.body()?.forEach {
                         categoriesArray.add(CategoryIdName(it.id, it.name))
                     }
-                    spinnerCategoryFilter(requireContext(), categoriesArray, categoryFilter)
 
-                    categoryFilter.onItemSelectedListener =
-                        object : AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(
-                                parent: AdapterView<*>, view: View, position: Int, id: Long
-                            ) {
-                                val categoryIdName: CategoryIdName =
-                                    parent.selectedItem as CategoryIdName
-                                if (categoryIdName.id != -1) {
-                                    categoryId = categoryIdName.id
-                                    categoryFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                    (parent.getChildAt(0) as TextView).setTextColor(
-                                        Color.parseColor(
-                                            "#FFFFFF"
+                    if (categoryFilter != null) {
+                        spinnerCategoryFilter(requireContext(), categoriesArray, categoryFilter)
+                        categoryFilter.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>, view: View, position: Int, id: Long
+                                ) {
+                                    val categoryIdName: CategoryIdName =
+                                        parent.selectedItem as CategoryIdName
+                                    if (categoryIdName.id != -1) {
+                                        categoryId = categoryIdName.id
+                                        categoryFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
+                                        (parent.getChildAt(0) as TextView).setTextColor(
+                                            Color.parseColor(
+                                                "#FFFFFF"
+                                            )
                                         )
-                                    )
-                                    icCategory.setImageResource(R.drawable.ic_close3)
-                                    icCategory.setOnClickListener {
-                                        categoryFilter.setSelection(0)
+                                        icCategory.setImageResource(R.drawable.ic_close3)
+                                        icCategory.setOnClickListener {
+                                            categoryFilter.setSelection(0)
+                                        }
+                                    } else {
+                                        categoryFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
+                                        icCategory.setImageResource(R.drawable.ic_down)
                                     }
-                                } else {
-                                    categoryFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
-                                    icCategory.setImageResource(R.drawable.ic_down)
+                                }
+
+                                override fun onNothingSelected(parent: AdapterView<*>) {
                                 }
                             }
+                    } else {
+                        logs("categoryFilter is null")
+                    }
 
-                            override fun onNothingSelected(parent: AdapterView<*>) {
-                            }
-                        }
                 } else {
                     logs("Error in FiltersFragment, getCategory")
                 }
@@ -413,94 +432,98 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                     walletArrayFrom.add(WalletIdNameFrom(-1, "С кошелка"))
                     walletArrayTo.add(WalletIdNameTo(-1, "На кошелек"))
 
-
                     response.body()?.forEach {
                         walletArray.add(WalletIdName(it.id, it.name))
                         walletArrayFrom.add(WalletIdNameFrom(it.id, it.name))
                         walletArrayTo.add(WalletIdNameTo(it.id, it.name))
                     }
 
-                    spinnerWalletFilter(requireContext(), walletArray, walletFilter)
-                    spinnerWalletFilterFrom(requireContext(), walletArrayFrom, walletFilterFrom)
-                    spinnerWalletFilterTo(requireContext(), walletArrayTo, walletFilterTo)
-
-
-                    walletFilter.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
-                            if (walletIdName.id != -1) {
-                                walletId = walletIdName.id
-                                walletFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                                icWallet.setImageResource(R.drawable.ic_close3)
-                                icWallet.setOnClickListener {
-                                    walletFilter.setSelection(0)
+                    if (walletFilter != null) {
+                        spinnerWalletFilter(requireContext(), walletArray, walletFilter)
+                        walletFilter.onItemSelectedListener = object :
+                            AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View, position: Int, id: Long
+                            ) {
+                                val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
+                                if (walletIdName.id != -1) {
+                                    walletId = walletIdName.id
+                                    walletFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
+                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    icWallet.setImageResource(R.drawable.ic_close3)
+                                    icWallet.setOnClickListener {
+                                        walletFilter.setSelection(0)
+                                    }
+                                } else {
+                                    walletFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
+                                    icWallet.setImageResource(R.drawable.ic_down)
                                 }
-                            } else {
-                                walletFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
-                                icWallet.setImageResource(R.drawable.ic_down)
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
+                            }
+                        }
+                    } else {
+                        logs("walletFilter is null")
+                    }
+
+                    if (walletFilterFrom != null && walletFilterTo != null) {
+                        spinnerWalletFilterFrom(requireContext(), walletArrayFrom, walletFilterFrom)
+                        spinnerWalletFilterTo(requireContext(), walletArrayTo, walletFilterTo)
+                        walletFilterTo.onItemSelectedListener = object :
+                            AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View, position: Int, id: Long
+                            ) {
+                                val walletIdName: WalletIdNameTo = parent.selectedItem as WalletIdNameTo
+                                if (walletIdName.id != -1) {
+                                    walletIdTo = walletIdName.id
+                                    walletFilterTo.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
+                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    icWalletTo.setImageResource(R.drawable.ic_close3)
+                                    icWalletTo.setOnClickListener {
+                                        walletFilterTo.setSelection(0)
+                                    }
+                                } else {
+                                    walletFilterTo.setBackgroundResource(R.drawable.spinner_filter_bg)
+                                    icWalletTo.setImageResource(R.drawable.ic_down)
+                                }
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
                             }
                         }
 
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                        }
-                    }
-
-                    walletFilterTo.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            val walletIdName: WalletIdNameTo = parent.selectedItem as WalletIdNameTo
-                            if (walletIdName.id != -1) {
-                                walletIdTo = walletIdName.id
-                                walletFilterTo.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                                icWalletTo.setImageResource(R.drawable.ic_close3)
-                                icWalletTo.setOnClickListener {
-                                    walletFilterTo.setSelection(0)
+                        walletFilterFrom.onItemSelectedListener = object :
+                            AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View, position: Int, id: Long
+                            ) {
+                                val walletIdName: WalletIdNameFrom =
+                                    parent.selectedItem as WalletIdNameFrom
+                                if (walletIdName.id != -1) {
+                                    walletIdFrom = walletIdName.id
+                                    walletFilterFrom.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
+                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    icWalletFrom.setImageResource(R.drawable.ic_close3)
+                                    icWalletFrom.setOnClickListener {
+                                        walletFilterTo.setSelection(0)
+                                    }
+                                } else {
+                                    walletFilterFrom.setBackgroundResource(R.drawable.spinner_filter_bg)
+                                    icWalletFrom.setImageResource(R.drawable.ic_down)
                                 }
-                            } else {
-                                walletFilterTo.setBackgroundResource(R.drawable.spinner_filter_bg)
-                                icWalletTo.setImageResource(R.drawable.ic_down)
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
                             }
                         }
-
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                        }
+                    } else {
+                        logs("walletFilterFrom and walletFilterTo are null")
                     }
-
-                    walletFilterFrom.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            val walletIdName: WalletIdNameFrom =
-                                parent.selectedItem as WalletIdNameFrom
-                            if (walletIdName.id != -1) {
-                                walletIdFrom = walletIdName.id
-                                walletFilterFrom.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                                icWalletFrom.setImageResource(R.drawable.ic_close3)
-                                icWalletFrom.setOnClickListener {
-                                    walletFilterTo.setSelection(0)
-                                }
-                            } else {
-                                walletFilterFrom.setBackgroundResource(R.drawable.spinner_filter_bg)
-                                icWalletFrom.setImageResource(R.drawable.ic_down)
-                            }
-                        }
-
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                        }
-                    }
-
                 } else {
                     logs("Error in FiltersFragment, getWallet")
                 }
@@ -588,58 +611,67 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                     response.body()?.forEach {
                         userArray.add(UserIdName(it.id, "${it.name} ${it.surname}"))
                     }
-                    spinnerUserFilter(requireContext(), userArray, userFilter)
-                    spinnerUserFilter(requireContext(), userArray, userFilterTransfer)
 
-                    userFilterTransfer.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            val userIdName: UserIdName = parent.selectedItem as UserIdName
-                            if (userIdName.id != -1) {
-                                user = userIdName.id
-                                userFilterTransfer.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                                icUserTransfer.setImageResource(R.drawable.ic_close3)
-                                icUserTransfer.setOnClickListener {
-                                    userFilterTransfer.setSelection(0)
+                    if (userFilter != null) {
+                        spinnerUserFilter(requireContext(), userArray, userFilter)
+                        userFilter.onItemSelectedListener = object :
+                            AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View, position: Int, id: Long
+                            ) {
+                                val userIdName: UserIdName = parent.selectedItem as UserIdName
+                                if (userIdName.id != -1) {
+                                    user = userIdName.id
+                                    userFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
+                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    icUser.setImageResource(R.drawable.ic_close3)
+                                    icUser.setOnClickListener {
+                                        userFilter.setSelection(0)
+                                    }
+                                } else {
+                                    userFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
+                                    icUser.setImageResource(R.drawable.ic_down)
                                 }
-                            } else {
-                                userFilterTransfer.setBackgroundResource(R.drawable.spinner_filter_bg)
-                                icUserTransfer.setImageResource(R.drawable.ic_down)
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
                             }
                         }
-
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                        }
+                    } else {
+                        logs("userFilter is null")
                     }
 
-                    userFilter.onItemSelectedListener = object :
-                        AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View, position: Int, id: Long
-                        ) {
-                            val userIdName: UserIdName = parent.selectedItem as UserIdName
-                            if (userIdName.id != -1) {
-                                user = userIdName.id
-                                userFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                                icUser.setImageResource(R.drawable.ic_close3)
-                                icUser.setOnClickListener {
-                                    userFilter.setSelection(0)
+                    if (userFilterTransfer != null) {
+                        spinnerUserFilter(requireContext(), userArray, userFilterTransfer)
+                        userFilterTransfer.onItemSelectedListener = object :
+                            AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View, position: Int, id: Long
+                            ) {
+                                val userIdName: UserIdName = parent.selectedItem as UserIdName
+                                if (userIdName.id != -1) {
+                                    user = userIdName.id
+                                    userFilterTransfer.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
+                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    icUserTransfer.setImageResource(R.drawable.ic_close3)
+                                    icUserTransfer.setOnClickListener {
+                                        userFilterTransfer.setSelection(0)
+                                    }
+                                } else {
+                                    userFilterTransfer.setBackgroundResource(R.drawable.spinner_filter_bg)
+                                    icUserTransfer.setImageResource(R.drawable.ic_down)
                                 }
-                            } else {
-                                userFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
-                                icUser.setImageResource(R.drawable.ic_down)
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
                             }
                         }
-
-                        override fun onNothingSelected(parent: AdapterView<*>) {
-                        }
+                    } else {
+                        logs("userFilterTransfer is null")
                     }
+
                 } else{
                     logs("Error in FiltersFragment, getUser")
                 }

@@ -31,12 +31,6 @@ class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
 
         getJournalBySection()
 
-        if (neobisJournalPB != null) {
-            neobisJournalPB.visibility = View.VISIBLE
-        } else {
-            logs("Error FilteredJournal, PB")
-        }
-
         adapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putInt("idJournal", it.id)
@@ -57,7 +51,6 @@ class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
                 call: Call<MutableList<JournalItem>>,
                 response: Response<MutableList<JournalItem>>
             ) {
-                neobisJournalPB.visibility = View.INVISIBLE
                 if (response.isSuccessful){
                     response.body()?.let {
                         adapter.differ.submitList(it)
@@ -68,7 +61,6 @@ class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
                 }
             }
             override fun onFailure(call: Call<MutableList<JournalItem>>, t: Throwable) {
-                neobisJournalPB.visibility = View.INVISIBLE
                 logs(t.toString())
             }
 

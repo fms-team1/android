@@ -79,6 +79,7 @@
         android:layout_marginLeft="14dp"
         android:visibility="gone">
         <LinearLayout
+            android:id="@+id/sectionLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -104,8 +105,6 @@
                 android:layout_marginRight="14dp"
                 android:fontFamily="@font/inter"
                 android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -136,14 +135,13 @@
                 android:layout_marginRight="14dp"
                 android:fontFamily="@font/inter"
                 android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/agentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -169,8 +167,6 @@
                 android:layout_marginRight="14dp"
                 android:fontFamily="@font/inter"
                 android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -204,8 +200,6 @@
                 android:layout_marginRight="14dp"
                 android:fontFamily="@font/inter"
                 android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -238,18 +232,16 @@
                 android:layout_marginRight="14dp"
                 android:fontFamily="@font/inter"
                 android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/transferWallets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="gone">
             <TextView
                 android:id="@+id/titleWallet1"
@@ -271,24 +263,8 @@
                 android:layout_marginStart="14dp"
                 android:fontFamily="@font/inter"
                 android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/titleWallet1"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginLeft="14dp" />
-
-            <TextView
-                android:id="@+id/toWallet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:fontFamily="@font/inter"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginLeft="14dp" />
 
@@ -306,6 +282,18 @@
                 app:layout_constraintEnd_toStartOf="@+id/toWallet"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginRight="14dp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/toWallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:fontFamily="@font/inter"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="14dp" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

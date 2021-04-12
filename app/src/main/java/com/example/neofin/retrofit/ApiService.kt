@@ -1,11 +1,10 @@
 package com.example.neofin.retrofit
 
-import com.example.neofin.retrofit.data.addingResponse.AddResponse
+import com.example.neofin.retrofit.data.addNewAccount.AddNewUser
 import com.example.neofin.retrofit.data.allUsers.AllUsers
 import com.example.neofin.retrofit.data.analytics.Analytics
 import com.example.neofin.retrofit.data.category.Category
-import com.example.neofin.retrofit.data.currentUser.CurrentUser
-import com.example.neofin.retrofit.data.filteredJournal.FilteredJournal
+import com.example.neofin.retrofit.data.changePassword.ChangePassword
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournalItem
 import com.example.neofin.retrofit.data.getAllAgents.AllAgents
 import com.example.neofin.retrofit.data.journal.AllJournalItem
@@ -16,9 +15,9 @@ import com.example.neofin.retrofit.data.tokenResponse.TokenResponse
 import com.example.neofin.retrofit.data.transaction.Transaction
 import com.example.neofin.retrofit.data.transactionAdding.AddTransactionOrExpense
 import com.example.neofin.retrofit.data.transactionAdding.AddTransfer
+import com.example.neofin.retrofit.data.user.CurrentUser
 import com.example.neofin.retrofit.data.wallet.GetWallet
 import com.example.neofin.utils.Constants
-import okhttp3.Response
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -101,4 +100,14 @@ interface ApiService {
         @Query("neoSectionId") neoSectionId: Int,
         @Query("startDate") startDate: String,
         @Query("transactionTypeId") transactionType: Int) : Call<Analytics>
+
+    @Headers("Content-Type: application/json")
+    @PUT(Constants.CHANGE_PASSWORD)
+    fun changePassword(@Header("Authorization") token: String,
+                       @Body request : ChangePassword) : Call<Void>
+
+
+    @Headers("Content-Type: application/json")
+    @POST(Constants.ADD_USER)
+    fun addUser(@Header("Authorization") token: String, @Body request: AddNewUser): Call<Void>
 }

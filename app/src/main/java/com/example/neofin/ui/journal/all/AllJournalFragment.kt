@@ -25,12 +25,6 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (allJournalPB != null) {
-            allJournalPB.visibility = View.VISIBLE
-        } else {
-            logs("Error FilteredJournal, PB")
-        }
-
         setupAllAdapter()
         getJournal()
 
@@ -51,7 +45,6 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
         retIn.getJournal(token).enqueue(object : Callback<MutableList<AllJournalItem>> {
             override fun onResponse(call: Call<MutableList<AllJournalItem>>, response: Response<MutableList<AllJournalItem>>) {
                 if (response.isSuccessful) {
-                    allJournalPB.visibility = View.INVISIBLE
                     response.body()?.let {
                         allAdapter.differ.submitList(it)
                         allAdapter.notifyDataSetChanged()
@@ -63,7 +56,6 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
 
             override fun onFailure(call: Call<MutableList<AllJournalItem>>, t: Throwable) {
                 logs(t.toString())
-                allJournalPB.visibility = View.INVISIBLE
             }
 
         })

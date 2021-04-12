@@ -17,4 +17,6 @@ object Constants {
     const val GET_ALL_USERS = "/user/getAllUsers"
     const val GET_ALL_AGENTS = "/people/getAllCounterparties"
     const val GET_ANALYTICS = "/transaction/getAnalytics"
+    const val CHANGE_PASSWORD ="/user/changePassword"
+    const val ADD_USER = "/registration/newAccountant"
 }

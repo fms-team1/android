@@ -1,14 +1,19 @@
 package com.example.neofin.retrofit.data.journalById
 
 data class JournalById(
-    val amount: Double,
-    val category: Category,
+    val accountantName: String,
+    val accountantSurname: String,
+    val amount: Int,
+    val categoryName: String,
     val comment: String,
+    val counterpartyName: String,
+    val counterpartySurname: String,
     val createdDate: String,
     val id: Int,
-    val person: Person,
-    val transactionStatus: String,
-    val user: User,
-    val wallet: Wallet,
-    val wallet2: Wallet2
+    val neoSection: String,
+    val transactionType: String,
+    val transferWalletId: Int,
+    val transferWalletName: String,
+    val walletId: Int,
+    val walletName: String
 )

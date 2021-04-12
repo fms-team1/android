@@ -25,13 +25,6 @@ class NeolabsJournalFragment : Fragment(R.layout.fragment_neolabs_journal) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (neolabsJournalPB != null) {
-            neolabsJournalPB.visibility = View.VISIBLE
-        } else {
-            logs("Error FilteredJournal, PB")
-        }
-
         setupAdapter()
         getJournalBySection()
 
@@ -55,7 +48,6 @@ class NeolabsJournalFragment : Fragment(R.layout.fragment_neolabs_journal) {
                 call: Call<MutableList<JournalItem>>,
                 response: Response<MutableList<JournalItem>>
             ) {
-                neolabsJournalPB.visibility = View.INVISIBLE
                 if (response.isSuccessful) {
                     response.body()?.let {
                         adapter.differ.submitList(it)
@@ -67,7 +59,6 @@ class NeolabsJournalFragment : Fragment(R.layout.fragment_neolabs_journal) {
             }
 
             override fun onFailure(call: Call<MutableList<JournalItem>>, t: Throwable) {
-                neolabsJournalPB.visibility = View.INVISIBLE
                 logs(t.toString())
             }
 

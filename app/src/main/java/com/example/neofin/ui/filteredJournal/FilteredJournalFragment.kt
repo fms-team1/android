@@ -1,5 +1,6 @@
 package com.example.neofin.ui.filteredJournal
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,9 @@ import kotlinx.android.synthetic.main.fragment_filtered_journal.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
     private val adapter by lazy { FilteredJournalAdapter() }
@@ -30,6 +34,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
     var dateTransfer: String? = null
 
 
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,10 +83,12 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
 
         if (isPeriodEmpty != true) {
             date = arguments?.getString("date")
+
         }
 
         if (isEmptyPeriodTransfer != true) {
             dateTransfer = arguments?.getString("dateTransfer")
+
         }
 
         if (isTypeEmpty != true) {
@@ -91,11 +98,22 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         if (isNotTransfer != true) {
             walletIdTo = arguments?.getInt("walletIdTo")
             walletIdFrom = arguments?.getInt("walletIdFrom")
-            getFilteredJournal(null, null, dateTransfer?.substringAfter(' '), null,
-                dateTransfer?.substringBefore(' '), type, walletIdTo, userId, walletIdFrom)
+            getFilteredJournal(
+                null,
+                null,
+                dateTransfer?.substringAfter(' '),
+                null,
+                dateTransfer?.substringBefore(' '),
+                type,
+                walletIdTo,
+                userId,
+                walletIdFrom
+            )
         } else {
-            getFilteredJournal(categoryId, agentId, date?.substringAfter(' '), section,
-                date?.substringBefore(' '), type, null, userId, walletId)
+            getFilteredJournal(
+                categoryId, agentId, date?.substringAfter(' '), section,
+                date?.substringBefore(' '), type, null, userId, walletId
+            )
         }
 
         closeBT.setOnClickListener {
@@ -107,17 +125,22 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         }
     }
 
-    private fun getFilteredJournal(category: Int?, agent : Int?, endDate: String?, section: Int?,startDate: String?,
-                                   type: Int?, walletTo : Int?, user : Int?, walletFrom : Int?){
+
+    private fun getFilteredJournal(
+        category: Int?, agent: Int?, endDate: String?, section: Int?, startDate: String?,
+        type: Int?, walletTo: Int?, user: Int?, walletFrom: Int?
+    ){
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
-        retIn.getFiltered(token, category, agent, endDate, section,startDate,
-            type, walletTo, user, walletFrom).enqueue(object : Callback<MutableList<FilteredJournalItem>> {
+        retIn.getFiltered(
+            token, category, agent, endDate, section, startDate,
+            type, walletTo, user, walletFrom
+        ).enqueue(object : Callback<MutableList<FilteredJournalItem>> {
             override fun onResponse(
                 call: Call<MutableList<FilteredJournalItem>>,
                 response: Response<MutableList<FilteredJournalItem>>
             ) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     filteredJournalPB.visibility = View.INVISIBLE
                     response.body()?.let {
                         adapter.differ.submitList(it)
@@ -131,6 +154,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
                     logs("Error in FilteredJournal, getFilteredJournal")
                 }
             }
+
             override fun onFailure(call: Call<MutableList<FilteredJournalItem>>, t: Throwable) {
                 filteredJournalPB.visibility = View.INVISIBLE
             }

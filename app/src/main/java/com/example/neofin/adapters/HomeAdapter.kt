@@ -8,8 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neofin.R
 import com.example.neofin.retrofit.data.transaction.LastFifteenTransaction
+import com.example.neofin.utils.formatDate
+import com.example.neofin.utils.formatDateAdapters
 import com.example.neofin.utils.logs
 import kotlinx.android.synthetic.main.transactions.view.*
+import okhttp3.internal.format
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
     private var myList = emptyList<LastFifteenTransaction>()
@@ -23,17 +28,9 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
         )
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = myList[position]
-
-        val date = current.createdDate
-
-        val nameAccount = current.accountantName
-        val surnameAccount = current.accountantName
-
-        val nameAgent = current.counterpartyName
-        val surnameAgent = current.counterpartySurname
         try {
             when (current.transactionType) {
                 "INCOME" -> {
@@ -53,8 +50,8 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
                 }
             }
 
+            holder.itemView.dateTransaction.text = formatDateAdapters(current.createdDate.substringBefore('T'))
             holder.itemView.nameTransaction.text = current.categoryName
-            holder.itemView.dateTransaction.text = current.createdDate.substringBefore('T')
 
         } catch (e: Exception) {
             logs("Error")
