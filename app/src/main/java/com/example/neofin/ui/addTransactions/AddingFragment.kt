@@ -150,7 +150,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
                 val sectionName: SectionName = parent.selectedItem as SectionName
                 if (sectionName.backName != -1) {
@@ -186,7 +186,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                         categoryAdd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
-                                view: View,
+                                view: View?,
                                 position: Int,
                                 id: Long
                             ) {
@@ -231,7 +231,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
-                                view: View, position: Int, id: Long
+                                view: View?, position: Int, id: Long
                             ) {
                                 val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
                                 walletId = walletIdName.id
@@ -251,7 +251,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
-                                view: View, position: Int, id: Long
+                                view: View?, position: Int, id: Long
                             ) {
                                 val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
                                 walletFrom = walletIdName.id
@@ -265,7 +265,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
-                                view: View, position: Int, id: Long
+                                view: View?, position: Int, id: Long
                             ) {
                                 val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
                                 walletTo = walletIdName.id

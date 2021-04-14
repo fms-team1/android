@@ -1,8 +1,10 @@
 package com.example.neofin.retrofit
 
 import com.example.neofin.retrofit.data.addCategory.AddCategory
+import com.example.neofin.retrofit.data.addGroup.GroupAdd
 import com.example.neofin.retrofit.data.addNewAccount.AddNewUser
 import com.example.neofin.retrofit.data.addWallets.AddWallet
+import com.example.neofin.retrofit.data.allGroups.Groups
 import com.example.neofin.retrofit.data.allUsers.AllUsers
 import com.example.neofin.retrofit.data.analytics.Analytics
 import com.example.neofin.retrofit.data.category.Category
@@ -39,6 +41,10 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_CATEGORY)
     fun addCategory(@Header("Authorization") token: String, @Body request: AddCategory): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @POST(Constants.ADD_GROUP)
+    fun addGroup(@Header("Authorization") token: String, @Body request: GroupAdd): Call<Void>
 
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_TRANSFER)
@@ -80,6 +86,10 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @GET(Constants.GET_ALL_AGENTS)
     fun getAllAgents(@Header("Authorization") token: String): Call<AllAgents>
+
+    @Headers("Content-Type: application/json")
+    @GET(Constants.GET_ALL_GROUPS)
+    fun getAllGroups(@Header("Authorization") token: String): Call<List<Groups>>
 
     @Headers("Content-Type: application/json")
     @GET(Constants.CATEGORY_ALL)

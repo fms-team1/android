@@ -174,7 +174,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
                 val sectionName: SectionName = parent.selectedItem as SectionName
                 if (sectionName.backName != -1) {
@@ -319,7 +319,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
                 val transactionType: TransactionType = parent.selectedItem as TransactionType
                 if (transactionType.id != -1) {
@@ -376,7 +376,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         categoryFilter.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(
-                                    parent: AdapterView<*>, view: View, position: Int, id: Long
+                                    parent: AdapterView<*>, view: View?, position: Int, id: Long
                                 ) {
                                     val categoryIdName: CategoryIdName =
                                         parent.selectedItem as CategoryIdName
@@ -444,7 +444,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
-                                view: View, position: Int, id: Long
+                                view: View?, position: Int, id: Long
                             ) {
                                 val walletIdName: WalletIdName = parent.selectedItem as WalletIdName
                                 if (walletIdName.id != -1) {
@@ -475,7 +475,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
-                                view: View, position: Int, id: Long
+                                view: View?, position: Int, id: Long
                             ) {
                                 val walletIdName: WalletIdNameTo = parent.selectedItem as WalletIdNameTo
                                 if (walletIdName.id != -1) {
@@ -500,7 +500,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
-                                view: View, position: Int, id: Long
+                                view: View?, position: Int, id: Long
                             ) {
                                 val walletIdName: WalletIdNameFrom =
                                     parent.selectedItem as WalletIdNameFrom
@@ -618,7 +618,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
-                                view: View, position: Int, id: Long
+                                view: View?, position: Int, id: Long
                             ) {
                                 val userIdName: UserIdName = parent.selectedItem as UserIdName
                                 if (userIdName.id != -1) {

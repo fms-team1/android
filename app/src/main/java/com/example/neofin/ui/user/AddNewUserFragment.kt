@@ -1,20 +1,26 @@
 package com.example.neofin.ui.user
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.neofin.R
 import com.example.neofin.retrofit.RetrofitBuilder
+import com.example.neofin.retrofit.data.addGroup.GroupAdd
 import com.example.neofin.retrofit.data.addNewAccount.AddNewUser
-import com.example.neofin.ui.addTransactions.data.SectionName
+import com.example.neofin.retrofit.data.allGroups.Groups
+import com.example.neofin.ui.user.data.GroupsIdName
 import com.example.neofin.utils.logs
-import com.example.neofin.utils.spinnerSection
+import com.example.neofin.utils.snackbar
+import com.example.neofin.utils.spinnerGroup
 import com.example.neofin.utils.toast
+import kotlinx.android.synthetic.main.dialog_add_group.view.*
 import kotlinx.android.synthetic.main.fragment_add_new_user.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,14 +39,20 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         toolbar?.setDisplayHomeAsUpEnabled(false)
         toolbar?.hide()
 
-        spinnerSection(requireContext(), group_add)
+        spinnerGroup(requireContext(), group_add)
         group_add.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
-                val sectionName: SectionName = parent.selectedItem as SectionName
-                data.add(sectionName.backName)
+                if (parent.selectedItem == "Создать группу") {
+                    dialogCreateGroup()
+                } else if (parent.selectedItem == "Выбрать из существующих") {
+                    searchLayout.visibility = View.VISIBLE
+                    getGroups()
+                } else {
+                    searchLayout.visibility = View.GONE
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -48,12 +60,6 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         }
 
         try {
-            val email = user_email.text.toString()
-            val password = user_pass.text.toString()
-            val user_n = user_name.text.toString()
-            val user_p = user_phone.text.toString()
-            val surname = user_surname.text.toString()
-
             add_user_BT.setOnClickListener {
                 addNewUser(
                     user_email.text.toString(), data,  user_name.text.toString(),user_pass.text.toString(),
@@ -65,6 +71,122 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
 
     }
 
+    private fun dialogCreateGroup() = CoroutineScope(Dispatchers.Main).launch {
+        val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_group,null)
+        val mBuilder = context?.let { it1 ->
+            AlertDialog.Builder(it1)
+                .setView(mDialogView)
+        }
+        val  mAlertDialog = mBuilder?.show()
+        mDialogView?.cancel_group?.setOnClickListener {
+            mAlertDialog?.dismiss()
+        }
+
+        mDialogView?.create_group?.setOnClickListener {
+            val name = mDialogView.et_add_group.text.toString()
+            addGroup(name)
+            mAlertDialog?.dismiss()
+        }
+    }
+
+    private fun addGroup(name : String) = CoroutineScope(Dispatchers.Main).launch {
+        val retIn = RetrofitBuilder.getInstance()
+        val token = RetrofitBuilder.getToken()
+        val groupBody = GroupAdd(name)
+        retIn.addGroup(token, groupBody).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                when {
+                    response.code() == 404 -> {
+                        snackbar(requireView(), "Такая группа уже существует!", Color.parseColor("#E11616"))
+                    }
+                    response.code() == 200 -> {
+                        snackbar(
+                            requireView(),
+                            "Группа добавлена!",
+                            Color.parseColor("#4AAF39")
+                        )
+                    }
+                    else -> {
+                        snackbar(requireView(), "Неизвестная ошибка!", Color.parseColor("#E11616"))
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                logs("Error in AddNewUserFr, addGroup")
+            }
+
+        })
+    }
+
+    private fun getGroups() = CoroutineScope(Dispatchers.Main).launch {
+        val retIn = RetrofitBuilder.getInstance()
+        val token = RetrofitBuilder.getToken()
+        retIn.getAllGroups(token).enqueue(object : Callback<List<Groups>> {
+            override fun onResponse(call: Call<List<Groups>>, response: Response<List<Groups>>) {
+                if (response.isSuccessful) {
+                    val groupArray: ArrayList<GroupsIdName> = ArrayList()
+                    response.body()?.forEach {
+                        groupArray.add(GroupsIdName(it.id, it.name))
+                    }
+                    val arrayAdapter =
+                        ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_list_item_1,
+                            groupArray
+                        )
+                    if (listViewGroup != null) {
+                        listViewGroup.adapter = arrayAdapter
+                    } else {
+                        logs("listViewGroup, AddNewUserFr")
+                    }
+
+                    searchGroup.setOnSearchClickListener {
+                        listViewGroup.visibility = View.VISIBLE
+                        hintSearchGroup.visibility = View.GONE
+                    }
+
+                    searchGroup.setOnCloseListener {
+                        listViewGroup.visibility = View.GONE
+                        hintSearchGroup.visibility = View.VISIBLE
+                        searchLayout.visibility = View.GONE
+                        false
+                    }
+
+                    searchGroup.setOnQueryTextListener(object :
+                        android.widget.SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            arrayAdapter.filter.filter(query)
+                            return false
+                        }
+
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            arrayAdapter.filter.filter(newText)
+                            return false
+                        }
+                    })
+
+                    if (listViewGroup != null) {
+                        listViewGroup?.onItemClickListener =
+                            AdapterView.OnItemClickListener { _, _, i, _ ->
+                                arrayAdapter.getItem(i)?.id?.let { data.add(it) }
+                                searchGroup.setQuery("${arrayAdapter.getItem(i)?.name}", true)
+                                listViewGroup.visibility = View.GONE
+                            }
+                    } else {
+                        logs("Error in AddNewUserFr, getGroups")
+                    }
+                } else {
+                    logs("Error in AddNewUserFr, getGroups")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Groups>>, t: Throwable) {
+                logs("Error in AddNewUserFr, getGroups")
+            }
+
+        })
+    }
 
     private fun addNewUser(
         email: String,
@@ -79,7 +201,6 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
             val addItems = AddNewUser(email, group_ids, name, password, phoneNumber, surname)
             retIn.addUser(token, addItems).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-
                     findNavController().navigate(R.id.navigation_user)
                     if (response.code() == 200) {
                         toast(requireContext(), "Successfully added")

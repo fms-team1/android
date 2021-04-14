@@ -47,6 +47,21 @@ fun snackbar(view: View, text: String, color: Int) {
     snackBar.show()
 }
 
+fun spinnerGroup(context: Context, spinner: Spinner) {
+    val group: ArrayList<String> = ArrayList()
+
+    group.add("Выберите опцию")
+    group.add("Создать группу")
+    group.add("Выбрать из существующих")
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner, group
+    )
+
+    spinner.adapter = adapter
+}
+
 fun spinnerSectionUser(context: Context, spinner: Spinner) {
     val sectionList: ArrayList<Section> = ArrayList()
 

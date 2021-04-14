@@ -7,17 +7,17 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.anychart.chart.common.dataentry.DataEntry
 import com.example.neofin.R
 import com.example.neofin.retrofit.RetrofitBuilder
 import com.example.neofin.retrofit.data.analytics.Analytics
 import com.example.neofin.ui.chart.data.SectionBalance
 import com.example.neofin.ui.filter.data.Period
 import com.example.neofin.ui.filter.data.TransactionType
-import com.example.neofin.utils.*
+import com.example.neofin.utils.logs
+import com.example.neofin.utils.spinnerPeriodAnalytics
+import com.example.neofin.utils.spinnerTransactionAnalytics
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
@@ -41,7 +41,6 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
     private val entries: ArrayList<PieEntry> = ArrayList()
     private val entriesBar: ArrayList<BarEntry> = ArrayList()
     private val labelsBar: ArrayList<String> = ArrayList()
-    val data: MutableList<DataEntry> = ArrayList()
     val test: ArrayList<SectionBalance> = ArrayList()
 
 
@@ -97,13 +96,8 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         entries.add(PieEntry(neolabs.toFloat(), "Neolabs"))
         val colors: ArrayList<Int> = ArrayList()
 
-        for (color in ColorTemplate.MATERIAL_COLORS) {
-            colors.add(color)
-        }
-
-        for (color in ColorTemplate.VORDIPLOM_COLORS) {
-            colors.add(color)
-        }
+        colors.add(Color.parseColor("#1778E9"))
+        colors.add(Color.parseColor("#094387"))
 
         val dataSet = PieDataSet(entries, "")
         dataSet.colors = colors
@@ -132,13 +126,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
 
         val barDataSet = BarDataSet(entriesBar, "")
         val colors: ArrayList<Int> = ArrayList()
-        for (color in ColorTemplate.MATERIAL_COLORS) {
-            colors.add(color)
-        }
-
-        for (color in ColorTemplate.VORDIPLOM_COLORS) {
-            colors.add(color)
-        }
+        colors.add(Color.parseColor("#1778E9"))
         barDataSet.colors = colors
         bar.description.text = "Категории"
         val barData= BarData(barDataSet)
@@ -162,7 +150,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
                 val period: Period = parent.selectedItem as Period
                 date2 = period.period
@@ -179,7 +167,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
                 val type: TransactionType = parent.selectedItem as TransactionType
                 type2 = type.id
