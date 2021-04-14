@@ -1,6 +1,8 @@
 package com.example.neofin.retrofit
 
+import com.example.neofin.retrofit.data.addCategory.AddCategory
 import com.example.neofin.retrofit.data.addNewAccount.AddNewUser
+import com.example.neofin.retrofit.data.addWallets.AddWallet
 import com.example.neofin.retrofit.data.allUsers.AllUsers
 import com.example.neofin.retrofit.data.analytics.Analytics
 import com.example.neofin.retrofit.data.category.Category
@@ -29,6 +31,14 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_INCOME_EXPENSE)
     fun addIncomeOrExpense(@Header("Authorization") token: String, @Body request: AddTransactionOrExpense): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @POST(Constants.ADD_WALLET)
+    fun addWallet(@Header("Authorization") token: String, @Body request: AddWallet): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @POST(Constants.ADD_CATEGORY)
+    fun addCategory(@Header("Authorization") token: String, @Body request: AddCategory): Call<Void>
 
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_TRANSFER)

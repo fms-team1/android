@@ -19,4 +19,6 @@ object Constants {
     const val GET_ANALYTICS = "/transaction/getAnalytics"
     const val CHANGE_PASSWORD ="/user/changePassword"
     const val ADD_USER = "/registration/newAccountant"
+    const val ADD_WALLET = "/wallet/add"
+    const val ADD_CATEGORY = "/category/add"
 }

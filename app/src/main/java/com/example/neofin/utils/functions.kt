@@ -12,6 +12,8 @@ import com.example.neofin.ui.addTransactions.data.CategoryIdName
 import com.example.neofin.ui.addTransactions.data.SectionName
 import com.example.neofin.ui.addTransactions.data.WalletIdName
 import com.example.neofin.ui.filter.data.*
+import com.example.neofin.ui.user.data.Section
+import com.example.neofin.ui.user.data.Type
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_filters.*
 import java.text.ParseException
@@ -43,6 +45,34 @@ fun snackbar(view: View, text: String, color: Int) {
     textView.textSize = 16F
     textView.maxLines = 6
     snackBar.show()
+}
+
+fun spinnerSectionUser(context: Context, spinner: Spinner) {
+    val sectionList: ArrayList<Section> = ArrayList()
+
+    sectionList.add(Section("NEOBIS", "Neobis"))
+    sectionList.add(Section("NEOLABS", "Neolabs"))
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner, sectionList
+    )
+
+    spinner.adapter = adapter
+}
+
+fun spinnerTypeUser(context: Context, spinner: Spinner) {
+    val typeList: ArrayList<Type> = ArrayList()
+
+    typeList.add(Type("INCOME", "Доход"))
+    typeList.add(Type("EXPENSE", "Расход"))
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner, typeList
+    )
+
+    spinner.adapter = adapter
 }
 
 fun spinnerWallet(context: Context, arrayList: ArrayList<WalletIdName>, spinner: Spinner) {
