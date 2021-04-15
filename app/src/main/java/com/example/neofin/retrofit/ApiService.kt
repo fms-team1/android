@@ -7,6 +7,9 @@ import com.example.neofin.retrofit.data.addWallets.AddWallet
 import com.example.neofin.retrofit.data.allGroups.Groups
 import com.example.neofin.retrofit.data.allUsers.AllUsers
 import com.example.neofin.retrofit.data.analytics.Analytics
+import com.example.neofin.retrofit.data.archiveCategory.ArchiveCategory
+import com.example.neofin.retrofit.data.archiveGroups.ArchiveGroup
+import com.example.neofin.retrofit.data.archiveWallet.ArchiveWallet
 import com.example.neofin.retrofit.data.category.Category
 import com.example.neofin.retrofit.data.changePassword.ChangePassword
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournalItem
@@ -41,6 +44,26 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_CATEGORY)
     fun addCategory(@Header("Authorization") token: String, @Body request: AddCategory): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PUT(Constants.ARCHIVE_WALLET)
+    fun archiveWallet(@Header("Authorization") token: String, @Body request: ArchiveWallet): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PUT(Constants.ARCHIVE_CATEGORY)
+    fun archiveCategory(@Header("Authorization") token: String, @Body request: ArchiveCategory): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PUT(Constants.ARCHIVE_GROUPS)
+    fun archiveGroup(@Header("Authorization") token: String, @Body request: ArchiveGroup): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @GET(Constants.GET_ALL_CATEGORY)
+    fun getAllCategory(@Header("Authorization") token: String): Call<List<ArchiveCategory>>
+
+    @Headers("Content-Type: application/json")
+    @GET(Constants.GET_ALL_GROUPS_ARCHIVE)
+    fun getAllGroupsArchive(@Header("Authorization") token: String): Call<List<ArchiveGroup>>
 
     @Headers("Content-Type: application/json")
     @POST(Constants.ADD_GROUP)

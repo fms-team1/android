@@ -28,6 +28,10 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
         val toolbar = (activity as AppCompatActivity).supportActionBar
         toolbar?.setDisplayHomeAsUpEnabled(false)
 
+        closeBT.setOnClickListener {
+            findNavController().navigate(R.id.navigation_user)
+        }
+
         change_Pass.setOnClickListener {
             MainScope().launch(Dispatchers.Main) {
 

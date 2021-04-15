@@ -76,6 +76,10 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             findNavController().navigate(R.id.addNewUserFragment)
         }
 
+        archive.setOnClickListener {
+            findNavController().navigate(R.id.archiveFragment)
+        }
+
         addWallet.setOnClickListener {
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_wallet,null)
             val mBuilder = context?.let { it1 ->
@@ -128,9 +132,11 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                 if (response.body()?.role?.id != 1) {
                     addWalletLayout.visibility = View.GONE
                     addCategoryLayout.visibility = View.GONE
+                    archiveLayout.visibility = View.GONE
                 } else {
                     addWalletLayout.visibility = View.VISIBLE
                     addCategoryLayout.visibility = View.VISIBLE
+                    archiveLayout.visibility = View.VISIBLE
                 }
                 profile.text = "$name $surname"
                 email.text = response.body()?.email

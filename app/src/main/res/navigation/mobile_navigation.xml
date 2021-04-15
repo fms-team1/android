@@ -98,4 +98,9 @@
         android:name="com.example.neofin.ui.user.UpdatePasswordFragment"
         android:label="fragment_update_password"
         tools:layout="@layout/fragment_update_password" />
+    <fragment
+        android:id="@+id/archiveFragment"
+        android:name="com.example.neofin.ui.user.ArchiveFragment"
+        android:label="fragment_archive"
+        tools:layout="@layout/fragment_archive" />
 </navigation>

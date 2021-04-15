@@ -39,6 +39,10 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         toolbar?.setDisplayHomeAsUpEnabled(false)
         toolbar?.hide()
 
+        closeBT.setOnClickListener {
+            findNavController().navigate(R.id.navigation_user)
+        }
+
         spinnerGroup(requireContext(), group_add)
         group_add.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(

@@ -62,6 +62,22 @@ fun spinnerGroup(context: Context, spinner: Spinner) {
     spinner.adapter = adapter
 }
 
+fun spinnerArchive(context: Context, spinner: Spinner) {
+    val group: ArrayList<String> = ArrayList()
+
+    group.add("Выберите опцию")
+    group.add("Кошелек")
+    group.add("Группа")
+    group.add("Категория")
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner, group
+    )
+
+    spinner.adapter = adapter
+}
+
 fun spinnerSectionUser(context: Context, spinner: Spinner) {
     val sectionList: ArrayList<Section> = ArrayList()
 
