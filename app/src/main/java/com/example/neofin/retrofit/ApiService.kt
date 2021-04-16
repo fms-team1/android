@@ -11,6 +11,7 @@ import com.example.neofin.retrofit.data.archiveCategory.ArchiveCategory
 import com.example.neofin.retrofit.data.archiveGroups.ArchiveGroup
 import com.example.neofin.retrofit.data.archiveWallet.ArchiveWallet
 import com.example.neofin.retrofit.data.category.Category
+import com.example.neofin.retrofit.data.changeJournal.ChangeJournal
 import com.example.neofin.retrofit.data.changePassword.ChangePassword
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournalItem
 import com.example.neofin.retrofit.data.getAllAgents.AllAgents
@@ -148,6 +149,11 @@ interface ApiService {
     @PUT(Constants.CHANGE_PASSWORD)
     fun changePassword(@Header("Authorization") token: String,
                        @Body request : ChangePassword) : Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PUT(Constants.UPDATE_JOURNAL_ITEM)
+    fun changeJournalItem(@Header("Authorization") token: String,
+                       @Body request : ChangeJournal) : Call<Void>
 
 
     @Headers("Content-Type: application/json")

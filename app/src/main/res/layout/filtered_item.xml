@@ -295,5 +295,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginLeft="14dp" />
         </LinearLayout>
+        <Button
+            android:id="@+id/change_filtered_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textFontWeight="600"
+            android:backgroundTint="#1778E9"
+            android:drawableLeft="@drawable/ic_pencil"
+            android:layout_gravity="center"
+            android:text="Изменить"
+            android:textSize="14sp"
+            android:fontFamily="@font/montserrat"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

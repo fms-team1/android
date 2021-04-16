@@ -2,7 +2,9 @@ package com.example.neofin.ui.filteredJournal
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -12,6 +14,7 @@ import com.example.neofin.adapters.FilteredJournalAdapter
 import com.example.neofin.retrofit.RetrofitBuilder
 import com.example.neofin.retrofit.data.filteredJournal.FilteredJournalItem
 import com.example.neofin.utils.logs
+import kotlinx.android.synthetic.main.dialog_add_wallet.view.*
 import kotlinx.android.synthetic.main.fragment_filtered_journal.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +52,13 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         }
 
         setupAdapter()
+
+        adapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putInt("filteredJournal", it.id)
+            }
+            findNavController().navigate(R.id.updateJournalFragment, bundle)
+        }
 
         val isCategoryEmpty = arguments?.getBoolean("isEmptyCategory")
         val isAgentEmpty = arguments?.getBoolean("isEmptyAgent")
@@ -124,7 +134,6 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
             status.visibility = View.GONE
         }
     }
-
 
     private fun getFilteredJournal(
         category: Int?, agent: Int?, endDate: String?, section: Int?, startDate: String?,

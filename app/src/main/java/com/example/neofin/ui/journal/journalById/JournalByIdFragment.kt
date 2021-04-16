@@ -36,6 +36,13 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
         back.setOnClickListener {
             findNavController().navigate(R.id.navigation_journal)
         }
+
+        change_button.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt("updateId", id)
+            }
+            findNavController().navigate(R.id.updateJournalFragment, bundle)
+        }
     }
 
     private fun getJournalById(id : Int) = CoroutineScope(Dispatchers.Main).launch {

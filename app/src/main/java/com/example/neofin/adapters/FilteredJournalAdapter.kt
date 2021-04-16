@@ -94,12 +94,16 @@ class FilteredJournalAdapter : RecyclerView.Adapter<FilteredJournalAdapter.MyVie
                 }
             }
 
-            holder.itemView.nameFiltered.setOnClickListener {
+            holder.itemView.setOnClickListener {
                 if (bigInfo.visibility == View.GONE) {
                     bigInfo.visibility = View.VISIBLE
                 } else {
                     bigInfo.visibility = View.GONE
                 }
+            }
+
+            holder.itemView.change_filtered_button.setOnClickListener {
+                onItemClickListener?.let { it(current) }
             }
         }
     }

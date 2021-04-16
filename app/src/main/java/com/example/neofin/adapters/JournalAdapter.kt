@@ -73,7 +73,7 @@ class JournalAdapter : RecyclerView.Adapter<JournalAdapter.MyViewHolder>() {
                 }
             }
 
-            holder.itemView.nameJournal.setOnClickListener {
+            holder.itemView.setOnClickListener {
                 onItemClickListener?.let { it(current) }
             }
         }

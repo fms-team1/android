@@ -103,4 +103,9 @@
         android:name="com.example.neofin.ui.user.ArchiveFragment"
         android:label="fragment_archive"
         tools:layout="@layout/fragment_archive" />
+    <fragment
+        android:id="@+id/updateJournalFragment"
+        android:name="com.example.neofin.ui.journal.journalById.updateJournalItem.UpdateJournalFragment"
+        android:label="fragment_update_journal"
+        tools:layout="@layout/fragment_update_journal" />
 </navigation>

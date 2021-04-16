@@ -130,13 +130,13 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                 val name = response.body()?.name
                 val surname = response.body()?.surname
                 if (response.body()?.role?.id != 1) {
-                    addWalletLayout.visibility = View.GONE
-                    addCategoryLayout.visibility = View.GONE
-                    archiveLayout.visibility = View.GONE
+                    addWalletLayout?.visibility = View.GONE
+                    addCategoryLayout?.visibility = View.GONE
+                    archiveLayout?.visibility = View.GONE
                 } else {
-                    addWalletLayout.visibility = View.VISIBLE
-                    addCategoryLayout.visibility = View.VISIBLE
-                    archiveLayout.visibility = View.VISIBLE
+                    addWalletLayout?.visibility = View.VISIBLE
+                    addCategoryLayout?.visibility = View.VISIBLE
+                    archiveLayout?.visibility = View.VISIBLE
                 }
                 profile.text = "$name $surname"
                 email.text = response.body()?.email

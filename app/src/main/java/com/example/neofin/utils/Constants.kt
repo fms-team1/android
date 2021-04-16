@@ -28,4 +28,5 @@ object Constants {
     const val ARCHIVE_WALLET = "/wallet/update"
     const val ARCHIVE_CATEGORY = "/category/update"
     const val ARCHIVE_GROUPS = "/group/update"
+    const val UPDATE_JOURNAL_ITEM = "/transaction/updateTransaction"
 }
