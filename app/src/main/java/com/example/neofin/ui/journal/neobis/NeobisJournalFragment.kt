@@ -42,7 +42,7 @@ class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
         }
     }
 
-    private fun getJournalBySection() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getJournalBySection() = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getJournalBySection(token, "NEOBIS").enqueue(object :

@@ -1,6 +1,7 @@
 package com.example.neofin.ui.filter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Build
@@ -12,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 import com.example.neofin.R
 import com.example.neofin.retrofit.RetrofitBuilder
@@ -31,7 +33,6 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -313,7 +314,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         }
     }
 
-    private fun getTransactionSpinner() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getTransactionSpinner() = CoroutineScope(Dispatchers.Default).launch {
         spinnerTransaction(requireContext(), operationFilter)
         operationFilter.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -329,7 +330,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         getCategory(section!!, type!!)
                     }
                     operationFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                    (parent?.getChildAt(0) as TextView)?.setTextColor(Color.parseColor("#FFFFFF"))
                     icOperation.setImageResource(R.drawable.ic_close3)
                     icOperation.setOnClickListener {
                         operationFilter.setSelection(0)
@@ -359,7 +360,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         }
     }
 
-    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.Main).launch {
+    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCategory(token, section, type).enqueue(object : Callback<Category> {
@@ -418,7 +419,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         })
     }
 
-    private fun getWallet() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getWallet() = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getWallets(token).enqueue(object : Callback<GetWallet> {
@@ -536,7 +537,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         })
     }
 
-    private fun getAgent() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getAgent() = CoroutineScope(Dispatchers.Default).launch {
         val retInt = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retInt.getAllAgents(token).enqueue(object : Callback<AllAgents> {
@@ -547,48 +548,54 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                     response.body()?.forEach {
                         agentArray.add(AgentIdName(it.id, "${it.name} ${it.surname}"))
                     }
-                    val arrayAdapter =
-                        ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_list_item_1,
-                            agentArray
-                        )
-                    if (listView != null) {
-                        listView.adapter = arrayAdapter
-                    } else {
-                        logs("listView, FiltersFragment")
-                    }
 
-                    searchAgent.setOnSearchClickListener {
-                        listView.visibility = View.VISIBLE
-                        hintSearch.visibility = View.GONE
-                    }
+                    val activity: FragmentActivity? = activity
+                    if (activity != null) {
+                        val arrayAdapter =
+                            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
+                                agentArray
+                            )
 
-                    searchAgent.setOnCloseListener {
-                        listView.visibility = View.GONE
-                        hintSearch.visibility = View.VISIBLE
-                        false
-                    }
-
-                    searchAgent.setOnQueryTextListener(object :
-                        android.widget.SearchView.OnQueryTextListener {
-                        override fun onQueryTextSubmit(query: String?): Boolean {
-                            arrayAdapter.filter.filter(query)
-                            return false
+                        if (listView != null) {
+                            listView.adapter = arrayAdapter
+                        } else {
+                            logs("listView, FiltersFragment")
                         }
 
-                        override fun onQueryTextChange(newText: String?): Boolean {
-                            arrayAdapter.filter.filter(newText)
-                            return false
+                        searchAgent.setOnSearchClickListener {
+                            listView.visibility = View.VISIBLE
+                            hintSearch.visibility = View.GONE
                         }
-                    })
 
-                    listView.onItemClickListener =
-                        AdapterView.OnItemClickListener { _, _, i, _ ->
-                            agent = arrayAdapter.getItem(i)?.id
-                            searchAgent.setQuery("${arrayAdapter.getItem(i)?.name}", true)
+                        searchAgent.setOnCloseListener {
                             listView.visibility = View.GONE
+                            hintSearch.visibility = View.VISIBLE
+                            false
                         }
+
+                        searchAgent.setOnQueryTextListener(object :
+                            android.widget.SearchView.OnQueryTextListener {
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                arrayAdapter.filter.filter(query)
+                                return false
+                            }
+
+                            override fun onQueryTextChange(newText: String?): Boolean {
+                                arrayAdapter.filter.filter(newText)
+                                return false
+                            }
+                        })
+
+                        listView.onItemClickListener =
+                            AdapterView.OnItemClickListener { _, _, i, _ ->
+                                agent = arrayAdapter.getItem(i)?.id
+                                searchAgent.setQuery("${arrayAdapter.getItem(i)?.name}", true)
+                                listView.visibility = View.GONE
+                            }
+                    } else {
+                        logs("Error in FiltersFr, AgentGet")
+                    }
+
                 } else {
                     logs("Error in FiltersFragment, getAgent")
                 }
@@ -600,7 +607,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         })
     }
 
-    private fun getUser() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getUser() = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getAllUsers(token).enqueue(object : Callback<AllUsers> {

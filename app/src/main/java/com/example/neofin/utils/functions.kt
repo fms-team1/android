@@ -12,6 +12,8 @@ import com.example.neofin.ui.addTransactions.data.CategoryIdName
 import com.example.neofin.ui.addTransactions.data.SectionName
 import com.example.neofin.ui.addTransactions.data.WalletIdName
 import com.example.neofin.ui.filter.data.*
+import com.example.neofin.ui.journal.journalById.data.CategoryItem
+import com.example.neofin.ui.journal.journalById.data.WalletItem
 import com.example.neofin.ui.user.data.Section
 import com.example.neofin.ui.user.data.Type
 import com.google.android.material.snackbar.Snackbar
@@ -115,6 +117,15 @@ fun spinnerWallet(context: Context, arrayList: ArrayList<WalletIdName>, spinner:
     spinner.adapter = adapter
 }
 
+fun spinnerWalletChange(context: Context, arrayList: ArrayList<WalletItem>, spinner: Spinner) {
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, arrayList
+    )
+
+    spinner.adapter = adapter
+}
+
 fun spinnerSection(context: Context, spinner: Spinner) {
     val sectionList: ArrayList<SectionName> = ArrayList()
 
@@ -192,6 +203,15 @@ fun spinnerSectionFilter(context: Context, spinner: Spinner) {
 }
 
 fun spinnerCategoryFilter(context: Context, arrayList: ArrayList<CategoryIdName>, spinner: Spinner) {
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner_filter, arrayList
+    )
+
+    spinner.adapter = adapter
+}
+
+fun spinnerCategoryChange(context: Context, arrayList: ArrayList<CategoryItem>, spinner: Spinner) {
     val adapter = ArrayAdapter(
         context,
         R.layout.spinner_filter, arrayList

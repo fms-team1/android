@@ -121,7 +121,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     }
 
 
-    private fun getCurrentUser() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getCurrentUser() = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCurrentUser(token).enqueue(object : Callback<CurrentUser> {
@@ -154,7 +154,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
     }
 
-    private fun setupCategorySpinners(spinnerSection: Spinner, spinnerType: Spinner, context: Context) = CoroutineScope(Dispatchers.Main).launch {
+    private fun setupCategorySpinners(spinnerSection: Spinner, spinnerType: Spinner, context: Context) = CoroutineScope(Dispatchers.Default).launch {
         spinnerSectionUser(context, spinnerSection)
         spinnerTypeUser(context, spinnerType)
         spinnerSection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -190,7 +190,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         }
     }
 
-    private fun addWallet(balance: Int, name: String) = CoroutineScope(Dispatchers.Main).launch {
+    private fun addWallet(balance: Int, name: String) = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val walletBody = AddWallet(balance, name)
@@ -220,7 +220,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         })
     }
 
-    private fun addCategory(name: String, section: String, type: String) = CoroutineScope(Dispatchers.Main).launch {
+    private fun addCategory(name: String, section: String, type: String) = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val categoryBody = AddCategory(name, section, type)

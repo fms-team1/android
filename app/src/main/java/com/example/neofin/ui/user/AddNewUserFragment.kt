@@ -75,7 +75,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
 
     }
 
-    private fun dialogCreateGroup() = CoroutineScope(Dispatchers.Main).launch {
+    private fun dialogCreateGroup() = CoroutineScope(Dispatchers.Default).launch {
         val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_group,null)
         val mBuilder = context?.let { it1 ->
             AlertDialog.Builder(it1)
@@ -93,7 +93,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         }
     }
 
-    private fun addGroup(name : String) = CoroutineScope(Dispatchers.Main).launch {
+    private fun addGroup(name : String) = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val groupBody = GroupAdd(name)
@@ -123,7 +123,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         })
     }
 
-    private fun getGroups() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getGroups() = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getAllGroups(token).enqueue(object : Callback<List<Groups>> {
@@ -199,7 +199,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         password: String,
         phoneNumber: String,
         surname: String
-    ) = CoroutineScope(Dispatchers.Main).launch {
+    ) = CoroutineScope(Dispatchers.Default).launch {
             val retIn = RetrofitBuilder.getInstance()
             val token = RetrofitBuilder.getToken()
             val addItems = AddNewUser(email, group_ids, name, password, phoneNumber, surname)

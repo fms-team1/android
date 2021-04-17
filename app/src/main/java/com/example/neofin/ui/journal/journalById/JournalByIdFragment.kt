@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
+    var sectionId: Int? = null
+    var typeId: Int? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,12 +42,15 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
         change_button.setOnClickListener {
             val bundle = Bundle().apply {
                 putInt("updateId", id)
+                putBoolean("isFiltered", false)
+                sectionId?.let { it1 -> putInt("singleSectionId", it1) }
+                typeId?.let { it1 -> putInt("singleTypeId", it1) }
             }
             findNavController().navigate(R.id.updateJournalFragment, bundle)
         }
     }
 
-    private fun getJournalById(id : Int) = CoroutineScope(Dispatchers.Main).launch {
+    private fun getJournalById(id : Int) = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getJournalById(token, id).enqueue(object : Callback<JournalById> {
@@ -56,6 +61,9 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
 
                 val nameAgent = response.body()?.counterpartyName
                 val surnameAgent = response.body()?.counterpartySurname
+
+                sectionId = response.body()?.neoSectionId
+                typeId = response.body()?.transactionTypeId
 
                 title.text = response.body()?.categoryName
                 date.text = formatDateAdapters(response.body()?.createdDate.toString().substringBefore('T'))

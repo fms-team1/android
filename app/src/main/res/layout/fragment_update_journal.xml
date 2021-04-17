@@ -144,7 +144,7 @@
                         app:layout_constraintTop_toTopOf="@+id/searchAgentChange" />
 
                     <ListView
-                        android:id="@+id/listView"
+                        android:id="@+id/listViewUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:visibility="gone"
@@ -302,6 +302,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:gravity="top"
             android:background="@drawable/on_focused_big"
             android:fontFamily="@font/montserrat"
             android:padding="10dp"

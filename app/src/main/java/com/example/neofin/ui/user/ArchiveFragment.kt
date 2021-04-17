@@ -90,7 +90,6 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                         changeRV.adapter = categoryAdapter
                         changeRV.layoutManager = LinearLayoutManager(requireContext())
                         categoryAdapter.differ.submitList(it)
-                        categoryAdapter.notifyDataSetChanged()
 
                         categoryAdapter.setOnItemClickListener { adapter ->
                             val mDialogView = LayoutInflater.from(context)
@@ -130,9 +129,11 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                                 }
 
                                 mAlertDialog?.dismiss()
+                                getAllCategory()
                             }
                         }
                     }
+                    categoryAdapter.notifyDataSetChanged()
                 }
             }
 
@@ -236,11 +237,12 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                                         )
                                     }
                                 }
+                                getAllGroups()
                                 mAlertDialog?.dismiss()
                             }
                         }
-                        groupAdapter.notifyDataSetChanged()
                     }
+                    groupAdapter.notifyDataSetChanged()
                 }
             }
 
@@ -332,10 +334,11 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                                     )
                                 }
                                 mAlertDialog?.dismiss()
+                                getWallets()
                             }
                         }
-                        walletAdapter.notifyDataSetChanged()
                     }
+                    walletAdapter.notifyDataSetChanged()
                 }
             }
 

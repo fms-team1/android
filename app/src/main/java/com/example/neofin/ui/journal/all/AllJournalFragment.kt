@@ -39,7 +39,7 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
         }
     }
 
-    private fun getJournal() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getJournal() = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getJournal(token).enqueue(object : Callback<MutableList<AllJournalItem>> {

@@ -34,8 +34,8 @@ class LoginActivity : AppCompatActivity() {
         if (checkbox) {
             val email = preferences.getString("email", "")
             val password = preferences.getString("password", "")
-            mainLogin.visibility = View.INVISIBLE
-            loginPb.visibility = View.VISIBLE
+            mainLogin?.visibility = View.INVISIBLE
+            loginPb?.visibility = View.VISIBLE
             val actionBar = supportActionBar
             actionBar?.hide()
             if (email != null && password != null) {
@@ -44,21 +44,21 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton.setOnClickListener {
-            loginPb.visibility = View.VISIBLE
-            mainLogin.visibility = View.INVISIBLE
-            MainScope().launch(Dispatchers.Main) {
+            loginPb?.visibility = View.VISIBLE
+            mainLogin?.visibility = View.INVISIBLE
+            MainScope().launch(Dispatchers.Default) {
                 val email = emailET.text.toString().trim()
                 val password = passwordET.text.toString().trim()
                 if (email.isEmpty() || password.isEmpty()) {
                     errorText.text = "Поля не должны быть пустыми"
-                    errorText.visibility = View.VISIBLE
-                    mainLogin.visibility = View.VISIBLE
+                    errorText?.visibility = View.VISIBLE
+                    mainLogin?.visibility = View.VISIBLE
                     emailET.setBackgroundResource(R.drawable.error_edit_text)
                     emailET.requestFocus()
-                    loginPb.visibility = View.INVISIBLE
+                    loginPb?.visibility = View.INVISIBLE
                     return@launch
                 }
-                errorText.visibility = View.GONE
+                errorText?.visibility = View.GONE
                 signIn(email, password)
             }
         }
@@ -90,12 +90,12 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
-                    loginPb.visibility = View.INVISIBLE
+                    loginPb?.visibility = View.INVISIBLE
                 } else {
                     errorText.text = "Неверный логин или пароль"
-                    errorText.visibility = View.VISIBLE
-                    mainLogin.visibility = View.VISIBLE
-                    loginPb.visibility = View.INVISIBLE
+                    errorText?.visibility = View.VISIBLE
+                    mainLogin?.visibility = View.VISIBLE
+                    loginPb?.visibility = View.INVISIBLE
                     emailET.setBackgroundResource(R.drawable.error_edit_text)
                     passwordET.setBackgroundResource(R.drawable.error_edit_text)
                 }
@@ -103,9 +103,9 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<TokenResponse>, t: Throwable) {
                 errorText.text = "Нет интернет соединения"
-                errorText.visibility = View.VISIBLE
-                loginPb.visibility = View.INVISIBLE
-                mainLogin.visibility = View.VISIBLE
+                errorText?.visibility = View.VISIBLE
+                loginPb?.visibility = View.INVISIBLE
+                mainLogin?.visibility = View.VISIBLE
             }
         })
     }

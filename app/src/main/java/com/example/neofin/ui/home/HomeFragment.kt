@@ -79,7 +79,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun getHomePage() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getHomePage() = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         try {
@@ -127,7 +127,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun getHomePageByPeriod(period: String) = CoroutineScope(Dispatchers.Main).launch {
+    private fun getHomePageByPeriod(period: String) = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         try {

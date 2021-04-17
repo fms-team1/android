@@ -33,7 +33,7 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
         }
 
         change_Pass.setOnClickListener {
-            MainScope().launch(Dispatchers.Main) {
+            MainScope().launch(Dispatchers.Default) {
 
                 val newPass = et_new_password.text.toString().trim()
                 val oldPass = et_old_password.text.toString().trim()
@@ -77,7 +77,7 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
     }
 
     private fun changePassword(newPass: String, oldPass: String) =
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             val retIn = RetrofitBuilder.getInstance()
             val token = RetrofitBuilder.getToken()
             val changePass = ChangePassword(newPass, oldPass)

@@ -16,6 +16,9 @@ import com.example.neofin.retrofit.data.filteredJournal.FilteredJournalItem
 import com.example.neofin.utils.logs
 import kotlinx.android.synthetic.main.dialog_add_wallet.view.*
 import kotlinx.android.synthetic.main.fragment_filtered_journal.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,7 +49,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         toolbar?.hide()
 
         if (filteredJournalPB != null) {
-            filteredJournalPB.visibility = View.VISIBLE
+            filteredJournalPB?.visibility = View.VISIBLE
         } else {
             logs("Error FilteredJournal, PB")
         }
@@ -56,6 +59,9 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         adapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putInt("filteredJournal", it.id)
+                putInt("filteredType", it.transactionTypeId)
+                putInt("filteredSection", it.neoSectionId)
+                putBoolean("isFromFiltered", true)
             }
             findNavController().navigate(R.id.updateJournalFragment, bundle)
         }
@@ -138,7 +144,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
     private fun getFilteredJournal(
         category: Int?, agent: Int?, endDate: String?, section: Int?, startDate: String?,
         type: Int?, walletTo: Int?, user: Int?, walletFrom: Int?
-    ){
+    ) = CoroutineScope(Dispatchers.Default).launch{
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getFiltered(
@@ -150,7 +156,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
                 response: Response<MutableList<FilteredJournalItem>>
             ) {
                 if (response.isSuccessful) {
-                    filteredJournalPB.visibility = View.INVISIBLE
+                    filteredJournalPB?.visibility = View.INVISIBLE
                     response.body()?.let {
                         adapter.differ.submitList(it)
                         adapter.notifyDataSetChanged()
@@ -165,7 +171,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
             }
 
             override fun onFailure(call: Call<MutableList<FilteredJournalItem>>, t: Throwable) {
-                filteredJournalPB.visibility = View.INVISIBLE
+                filteredJournalPB?.visibility = View.INVISIBLE
             }
         })
     }
@@ -175,8 +181,8 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         filteredRecycler.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         this.arguments?.clear()
     }
 

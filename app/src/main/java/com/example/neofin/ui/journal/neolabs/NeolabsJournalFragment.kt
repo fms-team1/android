@@ -39,7 +39,7 @@ class NeolabsJournalFragment : Fragment(R.layout.fragment_neolabs_journal) {
         }
     }
 
-    private fun getJournalBySection() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getJournalBySection() = CoroutineScope(Dispatchers.Default).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getJournalBySection(token, "NEOLABS").enqueue(object :
