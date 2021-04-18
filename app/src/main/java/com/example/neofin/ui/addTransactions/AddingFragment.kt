@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.neofin.R
@@ -45,6 +46,9 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val toolbar = (activity as AppCompatActivity).supportActionBar
+        toolbar?.setDisplayHomeAsUpEnabled(false)
+        toolbar?.hide()
         try {
             val sdf = SimpleDateFormat("dd.MM.yyyy")
             val currentDate = sdf.format(Date())
@@ -176,7 +180,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
                 if (response.isSuccessful) {
                     val categoriesArray: ArrayList<CategoryIdName> = ArrayList()
-                    categoriesArray.add(CategoryIdName(-1, "Выбеите категорию"))
+                    categoriesArray.add(CategoryIdName(-1, "Выберите категорию"))
                     response.body()?.forEach {
                         categoriesArray.add(CategoryIdName(it.id, it.name))
                     }

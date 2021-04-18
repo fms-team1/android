@@ -8,8 +8,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 import com.example.neofin.R
 import com.example.neofin.retrofit.RetrofitBuilder
@@ -50,6 +53,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
         val toolbar = (activity as AppCompatActivity).supportActionBar
         toolbar?.setDisplayHomeAsUpEnabled(false)
         toolbar?.hide()
+
         getAgent()
         getWallet()
 
@@ -129,9 +133,25 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
 
         }
 
-        closeChangeBT.setOnClickListener {
-            findNavController().navigate(R.id.filtersFragment)
-        }
+//        closeChangeBT.setOnClickListener {
+//            if (isFiltered == false){
+//                findNavController().navigate(R.id.journalByIdFragment)
+//            }
+//            if (isFromFiltered == true) {
+//                findNavController().navigate(R.id.filtersFragment)
+//            }
+//        }
+
+//        closeChangeBT.setOnClickListener {
+////            findNavController().navigate(R.id.filtersFragment)
+//            val singleSection = arguments?.getInt("singleSectionId")
+//            val singleType = arguments?.getInt("singleTypeId")
+//            val filteredTypeId = arguments?.getInt("filteredType")
+//            val filteredSectionId = arguments?.getInt("filteredSection")
+//            logs("Single id: $idSingle : Filtered id: $idFiltered")
+//            logs("Single type: $singleType : Filtered type: $filteredTypeId")
+//            logs("Single section: $singleSection : Filtered section: $filteredSectionId")
+//        }
     }
 
     private fun getAgent() = CoroutineScope(Dispatchers.Default).launch {
@@ -145,48 +165,52 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                     response.body()?.forEach {
                         agentArray.add(AgentIdName(it.id, "${it.name} ${it.surname}"))
                     }
-                    val arrayAdapter =
-                        ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_list_item_1,
-                            agentArray
-                        )
-                    if (listViewUpdate != null) {
-                        listViewUpdate.adapter = arrayAdapter
-                    } else {
-                        logs("listView, FiltersFragment")
-                    }
 
-                    searchAgentChange.setOnSearchClickListener {
-                        listViewUpdate.visibility = View.VISIBLE
-                        hintSearch.visibility = View.GONE
-                    }
-
-                    searchAgentChange.setOnCloseListener {
-                        listViewUpdate.visibility = View.GONE
-                        hintSearch.visibility = View.VISIBLE
-                        false
-                    }
-
-                    searchAgentChange.setOnQueryTextListener(object :
-                        android.widget.SearchView.OnQueryTextListener {
-                        override fun onQueryTextSubmit(query: String?): Boolean {
-                            arrayAdapter.filter.filter(query)
-                            return false
+                    val activity: FragmentActivity? = activity
+                    if (activity != null) {
+                        val arrayAdapter =
+                            ArrayAdapter(
+                                requireContext(),
+                                android.R.layout.simple_list_item_1,
+                                agentArray
+                            )
+                        if (listViewUpdate != null) {
+                            listViewUpdate.adapter = arrayAdapter
+                        } else {
+                            logs("listView, FiltersFragment")
                         }
 
-                        override fun onQueryTextChange(newText: String?): Boolean {
-                            arrayAdapter.filter.filter(newText)
-                            return false
+                        searchAgentChange.setOnSearchClickListener {
+                            listViewUpdate.visibility = View.VISIBLE
+                            hintSearch.visibility = View.GONE
                         }
-                    })
 
-                    listViewUpdate.onItemClickListener =
-                        AdapterView.OnItemClickListener { _, _, i, _ ->
-                            agent = arrayAdapter.getItem(i)?.id
-                            searchAgentChange.setQuery("${arrayAdapter.getItem(i)?.name}", true)
+                        searchAgentChange.setOnCloseListener {
                             listViewUpdate.visibility = View.GONE
+                            hintSearch.visibility = View.VISIBLE
+                            false
                         }
+
+                        searchAgentChange.setOnQueryTextListener(object :
+                            android.widget.SearchView.OnQueryTextListener {
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                arrayAdapter.filter.filter(query)
+                                return false
+                            }
+
+                            override fun onQueryTextChange(newText: String?): Boolean {
+                                arrayAdapter.filter.filter(newText)
+                                return false
+                            }
+                        })
+
+                        listViewUpdate.onItemClickListener =
+                            AdapterView.OnItemClickListener { _, _, i, _ ->
+                                agent = arrayAdapter.getItem(i)?.id
+                                searchAgentChange.setQuery("${arrayAdapter.getItem(i)?.name}", true)
+                                listViewUpdate.visibility = View.GONE
+                            }
+                    }
                 } else {
                     logs("Error in FiltersFragment, getAgent")
                 }
@@ -358,5 +382,4 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
         super.onDestroyView()
         this.arguments?.clear()
     }
-
 }

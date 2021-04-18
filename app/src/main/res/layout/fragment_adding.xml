@@ -243,6 +243,7 @@
                         android:backgroundTint="@color/white"
                         android:fontFamily="@font/montserrat"
                         android:text="Примечание"
+                        android:textSize="14sp"
                         android:textColor="@color/black"
                         android:textFontWeight="600" />
 
@@ -253,6 +254,7 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/on_focused_big"
                         android:gravity="top"
+                        android:textSize="14sp"
                         android:padding="10dp"
                         android:textCursorDrawable="@drawable/cursor" />
                 </LinearLayout>
@@ -267,8 +269,7 @@
                     android:text="Добавить"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textFontWeight="600"
-                    android:textStyle="bold" />
+                    android:textFontWeight="600" />
             </LinearLayout>
 
             <ScrollView
@@ -296,6 +297,7 @@
                             android:backgroundTint="@color/white"
                             android:fontFamily="@font/montserrat"
                             android:text="Организация"
+                            android:textSize="14sp"
                             android:textColor="@color/black"
                             android:textFontWeight="600" />
 
@@ -345,6 +347,7 @@
                                 android:backgroundTint="@color/white"
                                 android:fontFamily="@font/montserrat"
                                 android:text="Сумма"
+                                android:textSize="14sp"
                                 android:textColor="@color/black"
                                 android:textFontWeight="500" />
 
@@ -356,6 +359,7 @@
                                 android:background="@drawable/on_focused"
                                 android:fontFamily="@font/montserrat"
                                 android:hint="Введите сумму"
+                                android:textSize="14sp"
                                 android:inputType="number"
                                 android:padding="10dp"
                                 android:textCursorDrawable="@drawable/cursor"
@@ -377,6 +381,7 @@
                                 android:backgroundTint="@color/white"
                                 android:fontFamily="@font/montserrat"
                                 android:text="Категория расходов"
+                                android:textSize="14sp"
                                 android:textColor="@color/black"
                                 android:textFontWeight="500" />
 
@@ -420,6 +425,7 @@
                                 android:backgroundTint="@color/white"
                                 android:fontFamily="@font/montserrat"
                                 android:text="Дата"
+                                android:textSize="14sp"
                                 android:textColor="@color/black"
                                 android:textFontWeight="500" />
 
@@ -430,6 +436,7 @@
                                 android:background="@drawable/edit_text_rectangle_small"
                                 android:drawableRight="@drawable/ic_date"
                                 android:drawableTint="#358AED"
+                                android:textSize="14sp"
                                 android:gravity="center_vertical"
                                 android:padding="10dp" />
                         </LinearLayout>
@@ -447,6 +454,7 @@
                                 android:backgroundTint="@color/white"
                                 android:fontFamily="@font/montserrat"
                                 android:text="Контрагент"
+                                android:textSize="14sp"
                                 android:textColor="@color/black"
                                 android:textFontWeight="500" />
 
@@ -458,6 +466,7 @@
                                 android:fontFamily="@font/montserrat"
                                 android:hint="Введите контрагента"
                                 android:padding="10dp"
+                                android:textSize="14sp"
                                 android:textCursorDrawable="@drawable/cursor"
                                 android:textFontWeight="600" />
                         </LinearLayout>
@@ -475,6 +484,7 @@
                                 android:backgroundTint="@color/white"
                                 android:fontFamily="@font/montserrat"
                                 android:text="Кошелек"
+                                android:textSize="14sp"
                                 android:textColor="@color/black"
                                 android:textFontWeight="500" />
 
@@ -517,6 +527,7 @@
                                 android:backgroundTint="@color/white"
                                 android:fontFamily="@font/montserrat"
                                 android:text="Примечание"
+                                android:textSize="14sp"
                                 android:textColor="@color/black"
                                 android:textFontWeight="600" />
 
@@ -525,6 +536,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
+                                android:textSize="14sp"
                                 android:background="@drawable/on_focused_big"
                                 android:gravity="top"
                                 android:padding="10dp"
@@ -541,8 +553,7 @@
                             android:text="Добавить"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
-                            android:textFontWeight="600"
-                            android:textStyle="bold" />
+                            android:textFontWeight="600" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

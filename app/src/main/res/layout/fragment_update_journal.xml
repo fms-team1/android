@@ -7,35 +7,36 @@
     android:orientation="vertical"
     tools:context=".ui.journal.journalById.updateJournalItem.UpdateJournalFragment">
 
-    <RelativeLayout
-        android:id="@+id/rel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/closeChangeBT"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="14dp"
-            android:src="@drawable/ic_back"/>
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/rel"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <ImageView-->
+<!--            android:id="@+id/closeChangeBT"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_marginStart="14dp"-->
+<!--            android:layout_marginLeft="14dp"-->
+<!--            android:layout_marginTop="14dp"-->
+<!--            android:src="@drawable/ic_back"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Изменить"
-            android:layout_marginTop="12dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/montserrat" />
-    </RelativeLayout>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Изменить"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:fontFamily="@font/montserrat" />-->
+<!--    </RelativeLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="10dp"
         android:layout_margin="14dp">
         <TextView
             android:layout_width="wrap_content"
@@ -53,6 +54,7 @@
             android:background="@drawable/on_focused"
             android:fontFamily="@font/montserrat"
             android:hint="Сумма"
+            android:textSize="14sp"
             android:padding="10dp"
             android:textCursorDrawable="@drawable/cursor"/>
         <LinearLayout
@@ -306,6 +308,7 @@
             android:background="@drawable/on_focused_big"
             android:fontFamily="@font/montserrat"
             android:padding="10dp"
+            android:textSize="14sp"
             android:textCursorDrawable="@drawable/cursor"/>
 
         <Button

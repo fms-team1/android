@@ -39,9 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
-                    android:layout_marginLeft="14dp"
                     android:layout_marginEnd="44dp"
-                    android:layout_marginRight="44dp"
                     android:text="Фильтры"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -59,7 +57,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginLeft="14dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="14dp">
 
@@ -70,7 +67,6 @@
             android:background="@drawable/spinner_filter_bg"
             android:padding="10dp"
             android:paddingEnd="25dp"
-            android:paddingRight="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -81,7 +77,6 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:src="@drawable/ic_down"
             app:layout_constraintBottom_toBottomOf="@+id/operationFilter"
             app:layout_constraintEnd_toEndOf="@+id/operationFilter"
@@ -99,7 +94,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="14dp">
 
@@ -110,7 +104,6 @@
                 android:background="@drawable/spinner_filter_bg"
                 android:padding="10dp"
                 android:paddingEnd="25dp"
-                android:paddingRight="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -121,7 +114,6 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_down"
                 app:layout_constraintBottom_toBottomOf="@+id/periodFilterTransfer"
                 app:layout_constraintEnd_toEndOf="@+id/periodFilterTransfer"
@@ -185,10 +177,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/spinner_filter_bg"
-                    android:drawableRight="@drawable/ic_date"
                     android:drawableTint="#358AED"
                     android:gravity="center_vertical"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    app:drawableEndCompat="@drawable/ic_date" />
             </LinearLayout>
         </LinearLayout>
 
@@ -196,7 +188,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="14dp">
 
@@ -207,7 +198,6 @@
                 android:background="@drawable/spinner_filter_bg"
                 android:padding="10dp"
                 android:paddingEnd="25dp"
-                android:paddingRight="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -218,7 +208,6 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_down"
                 app:layout_constraintBottom_toBottomOf="@+id/walletFilterTo"
                 app:layout_constraintEnd_toEndOf="@+id/walletFilterTo"
@@ -229,7 +218,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="14dp">
 
@@ -240,7 +228,6 @@
                 android:background="@drawable/spinner_filter_bg"
                 android:padding="10dp"
                 android:paddingEnd="25dp"
-                android:paddingRight="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -251,7 +238,6 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_down"
                 app:layout_constraintBottom_toBottomOf="@+id/walletFilterFrom"
                 app:layout_constraintEnd_toEndOf="@+id/walletFilterFrom"
@@ -262,7 +248,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="14dp">
 
@@ -273,7 +258,6 @@
                 android:background="@drawable/spinner_filter_bg"
                 android:padding="10dp"
                 android:paddingEnd="25dp"
-                android:paddingRight="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -284,7 +268,6 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_down"
                 app:layout_constraintBottom_toBottomOf="@+id/userFilterTransfer"
                 app:layout_constraintEnd_toEndOf="@+id/userFilterTransfer"
@@ -311,7 +294,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="7dp"
-                android:layout_marginRight="7dp"
                 android:layout_weight="1">
 
                 <Spinner
@@ -321,7 +303,6 @@
                     android:background="@drawable/spinner_filter_bg"
                     android:padding="10dp"
                     android:paddingEnd="25dp"
-                    android:paddingRight="25dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -332,7 +313,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
                     android:src="@drawable/ic_down"
                     app:layout_constraintBottom_toBottomOf="@+id/sectionFilter"
                     app:layout_constraintEnd_toEndOf="@+id/sectionFilter"
@@ -343,7 +323,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
-                android:layout_marginLeft="7dp"
                 android:layout_weight="1">
 
                 <Spinner
@@ -353,7 +332,6 @@
                     android:background="@drawable/spinner_filter_bg"
                     android:padding="10dp"
                     android:paddingEnd="25dp"
-                    android:paddingRight="25dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -364,7 +342,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
                     android:src="@drawable/ic_down"
                     app:layout_constraintBottom_toBottomOf="@+id/walletFilter"
                     app:layout_constraintEnd_toEndOf="@+id/walletFilter"
@@ -376,7 +353,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="14dp">
 
@@ -394,7 +370,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="54dp"
-                android:layout_marginLeft="54dp"
                 android:fontFamily="@font/montserrat"
                 android:text="Контрагент"
                 android:textSize="14sp"
@@ -418,7 +393,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="14dp"
             android:visibility="gone">
@@ -430,7 +404,6 @@
                 android:background="@drawable/spinner_filter_bg"
                 android:padding="10dp"
                 android:paddingEnd="25dp"
-                android:paddingRight="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -442,7 +415,6 @@
                 android:layout_height="24dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_down"
                 app:layout_constraintBottom_toBottomOf="@+id/categoryFilter"
                 app:layout_constraintEnd_toEndOf="@+id/categoryFilter"
@@ -453,7 +425,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="14dp">
 
@@ -464,7 +435,6 @@
                 android:background="@drawable/spinner_filter_bg"
                 android:padding="10dp"
                 android:paddingEnd="25dp"
-                android:paddingRight="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -475,7 +445,6 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_down"
                 app:layout_constraintBottom_toBottomOf="@+id/periodFilter"
                 app:layout_constraintEnd_toEndOf="@+id/periodFilter"
@@ -511,10 +480,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/spinner_filter_bg"
-                    android:drawableRight="@drawable/ic_date"
                     android:drawableTint="#358AED"
                     android:gravity="center_vertical"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    app:drawableEndCompat="@drawable/ic_date" />
             </LinearLayout>
 
             <LinearLayout
@@ -539,10 +508,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/spinner_filter_bg"
-                    android:drawableRight="@drawable/ic_date"
                     android:drawableTint="#358AED"
                     android:gravity="center_vertical"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    app:drawableEndCompat="@drawable/ic_date" />
             </LinearLayout>
         </LinearLayout>
 
@@ -561,7 +530,6 @@
                 android:background="@drawable/spinner_filter_bg"
                 android:padding="10dp"
                 android:paddingEnd="25dp"
-                android:paddingRight="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -572,7 +540,6 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_down"
                 app:layout_constraintBottom_toBottomOf="@+id/userFilter"
                 app:layout_constraintEnd_toEndOf="@+id/userFilter"
@@ -600,7 +567,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="14dp"
-        android:layout_marginLeft="14dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat"

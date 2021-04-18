@@ -48,7 +48,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
             android:layout_marginTop="50dp"
             android:fontFamily="@font/montserrat"
             android:text="Почта"
@@ -77,6 +76,7 @@
                 android:fontFamily="@font/montserrat"
                 android:hint="Введите почту"
                 android:padding="10dp"
+                android:textSize="14sp"
                 android:textCursorDrawable="@drawable/cursor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +88,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat"
             android:text="Пароль"
@@ -120,6 +119,7 @@
                 android:padding="10dp"
                 android:inputType="textPassword"
                 android:hint="Введите пароль"
+                android:textSize="14sp"
                 android:textCursorDrawable="@drawable/cursor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,66 +127,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/passwordLayout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/textView4"-->
-<!--            android:layout_marginTop="10dp">-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/visible"-->
-<!--                android:layout_width="24dp"-->
-<!--                android:layout_height="24dp"-->
-<!--                android:layout_marginEnd="15dp"-->
-<!--                android:layout_marginRight="15dp"-->
-<!--                android:src="@drawable/ic_visible"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/passwordET"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/passwordET" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/invisible"-->
-<!--                android:layout_width="24dp"-->
-<!--                android:layout_height="24dp"-->
-<!--                android:layout_marginEnd="15dp"-->
-<!--                android:layout_marginRight="15dp"-->
-<!--                android:src="@drawable/ic_invisible"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/passwordET"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/passwordET"-->
-<!--                android:visibility="invisible"/>-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/passwordET"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:background="@drawable/on_focused"-->
-<!--                android:fontFamily="@font/montserrat"-->
-<!--                android:hint="Введите пароль"-->
-<!--                android:padding="10dp"-->
-<!--                android:inputType="textPassword"-->
-<!--                android:textCursorDrawable="@drawable/cursor"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-
-
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
         <TextView
             android:id="@+id/errorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_close"
             android:drawablePadding="5dp"
             android:fontFamily="@font/montserrat"
             android:gravity="center"
@@ -194,14 +140,14 @@
             android:textColor="#F24D4D"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutTextInput" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutTextInput"
+            app:drawableStartCompat="@drawable/ic_close" />
 
         <CheckBox
             android:id="@+id/rememberMe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/montserrat"
             android:text="Запомнить"
@@ -222,7 +168,6 @@
             android:textColor="@color/white"
             android:textFontWeight="600"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rememberMe" />
@@ -231,7 +176,7 @@
             android:id="@+id/pass_forget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat"

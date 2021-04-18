@@ -171,7 +171,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
 
     private fun getSection() = CoroutineScope(Dispatchers.Main).launch {
         spinnerSectionFilter(requireContext(), sectionFilter)
-        sectionFilter.onItemSelectedListener = object :
+        sectionFilter?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -207,7 +207,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         spinnerPeriodFilter(requireContext(), periodFilter)
         spinnerPeriodFilter(requireContext(), periodFilterTransfer)
 
-        periodFilter.onItemSelectedListener = object :
+        periodFilter?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onItemSelected(
@@ -248,6 +248,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                     icPeriod.setImageResource(R.drawable.ic_close3)
                     icPeriod.setOnClickListener {
                         periodFilter.setSelection(0)
+                        periodLayout?.visibility = View.GONE
                     }
                 } else {
                     periodFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
@@ -260,7 +261,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             }
         }
 
-        periodFilterTransfer.onItemSelectedListener = object :
+        periodFilterTransfer?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onItemSelected(
@@ -301,6 +302,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                     icPeriodTransfer.setImageResource(R.drawable.ic_close3)
                     icPeriodTransfer.setOnClickListener {
                         periodFilterTransfer.setSelection(0)
+                        periodLayoutTransfer?.visibility = View.GONE
                     }
                 } else {
                     periodFilterTransfer.setBackgroundResource(R.drawable.spinner_filter_bg)
@@ -316,7 +318,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
 
     private fun getTransactionSpinner() = CoroutineScope(Dispatchers.Default).launch {
         spinnerTransaction(requireContext(), operationFilter)
-        operationFilter.onItemSelectedListener = object :
+        operationFilter?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -330,7 +332,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         getCategory(section!!, type!!)
                     }
                     operationFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                    (parent?.getChildAt(0) as TextView)?.setTextColor(Color.parseColor("#FFFFFF"))
+                    (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
                     icOperation.setImageResource(R.drawable.ic_close3)
                     icOperation.setOnClickListener {
                         operationFilter.setSelection(0)
@@ -374,7 +376,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
 
                     if (categoryFilter != null) {
                         spinnerCategoryFilter(requireContext(), categoriesArray, categoryFilter)
-                        categoryFilter.onItemSelectedListener =
+                        categoryFilter?.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(
                                     parent: AdapterView<*>, view: View?, position: Int, id: Long
@@ -557,23 +559,23 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             )
 
                         if (listView != null) {
-                            listView.adapter = arrayAdapter
+                            listView?.adapter = arrayAdapter
                         } else {
                             logs("listView, FiltersFragment")
                         }
 
-                        searchAgent.setOnSearchClickListener {
-                            listView.visibility = View.VISIBLE
-                            hintSearch.visibility = View.GONE
+                        searchAgent?.setOnSearchClickListener {
+                            listView?.visibility = View.VISIBLE
+                            hintSearch?.visibility = View.GONE
                         }
 
-                        searchAgent.setOnCloseListener {
-                            listView.visibility = View.GONE
-                            hintSearch.visibility = View.VISIBLE
+                        searchAgent?.setOnCloseListener {
+                            listView?.visibility = View.GONE
+                            hintSearch?.visibility = View.VISIBLE
                             false
                         }
 
-                        searchAgent.setOnQueryTextListener(object :
+                        searchAgent?.setOnQueryTextListener(object :
                             android.widget.SearchView.OnQueryTextListener {
                             override fun onQueryTextSubmit(query: String?): Boolean {
                                 arrayAdapter.filter.filter(query)
@@ -586,11 +588,11 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             }
                         })
 
-                        listView.onItemClickListener =
+                        listView?.onItemClickListener =
                             AdapterView.OnItemClickListener { _, _, i, _ ->
                                 agent = arrayAdapter.getItem(i)?.id
-                                searchAgent.setQuery("${arrayAdapter.getItem(i)?.name}", true)
-                                listView.visibility = View.GONE
+                                searchAgent?.setQuery("${arrayAdapter.getItem(i)?.name}", true)
+                                listView?.visibility = View.GONE
                             }
                     } else {
                         logs("Error in FiltersFr, AgentGet")

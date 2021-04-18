@@ -316,7 +316,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="14dp"
-                        android:src="@drawable/locked"
+                        android:src="@drawable/ic_wallet"
                         app:layout_constraintBottom_toBottomOf="@+id/addWallet"
                         app:layout_constraintStart_toStartOf="@+id/addWallet"
                         app:layout_constraintTop_toTopOf="@+id/addWallet" />
