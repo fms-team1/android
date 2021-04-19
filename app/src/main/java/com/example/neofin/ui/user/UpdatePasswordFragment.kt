@@ -30,54 +30,48 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
         val toolbar = (activity as AppCompatActivity).supportActionBar
         toolbar?.setDisplayHomeAsUpEnabled(false)
 
-        closeBT.setOnClickListener {
+        closeBT?.setOnClickListener {
             findNavController().navigate(R.id.navigation_user)
         }
 
-        change_Pass.setOnClickListener {
-            MainScope().launch(Dispatchers.Main) {
-
-                val newPass = et_new_password.text.toString().trim()
-                val oldPass = et_old_password.text.toString().trim()
-                if (newPass == confirm_new_password.text.toString()) {
-                    if (newPass.isEmpty() || oldPass.isEmpty()) {
-                        error_update.text = "Поля не должны быть пустыми"
-                        error_update.visibility = View.VISIBLE
-                        et_old_password.setBackgroundResource(R.drawable.error_edit_text)
-                        et_old_password.requestFocus()
-                        return@launch
-                    }
-                    error_update.visibility = View.GONE
-                    changePassword(newPass, oldPass)
-
-                    findNavController().navigate(R.id.navigation_user)
-
-                    val preferences: SharedPreferences? =
-                        requireActivity().getSharedPreferences("checkbox", Context.MODE_PRIVATE)
-
-                    preferences?.edit()?.remove("password")?.apply()
-                    val editor = preferences?.edit()
-                    val password = et_new_password.text.toString().trim()
-                    if (password.isEmpty()) {
-                        toast(requireContext(),"Нет пароля")
-                    } else {
-                        editor?.putString("password",password)
-                        editor?.apply()
-                    }
-                } else {
-                    confirm_new_password.setBackgroundResource(R.drawable.error_edit_text)
-                    confirm_new_password.requestFocus()
-                    et_new_password.setBackgroundResource(R.drawable.error_edit_text)
-                    et_new_password.requestFocus()
-                    error_update.visibility  = View.VISIBLE
-                    error_update.text = "Пароли не совпадают!"
+        change_Pass?.setOnClickListener {
+            val newPass = et_new_password.text.toString().trim()
+            val oldPass = et_old_password.text.toString().trim()
+            if (newPass == confirm_new_password.text.toString()) {
+                if (newPass.isEmpty() || oldPass.isEmpty()) {
+                    error_update?.text = "Поля не должны быть пустыми"
+                    error_update?.visibility = View.VISIBLE
+                    et_old_password.setBackgroundResource(R.drawable.error_edit_text)
+                    et_old_password.requestFocus()
                 }
+                error_update?.visibility = View.GONE
+                changePassword(newPass, oldPass)
+
+                val preferences: SharedPreferences? =
+                    requireActivity().getSharedPreferences("checkbox", Context.MODE_PRIVATE)
+
+                preferences?.edit()?.remove("password")?.apply()
+                val editor = preferences?.edit()
+                val password = et_new_password.text.toString().trim()
+                if (password.isEmpty()) {
+                    toast(requireContext(),"Нет пароля")
+                } else {
+                    editor?.putString("password",password)
+                    editor?.apply()
+                }
+            } else {
+                confirm_new_password.setBackgroundResource(R.drawable.error_edit_text)
+                confirm_new_password.requestFocus()
+                et_new_password.setBackgroundResource(R.drawable.error_edit_text)
+                et_new_password.requestFocus()
+                error_update?.visibility  = View.VISIBLE
+                error_update?.text = "Пароли не совпадают!"
             }
         }
     }
 
     private fun changePassword(newPass: String, oldPass: String) =
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val retIn = RetrofitBuilder.getInstance()
             val token = RetrofitBuilder.getToken()
             val changePass = ChangePassword(newPass, oldPass)
@@ -88,12 +82,16 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
                         response.code() == 404 -> {
                             snackbar(requireView(), "Ошибка изменения!", Color.parseColor("#E11616"))
                         }
+                        response.code() == 400 -> {
+                            snackbar(requireView(), "Пароли не совпадают!", Color.parseColor("#E11616"))
+                        }
                         response.code() == 200 -> {
                             snackbar(
                                 requireView(),
                                 "Пароль изменен!",
                                 Color.parseColor("#4AAF39")
                             )
+                            findNavController().navigate(R.id.navigation_user)
                         }
                         else -> {
                             snackbar(requireView(), "Неизвестная ошибка!", Color.parseColor("#E11616"))

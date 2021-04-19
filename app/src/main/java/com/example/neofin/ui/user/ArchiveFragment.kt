@@ -47,12 +47,12 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
         toolbar?.setDisplayHomeAsUpEnabled(false)
         toolbar?.hide()
 
-        closeBT.setOnClickListener {
+        closeBT?.setOnClickListener {
             findNavController().navigate(R.id.navigation_user)
         }
 
         spinnerArchive(requireContext(), chooseOption)
-        chooseOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        chooseOption?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View?, position: Int, id: Long
@@ -318,7 +318,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                             mDialogView?.change_wallet?.setOnClickListener {
                                 val name = mDialogView.et_archive_wallet_name.text.toString()
                                 val balance = mDialogView.et_archive_wallet_balance.text.toString()
-                                if (name.isNotEmpty() && balance == "") {
+                                if (name.isNullOrEmpty() && balance.isNullOrEmpty()) {
                                     archiveWallet(
                                         getBooleanWallet(mDialogView.isArchiveWallet.isChecked),
                                         adapter.id,

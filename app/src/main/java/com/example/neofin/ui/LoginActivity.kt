@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             loginPb?.visibility = View.VISIBLE
             mainLogin?.visibility = View.INVISIBLE
-            MainScope().launch(Dispatchers.IO) {
+            MainScope().launch(Dispatchers.Main) {
                 val email = emailET.text.toString().trim()
                 val password = passwordET.text.toString().trim()
                 if (email.isEmpty() || password.isEmpty()) {

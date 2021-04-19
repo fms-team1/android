@@ -39,12 +39,12 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         toolbar?.setDisplayHomeAsUpEnabled(false)
         toolbar?.hide()
 
-        closeBT.setOnClickListener {
+        closeBT?.setOnClickListener {
             findNavController().navigate(R.id.navigation_user)
         }
 
         spinnerGroup(requireContext(), group_add)
-        group_add.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        group_add?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View?, position: Int, id: Long
@@ -68,7 +68,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         }
 
         try {
-            add_user_BT.setOnClickListener {
+            add_user_BT?.setOnClickListener {
                 addNewUser(
                     user_email.text.toString(), data,  user_name.text.toString(),user_pass.text.toString(),
                     user_phone.text.toString(), user_surname.text.toString())
@@ -79,7 +79,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
 
     }
 
-    private fun dialogCreateGroup() = CoroutineScope(Dispatchers.IO).launch {
+    private fun dialogCreateGroup() = CoroutineScope(Dispatchers.Main).launch {
         val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_group,null)
         val mBuilder = context?.let { it1 ->
             AlertDialog.Builder(it1)
@@ -149,19 +149,19 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
                         logs("listViewGroup, AddNewUserFr")
                     }
 
-                    searchGroup.setOnSearchClickListener {
-                        listViewGroup.visibility = View.VISIBLE
-                        hintSearchGroup.visibility = View.GONE
+                    searchGroup?.setOnSearchClickListener {
+                        listViewGroup?.visibility = View.VISIBLE
+                        hintSearchGroup?.visibility = View.GONE
                     }
 
-                    searchGroup.setOnCloseListener {
-                        listViewGroup.visibility = View.GONE
-                        hintSearchGroup.visibility = View.VISIBLE
-                        searchLayout.visibility = View.GONE
+                    searchGroup?.setOnCloseListener {
+                        listViewGroup?.visibility = View.GONE
+                        hintSearchGroup?.visibility = View.VISIBLE
+                        searchLayout?.visibility = View.GONE
                         false
                     }
 
-                    searchGroup.setOnQueryTextListener(object :
+                    searchGroup?.setOnQueryTextListener(object :
                         android.widget.SearchView.OnQueryTextListener {
                         override fun onQueryTextSubmit(query: String?): Boolean {
                             arrayAdapter.filter.filter(query)
@@ -178,8 +178,8 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
                         listViewGroup?.onItemClickListener =
                             AdapterView.OnItemClickListener { _, _, i, _ ->
                                 arrayAdapter.getItem(i)?.id?.let { data.add(it) }
-                                searchGroup.setQuery("${arrayAdapter.getItem(i)?.name}", true)
-                                listViewGroup.visibility = View.GONE
+                                searchGroup?.setQuery("${arrayAdapter.getItem(i)?.name}", true)
+                                listViewGroup?.visibility = View.GONE
                             }
                     } else {
                         logs("Error in AddNewUserFr, getGroups")
