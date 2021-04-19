@@ -42,6 +42,8 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
     private var walletTo = 0
 
     private val calendar = Calendar.getInstance()
+    val sdf = SimpleDateFormat("dd.MM.yyyy")
+    val currentDate = sdf.format(Date())
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,10 +52,9 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         toolbar?.setDisplayHomeAsUpEnabled(false)
         toolbar?.hide()
         try {
-            val sdf = SimpleDateFormat("dd.MM.yyyy")
-            val currentDate = sdf.format(Date())
 
-            backBT.setOnClickListener {
+
+            backBT?.setOnClickListener {
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 startActivity(intent)
             }
@@ -64,34 +65,31 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
 
             setupDatePicker()
 
-            addExpenseBT.setOnClickListener {
+            addExpenseBT?.setOnClickListener {
                 type = 1
-                expenseOrIncome.visibility = View.VISIBLE
-                transferLayout.visibility = View.GONE
+                expenseOrIncome?.visibility = View.VISIBLE
+                transferLayout?.visibility = View.GONE
                 addExpenseBT.setTextColor(Color.parseColor("#1778E9"))
                 addIncomeBT.setTextColor(Color.parseColor("#000000"))
                 addTransferBT.setTextColor(Color.parseColor("#000000"))
                 sectionAdd.setSelection(0)
             }
 
-            addIncomeBT.setOnClickListener {
+            addIncomeBT?.setOnClickListener {
                 type = 0
-                expenseOrIncome.visibility = View.VISIBLE
-                transferLayout.visibility = View.GONE
+                expenseOrIncome?.visibility = View.VISIBLE
+                transferLayout?.visibility = View.GONE
                 addIncomeBT.setTextColor(Color.parseColor("#1778E9"))
                 addTransferBT.setTextColor(Color.parseColor("#000000"))
                 addExpenseBT.setTextColor(Color.parseColor("#000000"))
                 sectionAdd.setSelection(0)
             }
 
-            dateAddTextTransfer.text = currentDate
-            dateAddText.text = currentDate
-
             val sumTransfer = sumAddTransfer.text
             val commentTransfer = commentAddTransfer.text
-            addTransferBT.setOnClickListener {
-                expenseOrIncome.visibility = View.GONE
-                transferLayout.visibility = View.VISIBLE
+            addTransferBT?.setOnClickListener {
+                expenseOrIncome?.visibility = View.GONE
+                transferLayout?.visibility = View.VISIBLE
                 addTransferBT.setTextColor(Color.parseColor("#1778E9"))
                 addExpenseBT.setTextColor(Color.parseColor("#000000"))
                 addIncomeBT.setTextColor(Color.parseColor("#000000"))
@@ -110,7 +108,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
             val comment = commentAdd.text
             val agent = agentAdd.text
             sendButton.setOnClickListener {
-                formatDate(currentDate)?.let { it1 ->
+                formatDate(dateAddText.text.toString())?.let { it1 ->
                     addExpenseOrIncome(
                         Integer.parseInt(sum.toString().trim()),
                         categoryId,
@@ -127,7 +125,9 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
     }
 
     private fun setupDatePicker() {
-        dateAddTextTransfer.setOnClickListener {
+        dateAddTextTransfer?.text = currentDate
+        dateAddText?.text = currentDate
+        dateAddTextTransfer?.setOnClickListener {
             DatePickerDialog(
                 requireContext(),
                 date(dateAddTextTransfer),
@@ -137,7 +137,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
             ).show()
         }
 
-        dateAddText.setOnClickListener {
+        dateAddText?.setOnClickListener {
             DatePickerDialog(
                 requireContext(),
                 date(dateAddText),
@@ -150,7 +150,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
 
     private fun getSection(){
         spinnerSection(requireContext(), sectionAdd)
-        sectionAdd.onItemSelectedListener = object :
+        sectionAdd?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -158,11 +158,11 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
             ) {
                 val sectionName: SectionName = parent.selectedItem as SectionName
                 if (sectionName.backName != -1) {
-                    categoryLayout.visibility = View.VISIBLE
+                    categoryLayout?.visibility = View.VISIBLE
                     sectionType = sectionName.backName
                     getCategory(sectionType, type)
                 } else {
-                    categoryLayout.visibility = View.GONE
+                    categoryLayout?.visibility = View.GONE
                     sectionType = -1
                 }
 
@@ -187,7 +187,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
 
                     if (categoryAdd != null) {
                         spinnerCategory(requireContext(), categoriesArray, categoryAdd)
-                        categoryAdd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        categoryAdd?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
                                 view: View?,
@@ -231,7 +231,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
 
                     if (walletAdd != null) {
                         spinnerWallet(requireContext(), walletArray, walletAdd)
-                        walletAdd.onItemSelectedListener = object :
+                        walletAdd?.onItemSelectedListener = object :
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
@@ -251,7 +251,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                     if (walletAddFrom != null && walletAddTo != null) {
                         spinnerWallet(requireContext(), walletArray, walletAddFrom)
                         spinnerWallet(requireContext(), walletArray, walletAddTo)
-                        walletAddFrom.onItemSelectedListener = object :
+                        walletAddFrom?.onItemSelectedListener = object :
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
@@ -265,7 +265,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                             }
                         }
 
-                        walletAddTo.onItemSelectedListener = object :
+                        walletAddTo?.onItemSelectedListener = object :
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
