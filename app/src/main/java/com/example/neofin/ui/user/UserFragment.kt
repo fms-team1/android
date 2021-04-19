@@ -162,7 +162,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         spinnerSection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -178,7 +178,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         spinnerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
