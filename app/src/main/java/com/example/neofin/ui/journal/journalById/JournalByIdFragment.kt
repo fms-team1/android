@@ -35,11 +35,11 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
 
         getJournalById(id!!)
 
-        back.setOnClickListener {
+        back?.setOnClickListener {
             findNavController().navigate(R.id.navigation_journal)
         }
 
-        change_button.setOnClickListener {
+        change_button?.setOnClickListener {
             val bundle = Bundle().apply {
                 putInt("updateId", id)
                 putBoolean("isFiltered", false)
@@ -65,42 +65,42 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
                 sectionId = response.body()?.neoSectionId
                 typeId = response.body()?.transactionTypeId
 
-                title.text = response.body()?.categoryName
-                date.text = formatDateAdapters(response.body()?.createdDate.toString().substringBefore('T'))
-                sum.text = response.body()?.amount.toString()
-                user.text = "$name $surname"
-                agent.text = "$nameAgent $surnameAgent"
+                title?.text = response.body()?.categoryName
+                date?.text = formatDateAdapters(response.body()?.createdDate.toString().substringBefore('T'))
+                sum?.text = response.body()?.amount.toString()
+                user?.text = "$name $surname"
+                agent?.text = "$nameAgent $surnameAgent"
 
                 when (response.body()?.neoSection) {
-                    "NEOBIS" -> section.text = "Neobis"
-                    "NEOLABS" -> section.text = "Neolabs"
+                    "NEOBIS" -> section?.text = "Neobis"
+                    "NEOLABS" -> section?.text = "Neolabs"
                 }
 
 
-                comment.text = response.body()?.comment
+                comment?.text = response.body()?.comment
                 if(response.body()?.comment == null){
-                    comment.text = "Нет примечаний"
+                    comment?.text = "Нет примечаний"
                 }
 
                 when (response.body()?.transactionType) {
                     "INCOME" -> {
-                        category.text = "Доход"
-                        transferLayout.visibility = View.GONE
-                        expenseIncomeLayout.visibility = View.VISIBLE
-                        wallet.text = response.body()?.walletName
+                        category?.text = "Доход"
+                        transferLayout?.visibility = View.GONE
+                        expenseIncomeLayout?.visibility = View.VISIBLE
+                        wallet?.text = response.body()?.walletName
                     }
                     "EXPENSE" -> {
-                        category.text = "Расход"
-                        transferLayout.visibility = View.GONE
-                        expenseIncomeLayout.visibility = View.VISIBLE
-                        wallet.text = response.body()?.walletName
+                        category?.text = "Расход"
+                        transferLayout?.visibility = View.GONE
+                        expenseIncomeLayout?.visibility = View.VISIBLE
+                        wallet?.text = response.body()?.walletName
                     }
                     else -> {
-                        category.text = "Перевод"
-                        transferLayout.visibility = View.VISIBLE
-                        expenseIncomeLayout.visibility = View.GONE
-                        wallet1.text = response.body()?.walletName
-                        wallet2.text = response.body()?.transferWalletName
+                        category?.text = "Перевод"
+                        transferLayout?.visibility = View.VISIBLE
+                        expenseIncomeLayout?.visibility = View.GONE
+                        wallet1?.text = response.body()?.walletName
+                        wallet2?.text = response.body()?.transferWalletName
                     }
                 }
             }

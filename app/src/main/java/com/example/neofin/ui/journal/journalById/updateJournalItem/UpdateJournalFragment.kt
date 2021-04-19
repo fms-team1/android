@@ -212,7 +212,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                             }
                     }
                 } else {
-                    logs("Error in FiltersFragment, getAgent")
+                    logs("Error in UpdateJournalFr, getAgent")
                 }
 
             }
@@ -249,11 +249,11 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                                 }
                             }
                     } else {
-                        logs("categoryFilter is null")
+                        logs("UpdateJournalFr is null")
                     }
 
                 } else {
-                    logs("Error in FiltersFragment, getCategory")
+                    logs("Error in UpdateJournalFr, getCategory")
                 }
             }
 
@@ -334,7 +334,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                         logs("walletFilterFrom and walletFilterTo are null")
                     }
                 } else {
-                    logs("Error in FiltersFragment, getWallet")
+                    logs("Error in UpdateJournalFr, getWallet")
                 }
             }
 
