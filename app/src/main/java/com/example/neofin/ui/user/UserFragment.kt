@@ -50,7 +50,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         toolbar?.hide()
         getCurrentUser()
 
-        logout.setOnClickListener {
+        logout?.setOnClickListener {
             requireActivity().run {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
@@ -65,22 +65,22 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             }
 
         }
-        back_user.setOnClickListener {
+        back_user?.setOnClickListener {
             findNavController().navigate(R.id.navigation_home)
         }
 
-        change_textView.setOnClickListener {
+        change_textView?.setOnClickListener {
             findNavController().navigate(R.id.updatePasswordFragment)
         }
-        addUser.setOnClickListener {
+        addUser?.setOnClickListener {
             findNavController().navigate(R.id.addNewUserFragment)
         }
 
-        archive.setOnClickListener {
+        archive?.setOnClickListener {
             findNavController().navigate(R.id.archiveFragment)
         }
 
-        addWallet.setOnClickListener {
+        addWallet?.setOnClickListener {
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_wallet,null)
             val mBuilder = context?.let { it1 ->
                 AlertDialog.Builder(it1)
@@ -98,7 +98,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             }
         }
 
-        addCategory.setOnClickListener {
+        addCategory?.setOnClickListener {
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_category,null)
             val mBuilder = context?.let { it1 ->
                 AlertDialog.Builder(it1)
@@ -138,12 +138,12 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                     addCategoryLayout?.visibility = View.VISIBLE
                     archiveLayout?.visibility = View.VISIBLE
                 }
-                profile.text = "$name $surname"
-                email.text = response.body()?.email
+                profile?.text = "$name $surname"
+                email?.text = response.body()?.email
                 response.body()?.groups?.forEach {
-                    groups.text = it.name
+                    groups?.text = it.name
                 }
-                phoneProfile.text = response.body()?.phoneNumber
+                phoneProfile?.text = response.body()?.phoneNumber
             }
 
             override fun onFailure(call: Call<CurrentUser>, t: Throwable) {

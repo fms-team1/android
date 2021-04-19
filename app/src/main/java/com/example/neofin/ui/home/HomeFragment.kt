@@ -37,46 +37,43 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val toolbar = (activity as AppCompatActivity).supportActionBar
         toolbar?.setDisplayHomeAsUpEnabled(false)
         toolbar?.hide()
-        try {
-            scrollView.visibility = View.INVISIBLE
-            homePb.visibility = View.VISIBLE
 
-            year.setOnClickListener {
-                yearTV.setTextColor(Color.parseColor("#1778E9"))
-                monthTV.setTextColor(Color.parseColor("#6B6666"))
-                weekTV.setTextColor(Color.parseColor("#6B6666"))
-                getHomePageByPeriod(getYear())
-                scrollView.visibility = View.VISIBLE
-                scrollView.visibility = View.INVISIBLE
-                homePb.visibility = View.VISIBLE
-            }
+        scrollView?.visibility = View.INVISIBLE
+        homePb?.visibility = View.VISIBLE
 
-            month.setOnClickListener {
-                yearTV.setTextColor(Color.parseColor("#6B6666"))
-                monthTV.setTextColor(Color.parseColor("#1778E9"))
-                weekTV.setTextColor(Color.parseColor("#6B6666"))
-                getHomePageByPeriod(getMonth())
-                scrollView.visibility = View.VISIBLE
-                scrollView.visibility = View.INVISIBLE
-                homePb.visibility = View.VISIBLE
-            }
-
-            week.setOnClickListener {
-                yearTV.setTextColor(Color.parseColor("#6B6666"))
-                monthTV.setTextColor(Color.parseColor("#6B6666"))
-                weekTV.setTextColor(Color.parseColor("#1778E9"))
-                getHomePageByPeriod(getWeek())
-                scrollView.visibility = View.VISIBLE
-                scrollView.visibility = View.INVISIBLE
-                homePb.visibility = View.VISIBLE
-            }
-
-            setupWalletRV()
-            setupRecyclerview()
-            getHomePage()
-        } catch (e: Exception) {
-            logs("Error in Home, onViewCreated")
+        year?.setOnClickListener {
+            yearTV?.setTextColor(Color.parseColor("#1778E9"))
+            monthTV?.setTextColor(Color.parseColor("#6B6666"))
+            weekTV?.setTextColor(Color.parseColor("#6B6666"))
+            getHomePageByPeriod(getYear())
+            scrollView?.visibility = View.VISIBLE
+            scrollView?.visibility = View.INVISIBLE
+            homePb?.visibility = View.VISIBLE
         }
+
+        month?.setOnClickListener {
+            yearTV?.setTextColor(Color.parseColor("#6B6666"))
+            monthTV?.setTextColor(Color.parseColor("#1778E9"))
+            weekTV?.setTextColor(Color.parseColor("#6B6666"))
+            getHomePageByPeriod(getMonth())
+            scrollView?.visibility = View.VISIBLE
+            scrollView?.visibility = View.INVISIBLE
+            homePb?.visibility = View.VISIBLE
+        }
+
+        week?.setOnClickListener {
+            yearTV?.setTextColor(Color.parseColor("#6B6666"))
+            monthTV?.setTextColor(Color.parseColor("#6B6666"))
+            weekTV?.setTextColor(Color.parseColor("#1778E9"))
+            getHomePageByPeriod(getWeek())
+            scrollView?.visibility = View.VISIBLE
+            scrollView?.visibility = View.INVISIBLE
+            homePb?.visibility = View.VISIBLE
+        }
+
+        setupWalletRV()
+        setupRecyclerview()
+        getHomePage()
     }
 
     private fun getHomePage() = CoroutineScope(Dispatchers.IO).launch {
@@ -87,11 +84,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 @SuppressLint("SetTextI18n")
                 override fun onResponse(call: Call<Transaction>, response: Response<Transaction>) {
                     if (response.isSuccessful) {
-                        scrollView.visibility = View.VISIBLE
-                        homePb.visibility = View.INVISIBLE
-                        expense.text =
+                        scrollView?.visibility = View.VISIBLE
+                        homePb?.visibility = View.INVISIBLE
+                        expense?.text =
                             "- ${response.body()?.incomesAndExpensesHomeModel?.expense} с"
-                        income.text =
+                        income?.text =
                             "${response.body()?.incomesAndExpensesHomeModel?.income} с"
 
                         response.body()?.walletBalance?.let { listWallet ->
@@ -116,10 +113,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
                 }
                 override fun onFailure(call: Call<Transaction>, t: Throwable) {
-                    scrollView.visibility = View.INVISIBLE
-                    homePb.visibility = View.INVISIBLE
-                    noInternet.visibility = View.VISIBLE
-                    noInternet.text = "Нет интернет соединения"
+                    scrollView?.visibility = View.INVISIBLE
+                    homePb?.visibility = View.INVISIBLE
+                    noInternet?.visibility = View.VISIBLE
+                    noInternet?.text = "Нет интернет соединения"
                 }
             })
         } catch (e: Exception) {
@@ -135,11 +132,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 @SuppressLint("SetTextI18n")
                 override fun onResponse(call: Call<Transaction>, response: Response<Transaction>) {
                     if (response.isSuccessful) {
-                        scrollView.visibility = View.VISIBLE
-                        homePb.visibility = View.INVISIBLE
-                        expense.text =
+                        scrollView?.visibility = View.VISIBLE
+                        homePb?.visibility = View.INVISIBLE
+                        expense?.text =
                             "- ${response.body()?.incomesAndExpensesHomeModel?.expense} с"
-                        income.text =
+                        income?.text =
                             "${response.body()?.incomesAndExpensesHomeModel?.income} с"
 
                         response.body()?.walletBalance?.let { listWallet ->
@@ -166,10 +163,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
 
                 override fun onFailure(call: Call<Transaction>, t: Throwable) {
-                    scrollView.visibility = View.INVISIBLE
-                    homePb.visibility = View.INVISIBLE
-                    noInternet.visibility = View.VISIBLE
-                    noInternet.text = "Нет интернет соединения"
+                    scrollView?.visibility = View.INVISIBLE
+                    homePb?.visibility = View.INVISIBLE
+                    noInternet?.visibility = View.VISIBLE
+                    noInternet?.text = "Нет интернет соединения"
                 }
             })
         } catch (e: Exception) {

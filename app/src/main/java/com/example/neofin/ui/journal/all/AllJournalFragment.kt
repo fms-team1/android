@@ -29,7 +29,7 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
         getJournal()
 
         allPB?.visibility = View.VISIBLE
-        allJournalRV.visibility = View.INVISIBLE
+        allJournalRV?.visibility = View.INVISIBLE
 
         allAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
@@ -53,7 +53,7 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
                         allAdapter.notifyDataSetChanged()
                     }
                     allPB?.visibility = View.GONE
-                    allJournalRV.visibility = View.VISIBLE
+                    allJournalRV?.visibility = View.VISIBLE
                 } else {
                     logs("Error in AllJournalFr, getJournal")
                     allPB?.visibility = View.GONE

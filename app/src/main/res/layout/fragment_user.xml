@@ -52,6 +52,7 @@
                 android:textColor="@color/black"
                 android:textSize="17sp"
                 android:layout_marginTop="10dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -65,6 +66,7 @@
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/montserrat"
                 android:text="Персональные данные"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -224,6 +226,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="Пользователи"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -263,7 +267,7 @@
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/montserrat"
                         android:text="Добавить пользователей"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/addUser"
                         app:layout_constraintStart_toStartOf="@+id/imageView2"
                         app:layout_constraintTop_toTopOf="@+id/addUser" />
@@ -282,7 +286,7 @@
                     android:id="@+id/addWalletLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -294,6 +298,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="Кошелек"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -323,7 +329,7 @@
                         android:layout_marginStart="35dp"
                         android:fontFamily="@font/montserrat"
                         android:text="Добавить кошелек"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/addWallet"
                         app:layout_constraintStart_toStartOf="@+id/imageView7"
                         app:layout_constraintTop_toTopOf="@+id/addWallet" />
@@ -342,7 +348,7 @@
                     android:id="@+id/addCategoryLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -354,6 +360,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="Категория"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -372,7 +380,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="14dp"
-                        android:src="@drawable/locked"
+                        android:src="@drawable/ic_category"
                         app:layout_constraintBottom_toBottomOf="@+id/addCategory"
                         app:layout_constraintStart_toStartOf="@+id/addCategory"
                         app:layout_constraintTop_toTopOf="@+id/addCategory" />
@@ -383,7 +391,7 @@
                         android:layout_marginStart="35dp"
                         android:fontFamily="@font/montserrat"
                         android:text="Добавить категорию"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/addCategory"
                         app:layout_constraintStart_toStartOf="@+id/imageView0"
                         app:layout_constraintTop_toTopOf="@+id/addCategory" />
@@ -401,7 +409,7 @@
                     android:id="@+id/archiveLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -413,6 +421,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="Данные"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -431,7 +441,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="14dp"
-                        android:src="@drawable/locked"
+                        android:src="@drawable/ic_archive"
                         app:layout_constraintBottom_toBottomOf="@+id/archive"
                         app:layout_constraintStart_toStartOf="@+id/archive"
                         app:layout_constraintTop_toTopOf="@+id/archive" />
@@ -442,7 +452,7 @@
                         android:layout_marginStart="35dp"
                         android:fontFamily="@font/montserrat"
                         android:text="Изменение и архивирование"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/archive"
                         app:layout_constraintStart_toStartOf="@+id/imageAr"
                         app:layout_constraintTop_toTopOf="@+id/archive" />
@@ -460,7 +470,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="80dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -471,7 +481,9 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat"
                         android:text="Безопасность"
+                        android:textSize="15sp"
                         android:textColor="@color/black"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -500,7 +512,7 @@
                         android:layout_marginStart="35dp"
                         android:fontFamily="@font/montserrat"
                         android:text="Изменить пароль"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/change_textView"
                         app:layout_constraintStart_toStartOf="@+id/imageView4"
                         app:layout_constraintTop_toTopOf="@+id/change_textView" />
@@ -518,7 +530,7 @@
                         android:id="@+id/imageView1"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="30dp"
                         android:src="@drawable/log_out"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/change_textView" />
@@ -529,7 +541,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="30dp"
                         android:fontFamily="@font/montserrat"
                         android:text="Выйти"
                         android:textColor="#1076ED"
