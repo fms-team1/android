@@ -55,7 +55,11 @@ class FilteredJournalAdapter : RecyclerView.Adapter<FilteredJournalAdapter.MyVie
             holder.itemView.nameFiltered.text = current.categoryName
             holder.itemView.dateFiltered.text = formatDateAdapters(current.createdDate.substringBefore('T'))
             holder.itemView.nameSurnameUser.text = "${current.accountantName} ${current.accountantSurname}"
-            holder.itemView.nameSurnameAgent.text = "${current.counterpartyName} ${current.counterpartySurname}"
+            if (current.counterpartySurname == null){
+                holder.itemView.nameSurnameAgent.text = current.counterpartyName
+            } else {
+                holder.itemView.nameSurnameAgent.text = "${current.counterpartyName} ${current.counterpartySurname}"
+            }
             holder.itemView.walletFiltered.text = current.walletName
             holder.itemView.commentFiltered.text = current.comment
 

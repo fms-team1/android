@@ -623,7 +623,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
 
                     if (userFilter != null) {
                         spinnerUserFilter(requireContext(), userArray, userFilter)
-                        userFilter.onItemSelectedListener = object :
+                        userFilter?.onItemSelectedListener = object :
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
@@ -635,7 +635,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                                     userFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
                                     (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
                                     icUser.setImageResource(R.drawable.ic_close3)
-                                    icUser.setOnClickListener {
+                                    icUser?.setOnClickListener {
                                         userFilter.setSelection(0)
                                     }
                                 } else {
@@ -653,11 +653,11 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
 
                     if (userFilterTransfer != null) {
                         spinnerUserFilter(requireContext(), userArray, userFilterTransfer)
-                        userFilterTransfer.onItemSelectedListener = object :
+                        userFilterTransfer?.onItemSelectedListener = object :
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
-                                view: View, position: Int, id: Long
+                                view: View?, position: Int, id: Long
                             ) {
                                 val userIdName: UserIdName = parent.selectedItem as UserIdName
                                 if (userIdName.id != -1) {
@@ -665,7 +665,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                                     userFilterTransfer.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
                                     (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
                                     icUserTransfer.setImageResource(R.drawable.ic_close3)
-                                    icUserTransfer.setOnClickListener {
+                                    icUserTransfer?.setOnClickListener {
                                         userFilterTransfer.setSelection(0)
                                     }
                                 } else {

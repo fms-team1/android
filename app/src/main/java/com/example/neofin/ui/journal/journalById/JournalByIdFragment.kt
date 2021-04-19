@@ -24,6 +24,7 @@ import java.util.*
 class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
     var sectionId: Int? = null
     var typeId: Int? = null
+    var amountById: Int? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,6 +46,7 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
                 putBoolean("isFiltered", false)
                 sectionId?.let { it1 -> putInt("singleSectionId", it1) }
                 typeId?.let { it1 -> putInt("singleTypeId", it1) }
+                amountById?.let { it1 -> putInt("amountById", it1) }
             }
             findNavController().navigate(R.id.updateJournalFragment, bundle)
         }
@@ -64,12 +66,18 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
 
                 sectionId = response.body()?.neoSectionId
                 typeId = response.body()?.transactionTypeId
+                amountById = response.body()?.amount
 
                 title?.text = response.body()?.categoryName
                 date?.text = formatDateAdapters(response.body()?.createdDate.toString().substringBefore('T'))
                 sum?.text = response.body()?.amount.toString()
                 user?.text = "$name $surname"
-                agent?.text = "$nameAgent $surnameAgent"
+                if (surnameAgent == null) {
+                    agent?.text = "$nameAgent"
+                } else {
+                    agent?.text = "$nameAgent $surnameAgent"
+                }
+
 
                 when (response.body()?.neoSection) {
                     "NEOBIS" -> section?.text = "Neobis"
@@ -78,7 +86,7 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
 
 
                 comment?.text = response.body()?.comment
-                if(response.body()?.comment == null){
+                if(response.body()?.comment == null || response.body()?.comment == ""){
                     comment?.text = "Нет примечаний"
                 }
 
@@ -86,12 +94,16 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
                     "INCOME" -> {
                         category?.text = "Доход"
                         transferLayout?.visibility = View.GONE
+                        sectionLay?.visibility = View.VISIBLE
+                        agentLay?.visibility = View.VISIBLE
                         expenseIncomeLayout?.visibility = View.VISIBLE
                         wallet?.text = response.body()?.walletName
                     }
                     "EXPENSE" -> {
                         category?.text = "Расход"
                         transferLayout?.visibility = View.GONE
+                        sectionLay?.visibility = View.VISIBLE
+                        agentLay?.visibility = View.VISIBLE
                         expenseIncomeLayout?.visibility = View.VISIBLE
                         wallet?.text = response.body()?.walletName
                     }
@@ -99,6 +111,8 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
                         category?.text = "Перевод"
                         transferLayout?.visibility = View.VISIBLE
                         expenseIncomeLayout?.visibility = View.GONE
+                        sectionLay?.visibility = View.GONE
+                        agentLay?.visibility = View.GONE
                         wallet1?.text = response.body()?.walletName
                         wallet2?.text = response.body()?.transferWalletName
                     }

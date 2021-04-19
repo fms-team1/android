@@ -62,6 +62,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
                 putInt("filteredJournal", it.id)
                 putInt("filteredType", it.transactionTypeId)
                 putInt("filteredSection", it.neoSectionId)
+                putInt("amount", it.amount)
                 putBoolean("isFromFiltered", true)
             }
             findNavController().navigate(R.id.updateJournalFragment, bundle)

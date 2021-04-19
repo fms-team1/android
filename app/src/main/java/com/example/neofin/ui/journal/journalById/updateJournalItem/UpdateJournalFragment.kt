@@ -65,9 +65,11 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
         if (isFiltered == false) {
             val singleSection = arguments?.getInt("singleSectionId")
             val singleType = arguments?.getInt("singleTypeId")
+            val singleAmount = arguments?.getInt("amountById")
             if (singleType != 2) {
                 notTransfer?.visibility = View.VISIBLE
                 walletTransferLayout?.visibility = View.GONE
+                updateAmount?.hint = "Старое значение: $singleAmount"
                 getCategory(singleSection!!, singleType!!)
                 changeBT?.setOnClickListener {
                     if (updateAmount?.text.toString().isNotEmpty()) {
@@ -83,6 +85,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
             } else {
                 notTransfer.visibility = View.GONE
                 walletTransferLayout?.visibility = View.VISIBLE
+                updateAmount?.hint = "Старое значение: $singleAmount"
                 changeBT?.setOnClickListener {
                     if (updateAmount?.text.toString().isNotEmpty()) {
                         val amountText = updateAmount?.text.toString()
@@ -96,10 +99,13 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                 }
             }
         }
-            if (isFromFiltered == true) {
+
+        if (isFromFiltered == true) {
             val filteredTypeId = arguments?.getInt("filteredType")
             val filteredSectionId = arguments?.getInt("filteredSection")
+            val amountD = arguments?.getInt("amount")
             if (filteredTypeId != 2) {
+                updateAmount?.hint = "Старое значение: $amountD"
                 notTransfer?.visibility = View.VISIBLE
                 walletTransferLayout?.visibility = View.GONE
                 getCategory(filteredSectionId!!, filteredTypeId!!)
@@ -117,6 +123,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
             } else {
                 notTransfer?.visibility = View.GONE
                 walletTransferLayout?.visibility = View.VISIBLE
+                updateAmount?.hint = "Старое значение: $amountD"
                 changeBT?.setOnClickListener {
                     if (updateAmount?.text.toString().isNotEmpty()) {
                         val amountText = updateAmount?.text.toString()

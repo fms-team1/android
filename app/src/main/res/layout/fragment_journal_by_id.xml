@@ -52,22 +52,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backLay"
         android:layout_below="@+id/backLay">
-        <TextView
+        <LinearLayout
+            android:id="@+id/sectionLay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:textSize="15sp"
-            android:fontFamily="@font/montserrat"
-            android:text="Организация"
-            android:textColor="#B5BBC9"/>
-        <TextView
-            android:id="@+id/section"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:textSize="15sp"
-            android:fontFamily="@font/montserrat"
-            android:textColor="@color/black"/>
+            android:orientation="vertical"
+            android:layout_marginStart="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:text="Организация"
+                android:textColor="#B5BBC9"/>
+            <TextView
+                android:id="@+id/section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/black"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -157,23 +162,29 @@
             android:textSize="15sp"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/black"/>
-        <TextView
+        <LinearLayout
+            android:id="@+id/agentLay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="20dp"
-            android:textSize="15sp"
-            android:fontFamily="@font/montserrat"
-            android:text="Контрагент"
-            android:textColor="#B5BBC9"/>
-        <TextView
-            android:id="@+id/agent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:textSize="15sp"
-            android:fontFamily="@font/montserrat"
-            android:textColor="@color/black"/>
+            android:orientation="vertical"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:text="Контрагент"
+                android:textColor="#B5BBC9"/>
+            <TextView
+                android:id="@+id/agent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/expenseIncomeLayout"
             android:layout_width="wrap_content"
