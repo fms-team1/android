@@ -173,7 +173,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         }
     }
 
-    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.Default).launch {
+    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCategory(token, section, type).enqueue(object : Callback<Category> {
@@ -217,7 +217,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         })
     }
 
-    private fun getWallet() = CoroutineScope(Dispatchers.Default).launch{
+    private fun getWallet() = CoroutineScope(Dispatchers.IO).launch{
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getWallets(token).enqueue(object : Callback<GetWallet> {
@@ -302,7 +302,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         agentName: String,
         date: String,
         walletId: Int
-    ) = CoroutineScope(Dispatchers.Default).launch {
+    ) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val addItems = AddTransactionOrExpense(amount, category, comment, agentName, date, walletId)
@@ -324,7 +324,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
     }
 
     private fun addTransfer(amount: Int, comment: String, walletFrom: Int, walletTo: Int) =
-        CoroutineScope(Dispatchers.Default).launch{
+        CoroutineScope(Dispatchers.IO).launch{
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val addItems = AddTransfer(amount, comment, walletFrom, walletTo)

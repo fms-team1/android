@@ -145,7 +145,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
     }
 
     private fun archiveCategory(status: String?, id: Int?, name: String?, section: String?, type: String?)
-    = CoroutineScope(Dispatchers.Main).launch {
+    = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val categoryBody = ArchiveCategory(status, id, name, section, type)
@@ -253,7 +253,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
         })
     }
 
-    private fun archiveGroup(boolean: String, id: Int, name: String) = CoroutineScope(Dispatchers.Main).launch {
+    private fun archiveGroup(boolean: String, id: Int, name: String) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val groupBody = ArchiveGroup(boolean, id, name)
@@ -349,7 +349,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
         })
     }
 
-    private fun archiveWallet(boolean: String, id: Int, name: String?, balance: Int?) = CoroutineScope(Dispatchers.Main).launch {
+    private fun archiveWallet(boolean: String, id: Int, name: String?, balance: Int?) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val walletBody = ArchiveWallet(balance, id, name, boolean)

@@ -27,6 +27,9 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.android.synthetic.main.fragment_chart.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -185,7 +188,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         neoSection: Int,
         startData: String,
         transactionType: Int
-    ){
+    ) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token  = RetrofitBuilder.getToken()
         retIn.getAnalytics(token, endData, neoSection, startData, transactionType).enqueue(object :
@@ -220,7 +223,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         neoSection: Int,
         startData: String,
         transactionType: Int
-    ){
+    ) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token  = RetrofitBuilder.getToken()
         retIn.getAnalytics(token, endData, neoSection, startData, transactionType).enqueue(object :

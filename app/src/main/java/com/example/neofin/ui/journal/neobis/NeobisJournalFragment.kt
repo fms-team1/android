@@ -31,6 +31,10 @@ class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
 
         getJournalBySection()
 
+        neobisPB?.visibility = View.VISIBLE
+        neobisJournalRV?.visibility = View.INVISIBLE
+
+
         adapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putInt("idJournal", it.id)
@@ -42,7 +46,7 @@ class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
         }
     }
 
-    private fun getJournalBySection() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getJournalBySection() = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getJournalBySection(token, "NEOBIS").enqueue(object :
@@ -56,12 +60,16 @@ class NeobisJournalFragment : Fragment(R.layout.fragment_neobis_journal) {
                         adapter.differ.submitList(it)
                         adapter.notifyDataSetChanged()
                     }
+                    neobisPB?.visibility = View.GONE
+                    neobisJournalRV?.visibility = View.VISIBLE
                 } else {
                     logs("Error in NeobisJournalFr, getJournal")
+                    neobisPB?.visibility = View.GONE
                 }
             }
             override fun onFailure(call: Call<MutableList<JournalItem>>, t: Throwable) {
                 logs(t.toString())
+                neobisPB?.visibility = View.GONE
             }
 
         })

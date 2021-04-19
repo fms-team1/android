@@ -76,8 +76,8 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         val sdf = SimpleDateFormat("dd.MM.yyyy")
         val currentDate = sdf.format(Date())
 
-        dateFromTransfer.text = currentDate
-        dateFrom.text = currentDate
+        dateFromTransfer?.text = currentDate
+        dateFrom?.text = currentDate
 
         closeButton.setOnClickListener {
             findNavController().navigate(
@@ -85,7 +85,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             )
         }
 
-        resetAll.setOnClickListener {
+        resetAll?.setOnClickListener {
             sectionFilter.setSelection(0)
             periodFilter.setSelection(0)
             walletFilter.setSelection(0)
@@ -97,7 +97,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             type = null
         }
 
-        acceptFilters.setOnClickListener {
+        acceptFilters?.setOnClickListener {
             val bundle = Bundle().apply {
                 if (walletId == null) {
                     putBoolean("isEmptyWallet", true)
@@ -169,7 +169,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         }
     }
 
-    private fun getSection() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getSection() = CoroutineScope(Dispatchers.IO).launch {
         spinnerSectionFilter(requireContext(), sectionFilter)
         sectionFilter?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -181,20 +181,20 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 if (sectionName.backName != -1) {
                     section = sectionName.backName
                     sectionFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                    (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
                     icSection.setImageResource(R.drawable.ic_close3)
-                    icSection.setOnClickListener {
+                    icSection?.setOnClickListener {
                         sectionFilter.setSelection(0)
-                        categoryLayout.visibility = View.GONE
+                        categoryLayout?.visibility = View.GONE
                         section = null
                     }
                     if (type != null && section != null) {
-                        categoryLayout.visibility = View.VISIBLE
+                        categoryLayout?.visibility = View.VISIBLE
                         getCategory(section!!, type!!)
                     }
                 } else {
-                    sectionFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
-                    icSection.setImageResource(R.drawable.ic_down)
+                    sectionFilter?.setBackgroundResource(R.drawable.spinner_filter_bg)
+                    icSection?.setImageResource(R.drawable.ic_down)
                 }
             }
 
@@ -203,7 +203,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         }
     }
 
-    private fun getPeriod() = CoroutineScope(Dispatchers.Main).launch {
+    private fun getPeriod() = CoroutineScope(Dispatchers.IO).launch {
         spinnerPeriodFilter(requireContext(), periodFilter)
         spinnerPeriodFilter(requireContext(), periodFilterTransfer)
 
@@ -212,16 +212,16 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
                 val period: Period = parent.selectedItem as Period
                 if (period.period != "") {
                     date = period.period
                     if (period.name == "За период") {
                         isPeriod = true
-                        periodLayout.visibility = View.VISIBLE
+                        periodLayout?.visibility = View.VISIBLE
 
-                        dateFrom.setOnClickListener {
+                        dateFrom?.setOnClickListener {
                             DatePickerDialog(
                                 requireContext(),
                                 date(dateFrom),
@@ -231,7 +231,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             ).show()
                         }
 
-                        dateTo.setOnClickListener {
+                        dateTo?.setOnClickListener {
                             DatePickerDialog(
                                 requireContext(),
                                 date(dateTo),
@@ -241,18 +241,18 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             ).show()
                         }
                     } else {
-                        periodLayout.visibility = View.GONE
+                        periodLayout?.visibility = View.GONE
                     }
-                    periodFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                    icPeriod.setImageResource(R.drawable.ic_close3)
-                    icPeriod.setOnClickListener {
-                        periodFilter.setSelection(0)
+                    periodFilter?.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
+                    (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
+                    icPeriod?.setImageResource(R.drawable.ic_close3)
+                    icPeriod?.setOnClickListener {
+                        periodFilter?.setSelection(0)
                         periodLayout?.visibility = View.GONE
                     }
                 } else {
-                    periodFilter.setBackgroundResource(R.drawable.spinner_filter_bg)
-                    icPeriod.setImageResource(R.drawable.ic_down)
+                    periodFilter?.setBackgroundResource(R.drawable.spinner_filter_bg)
+                    icPeriod?.setImageResource(R.drawable.ic_down)
                 }
 
             }
@@ -266,16 +266,16 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View, position: Int, id: Long
+                view: View?, position: Int, id: Long
             ) {
                 val period: Period = parent.selectedItem as Period
                 if (period.period != "") {
                     date = period.period
                     if (period.name == "За период") {
                         isPeriodTransfer = true
-                        periodLayoutTransfer.visibility = View.VISIBLE
+                        periodLayoutTransfer?.visibility = View.VISIBLE
 
-                        dateFromTransfer.setOnClickListener {
+                        dateFromTransfer?.setOnClickListener {
                             DatePickerDialog(
                                 requireContext(),
                                 date(dateFromTransfer),
@@ -285,7 +285,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                             ).show()
                         }
 
-                        dateToTransfer.setOnClickListener {
+                        dateToTransfer?.setOnClickListener {
                             DatePickerDialog(
                                 requireContext(),
                                 date(dateToTransfer),
@@ -297,16 +297,16 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                     } else {
                         periodLayoutTransfer.visibility = View.GONE
                     }
-                    periodFilterTransfer.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
-                    icPeriodTransfer.setImageResource(R.drawable.ic_close3)
-                    icPeriodTransfer.setOnClickListener {
+                    periodFilterTransfer?.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
+                    (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
+                    icPeriodTransfer?.setImageResource(R.drawable.ic_close3)
+                    icPeriodTransfer?.setOnClickListener {
                         periodFilterTransfer.setSelection(0)
                         periodLayoutTransfer?.visibility = View.GONE
                     }
                 } else {
                     periodFilterTransfer.setBackgroundResource(R.drawable.spinner_filter_bg)
-                    icPeriodTransfer.setImageResource(R.drawable.ic_down)
+                    icPeriodTransfer?.setImageResource(R.drawable.ic_down)
                 }
 
             }
@@ -316,7 +316,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         }
     }
 
-    private fun getTransactionSpinner() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getTransactionSpinner() = CoroutineScope(Dispatchers.Main).launch {
         spinnerTransaction(requireContext(), operationFilter)
         operationFilter?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -362,7 +362,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         }
     }
 
-    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.Default).launch {
+    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCategory(token, section, type).enqueue(object : Callback<Category> {
@@ -386,7 +386,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                                     if (categoryIdName.id != -1) {
                                         categoryId = categoryIdName.id
                                         categoryFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                        (parent.getChildAt(0) as TextView).setTextColor(
+                                        (parent.getChildAt(0) as TextView?)?.setTextColor(
                                             Color.parseColor(
                                                 "#FFFFFF"
                                             )
@@ -421,7 +421,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         })
     }
 
-    private fun getWallet() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getWallet() = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getWallets(token).enqueue(object : Callback<GetWallet> {
@@ -453,7 +453,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                                 if (walletIdName.id != -1) {
                                     walletId = walletIdName.id
                                     walletFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
                                     icWallet.setImageResource(R.drawable.ic_close3)
                                     icWallet.setOnClickListener {
                                         walletFilter.setSelection(0)
@@ -484,7 +484,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                                 if (walletIdName.id != -1) {
                                     walletIdTo = walletIdName.id
                                     walletFilterTo.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
                                     icWalletTo.setImageResource(R.drawable.ic_close3)
                                     icWalletTo.setOnClickListener {
                                         walletFilterTo.setSelection(0)
@@ -510,7 +510,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                                 if (walletIdName.id != -1) {
                                     walletIdFrom = walletIdName.id
                                     walletFilterFrom.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
                                     icWalletFrom.setImageResource(R.drawable.ic_close3)
                                     icWalletFrom.setOnClickListener {
                                         walletFilterTo.setSelection(0)
@@ -539,7 +539,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         })
     }
 
-    private fun getAgent() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getAgent() = CoroutineScope(Dispatchers.IO).launch {
         val retInt = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retInt.getAllAgents(token).enqueue(object : Callback<AllAgents> {
@@ -609,7 +609,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
         })
     }
 
-    private fun getUser() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getUser() = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getAllUsers(token).enqueue(object : Callback<AllUsers> {
@@ -633,7 +633,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                                 if (userIdName.id != -1) {
                                     user = userIdName.id
                                     userFilter.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
                                     icUser.setImageResource(R.drawable.ic_close3)
                                     icUser.setOnClickListener {
                                         userFilter.setSelection(0)
@@ -663,7 +663,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                                 if (userIdName.id != -1) {
                                     user = userIdName.id
                                     userFilterTransfer.setBackgroundResource(R.drawable.spinner_filter_bg_selected)
-                                    (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#FFFFFF"))
+                                    (parent.getChildAt(0) as TextView?)?.setTextColor(Color.parseColor("#FFFFFF"))
                                     icUserTransfer.setImageResource(R.drawable.ic_close3)
                                     icUserTransfer.setOnClickListener {
                                         userFilterTransfer.setSelection(0)

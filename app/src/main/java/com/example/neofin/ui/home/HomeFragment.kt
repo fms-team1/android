@@ -79,7 +79,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun getHomePage() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getHomePage() = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         try {
@@ -127,7 +127,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun getHomePageByPeriod(period: String) = CoroutineScope(Dispatchers.Default).launch {
+    private fun getHomePageByPeriod(period: String) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         try {
@@ -177,12 +177,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun setupRecyclerview() = CoroutineScope(Dispatchers.IO).launch {
+    private fun setupRecyclerview() = CoroutineScope(Dispatchers.Main).launch {
         recyclerViewHome.adapter = adapter
         recyclerViewHome.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun setupWalletRV() = CoroutineScope(Dispatchers.IO).launch {
+    private fun setupWalletRV() = CoroutineScope(Dispatchers.Main).launch {
         walletRV.adapter = adapterWallet
         walletRV.layoutManager = LinearLayoutManager(requireContext())
     }

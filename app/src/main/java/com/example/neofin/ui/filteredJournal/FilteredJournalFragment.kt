@@ -49,6 +49,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
         toolbar?.hide()
 
         if (filteredJournalPB != null) {
+            filteredRecycler?.visibility = View.INVISIBLE
             filteredJournalPB?.visibility = View.VISIBLE
         } else {
             logs("Error FilteredJournal, PB")
@@ -144,7 +145,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
     private fun getFilteredJournal(
         category: Int?, agent: Int?, endDate: String?, section: Int?, startDate: String?,
         type: Int?, walletTo: Int?, user: Int?, walletFrom: Int?
-    ) = CoroutineScope(Dispatchers.Default).launch{
+    ) = CoroutineScope(Dispatchers.IO).launch{
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getFiltered(
@@ -157,6 +158,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
             ) {
                 if (response.isSuccessful) {
                     filteredJournalPB?.visibility = View.INVISIBLE
+                    filteredRecycler?.visibility = View.VISIBLE
                     response.body()?.let {
                         adapter.differ.submitList(it)
                         adapter.notifyDataSetChanged()
@@ -172,6 +174,7 @@ class FilteredJournalFragment : Fragment(R.layout.fragment_filtered_journal) {
 
             override fun onFailure(call: Call<MutableList<FilteredJournalItem>>, t: Throwable) {
                 filteredJournalPB?.visibility = View.INVISIBLE
+                status.text = "Ошибка с Интернет!"
             }
         })
     }

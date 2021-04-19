@@ -49,13 +49,17 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
                 parent: AdapterView<*>,
                 view: View?, position: Int, id: Long
             ) {
-                if (parent.selectedItem == "Создать группу") {
-                    dialogCreateGroup()
-                } else if (parent.selectedItem == "Выбрать из существующих") {
-                    searchLayout.visibility = View.VISIBLE
-                    getGroups()
-                } else {
-                    searchLayout.visibility = View.GONE
+                when (parent.selectedItem) {
+                    "Создать группу" -> {
+                        dialogCreateGroup()
+                    }
+                    "Выбрать из существующих" -> {
+                        searchLayout.visibility = View.VISIBLE
+                        getGroups()
+                    }
+                    else -> {
+                        searchLayout.visibility = View.GONE
+                    }
                 }
             }
 
@@ -75,7 +79,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
 
     }
 
-    private fun dialogCreateGroup() = CoroutineScope(Dispatchers.Default).launch {
+    private fun dialogCreateGroup() = CoroutineScope(Dispatchers.IO).launch {
         val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_group,null)
         val mBuilder = context?.let { it1 ->
             AlertDialog.Builder(it1)
@@ -93,7 +97,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         }
     }
 
-    private fun addGroup(name : String) = CoroutineScope(Dispatchers.Default).launch {
+    private fun addGroup(name : String) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val groupBody = GroupAdd(name)
@@ -123,7 +127,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         })
     }
 
-    private fun getGroups() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getGroups() = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getAllGroups(token).enqueue(object : Callback<List<Groups>> {
@@ -199,7 +203,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         password: String,
         phoneNumber: String,
         surname: String
-    ) = CoroutineScope(Dispatchers.Default).launch {
+    ) = CoroutineScope(Dispatchers.IO).launch {
             val retIn = RetrofitBuilder.getInstance()
             val token = RetrofitBuilder.getToken()
             val addItems = AddNewUser(email, group_ids, name, password, phoneNumber, surname)
@@ -207,7 +211,13 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     findNavController().navigate(R.id.navigation_user)
                     if (response.code() == 200) {
-                        toast(requireContext(), "Successfully added")
+                        snackbar(
+                            requireView(),
+                            "Пользователь добавлен!",
+                            Color.parseColor("#4AAF39")
+                        )
+                    } else {
+                        snackbar(requireView(), "Пользователь не добавлен!", Color.parseColor("#E11616"))
                     }
                 }
 

@@ -3,6 +3,7 @@ package com.example.neofin.ui.user
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.neofin.R
 import com.example.neofin.retrofit.RetrofitBuilder
+import com.example.neofin.utils.snackbar
 import com.example.neofin.utils.toast
 import kotlinx.android.synthetic.main.fragment_update_password.*
 import kotlinx.coroutines.CoroutineScope
@@ -33,7 +35,7 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
         }
 
         change_Pass.setOnClickListener {
-            MainScope().launch(Dispatchers.Default) {
+            MainScope().launch(Dispatchers.Main) {
 
                 val newPass = et_new_password.text.toString().trim()
                 val oldPass = et_old_password.text.toString().trim()
@@ -47,8 +49,6 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
                     }
                     error_update.visibility = View.GONE
                     changePassword(newPass, oldPass)
-                    context?.let { it1 -> toast(it1,"Изменено")
-                    }
 
                     findNavController().navigate(R.id.navigation_user)
 
@@ -77,13 +77,28 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
     }
 
     private fun changePassword(newPass: String, oldPass: String) =
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             val retIn = RetrofitBuilder.getInstance()
             val token = RetrofitBuilder.getToken()
             val changePass = ChangePassword(newPass, oldPass)
             retIn.changePassword(token, changePass).enqueue(object : Callback<Void> {
                 @SuppressLint("CommitPrefEdits")
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    when {
+                        response.code() == 404 -> {
+                            snackbar(requireView(), "Ошибка изменения!", Color.parseColor("#E11616"))
+                        }
+                        response.code() == 200 -> {
+                            snackbar(
+                                requireView(),
+                                "Пароль изменен!",
+                                Color.parseColor("#4AAF39")
+                            )
+                        }
+                        else -> {
+                            snackbar(requireView(), "Неизвестная ошибка!", Color.parseColor("#E11616"))
+                        }
+                    }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                 }

@@ -28,6 +28,9 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
         setupAllAdapter()
         getJournal()
 
+        allPB?.visibility = View.VISIBLE
+        allJournalRV.visibility = View.INVISIBLE
+
         allAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putInt("idJournal", it.id)
@@ -39,7 +42,7 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
         }
     }
 
-    private fun getJournal() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getJournal() = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getJournal(token).enqueue(object : Callback<MutableList<AllJournalItem>> {
@@ -49,13 +52,17 @@ class AllJournalFragment : Fragment(R.layout.fragment_all_journal) {
                         allAdapter.differ.submitList(it)
                         allAdapter.notifyDataSetChanged()
                     }
+                    allPB?.visibility = View.GONE
+                    allJournalRV.visibility = View.VISIBLE
                 } else {
                     logs("Error in AllJournalFr, getJournal")
+                    allPB?.visibility = View.GONE
                 }
             }
 
             override fun onFailure(call: Call<MutableList<AllJournalItem>>, t: Throwable) {
                 logs(t.toString())
+                allPB?.visibility = View.GONE
             }
 
         })

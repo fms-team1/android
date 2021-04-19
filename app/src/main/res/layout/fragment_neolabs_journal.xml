@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.journal.neolabs.NeolabsJournalFragment">
+    <ProgressBar
+        android:id="@+id/neolabsPB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/neolabsJournalRV"
         android:layout_width="match_parent"

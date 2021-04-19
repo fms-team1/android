@@ -52,6 +52,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backLay"
         android:layout_below="@+id/backLay">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"
+            android:text="Организация"
+            android:textColor="#B5BBC9"/>
+        <TextView
+            android:id="@+id/section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,6 +75,7 @@
             android:layout_marginLeft="25dp"
             android:textSize="15sp"
             android:fontFamily="@font/montserrat"
+            android:layout_marginTop="20dp"
             android:text="Операция"
             android:textColor="#B5BBC9"/>
         <TextView
@@ -250,7 +267,7 @@
             android:id="@+id/change_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="72dp"
+            android:layout_marginBottom="30dp"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textFontWeight="600"

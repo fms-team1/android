@@ -66,10 +66,10 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
             val singleSection = arguments?.getInt("singleSectionId")
             val singleType = arguments?.getInt("singleTypeId")
             if (singleType != 2) {
-                notTransfer.visibility = View.VISIBLE
-                walletTransferLayout.visibility = View.GONE
+                notTransfer?.visibility = View.VISIBLE
+                walletTransferLayout?.visibility = View.GONE
                 getCategory(singleSection!!, singleType!!)
-                changeBT.setOnClickListener {
+                changeBT?.setOnClickListener {
                     if (updateAmount?.text.toString().isNotEmpty()) {
                         val amountText = updateAmount?.text.toString()
                         amountChange = Integer.parseInt(amountText)
@@ -82,8 +82,8 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                 }
             } else {
                 notTransfer.visibility = View.GONE
-                walletTransferLayout.visibility = View.VISIBLE
-                changeBT.setOnClickListener {
+                walletTransferLayout?.visibility = View.VISIBLE
+                changeBT?.setOnClickListener {
                     if (updateAmount?.text.toString().isNotEmpty()) {
                         val amountText = updateAmount?.text.toString()
                         amountChange = Integer.parseInt(amountText)
@@ -100,10 +100,10 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
             val filteredTypeId = arguments?.getInt("filteredType")
             val filteredSectionId = arguments?.getInt("filteredSection")
             if (filteredTypeId != 2) {
-                notTransfer.visibility = View.VISIBLE
-                walletTransferLayout.visibility = View.GONE
+                notTransfer?.visibility = View.VISIBLE
+                walletTransferLayout?.visibility = View.GONE
                 getCategory(filteredSectionId!!, filteredTypeId!!)
-                changeBT.setOnClickListener {
+                changeBT?.setOnClickListener {
                     if (updateAmount?.text.toString().isNotEmpty()) {
                         val amountText = updateAmount?.text.toString()
                         amountChange = Integer.parseInt(amountText)
@@ -115,9 +115,9 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                         idFiltered!!, null, walletId)
                 }
             } else {
-                notTransfer.visibility = View.GONE
-                walletTransferLayout.visibility = View.VISIBLE
-                changeBT.setOnClickListener {
+                notTransfer?.visibility = View.GONE
+                walletTransferLayout?.visibility = View.VISIBLE
+                changeBT?.setOnClickListener {
                     if (updateAmount?.text.toString().isNotEmpty()) {
                         val amountText = updateAmount?.text.toString()
                         amountChange = Integer.parseInt(amountText)
@@ -154,7 +154,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
 //        }
     }
 
-    private fun getAgent() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getAgent() = CoroutineScope(Dispatchers.IO).launch {
         val retInt = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retInt.getAllAgents(token).enqueue(object : Callback<AllAgents> {
@@ -180,14 +180,14 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                             logs("listView, FiltersFragment")
                         }
 
-                        searchAgentChange.setOnSearchClickListener {
-                            listViewUpdate.visibility = View.VISIBLE
-                            hintSearch.visibility = View.GONE
+                        searchAgentChange?.setOnSearchClickListener {
+                            listViewUpdate?.visibility = View.VISIBLE
+                            hintSearch?.visibility = View.GONE
                         }
 
-                        searchAgentChange.setOnCloseListener {
-                            listViewUpdate.visibility = View.GONE
-                            hintSearch.visibility = View.VISIBLE
+                        searchAgentChange?.setOnCloseListener {
+                            listViewUpdate?.visibility = View.GONE
+                            hintSearch?.visibility = View.VISIBLE
                             false
                         }
 
@@ -204,11 +204,11 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                             }
                         })
 
-                        listViewUpdate.onItemClickListener =
+                        listViewUpdate?.onItemClickListener =
                             AdapterView.OnItemClickListener { _, _, i, _ ->
                                 agent = arrayAdapter.getItem(i)?.id
                                 searchAgentChange.setQuery("${arrayAdapter.getItem(i)?.name}", true)
-                                listViewUpdate.visibility = View.GONE
+                                listViewUpdate?.visibility = View.GONE
                             }
                     }
                 } else {
@@ -222,7 +222,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
         })
     }
 
-    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.Default).launch {
+    private fun getCategory(section: Int, type: Int) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getCategory(token, section, type).enqueue(object : Callback<Category> {
@@ -236,7 +236,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
 
                     if (categoryChange != null) {
                         spinnerCategoryChange(requireContext(), categoriesArray, categoryChange)
-                        categoryChange.onItemSelectedListener =
+                        categoryChange?.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(
                                     parent: AdapterView<*>, view: View?, position: Int, id: Long
@@ -265,7 +265,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
         })
     }
 
-    private fun getWallet() = CoroutineScope(Dispatchers.Default).launch {
+    private fun getWallet() = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getWallets(token).enqueue(object : Callback<GetWallet> {
@@ -281,7 +281,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
 
                     if (walletChange != null) {
                         spinnerWalletChange(requireContext(), walletArray, walletChange)
-                        walletChange.onItemSelectedListener = object :
+                        walletChange?.onItemSelectedListener = object :
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
@@ -301,7 +301,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                     if (walletFrom != null && walletTo != null) {
                         spinnerWalletChange(requireContext(), walletArray, walletFrom)
                         spinnerWalletChange(requireContext(), walletArray, walletTo)
-                        walletFrom.onItemSelectedListener = object :
+                        walletFrom?.onItemSelectedListener = object :
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
@@ -316,7 +316,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                             }
                         }
 
-                        walletTo.onItemSelectedListener = object :
+                        walletTo?.onItemSelectedListener = object :
                             AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
                                 parent: AdapterView<*>,
@@ -351,7 +351,7 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                            agentId: Int?,
                            itemId: Int,
                            walletFrom: Int?,
-                           walletTo: Int?) = CoroutineScope(Dispatchers.Default).launch {
+                           walletTo: Int?) = CoroutineScope(Dispatchers.IO).launch {
         val retInt = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val updateBody = ChangeJournal(amount, category, comment, agentId, itemId, walletFrom, walletTo)

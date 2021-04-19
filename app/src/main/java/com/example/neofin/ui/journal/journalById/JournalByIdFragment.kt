@@ -50,7 +50,7 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
         }
     }
 
-    private fun getJournalById(id : Int) = CoroutineScope(Dispatchers.Default).launch {
+    private fun getJournalById(id : Int) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         retIn.getJournalById(token, id).enqueue(object : Callback<JournalById> {
@@ -70,6 +70,11 @@ class JournalByIdFragment : Fragment(R.layout.fragment_journal_by_id) {
                 sum.text = response.body()?.amount.toString()
                 user.text = "$name $surname"
                 agent.text = "$nameAgent $surnameAgent"
+
+                when (response.body()?.neoSection) {
+                    "NEOBIS" -> section.text = "Neobis"
+                    "NEOLABS" -> section.text = "Neolabs"
+                }
 
 
                 comment.text = response.body()?.comment
