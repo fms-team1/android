@@ -28,10 +28,7 @@ import com.example.neofin.retrofit.data.addWallets.AddWallet
 import com.example.neofin.retrofit.data.user.CurrentUser
 import com.example.neofin.ui.user.data.Section
 import com.example.neofin.ui.user.data.Type
-import com.example.neofin.utils.logs
-import com.example.neofin.utils.snackbar
-import com.example.neofin.utils.spinnerSectionUser
-import com.example.neofin.utils.spinnerTypeUser
+import com.example.neofin.utils.*
 import kotlinx.android.synthetic.main.dialog_add_category.*
 import kotlinx.android.synthetic.main.dialog_add_category.view.*
 import kotlinx.android.synthetic.main.dialog_add_wallet.*
@@ -93,7 +90,11 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
             mDialogView?.create_wallet?.setOnClickListener {
                 val balance = mDialogView.et_add_balance.text.toString()
-                addWallet(Integer.parseInt(balance.trim()), mDialogView.et_add_name.text.toString())
+                if (balance.isNotEmpty()){
+                    addWallet(balance.toInt(), mDialogView.et_add_name.text.toString())
+                } else {
+                    toast(requireContext(), "Введите баланс!")
+                }
                 mAlertDialog?.dismiss()
             }
         }

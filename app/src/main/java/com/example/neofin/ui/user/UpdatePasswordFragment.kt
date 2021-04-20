@@ -29,6 +29,7 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = (activity as AppCompatActivity).supportActionBar
         toolbar?.setDisplayHomeAsUpEnabled(false)
+        toolbar?.hide()
 
         closeBT?.setOnClickListener {
             findNavController().navigate(R.id.navigation_user)
@@ -54,7 +55,8 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
                 val editor = preferences?.edit()
                 val password = et_new_password.text.toString().trim()
                 if (password.isEmpty()) {
-                    toast(requireContext(),"Нет пароля")
+                    error_update?.visibility  = View.VISIBLE
+                    error_update?.text = "Введите пароль!"
                 } else {
                     editor?.putString("password",password)
                     editor?.apply()

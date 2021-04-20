@@ -85,7 +85,7 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                 sectionAdd.setSelection(0)
             }
 
-            val sumTransfer = sumAddTransfer.text
+            val sumTransfer = sumAddTransfer.text.toString()
             val commentTransfer = commentAddTransfer.text
             addTransferBT?.setOnClickListener {
                 expenseOrIncome?.visibility = View.GONE
@@ -95,31 +95,39 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                 addIncomeBT.setTextColor(Color.parseColor("#000000"))
             }
 
+
             sendButtonTransfer.setOnClickListener {
+                if (sumTransfer.isNotEmpty()) {
                 formatDate(dateAddTextTransfer.text.toString())?.let { it1 ->
                     addTransfer(
-                        Integer.parseInt(sumTransfer.toString()),
+                        sumTransfer.toInt(),
                         commentTransfer.toString(),
                         it1,
                         walletFrom,
-                        walletTo
-                    )
+                        walletTo)
+                    }
+                } else {
+                    toast(requireContext(), "Введите сумму!")
                 }
             }
 
-            val sum = sumAdd.text
+            val sum = sumAdd.text.toString()
             val comment = commentAdd.text
             val agent = agentAdd.text
             sendButton.setOnClickListener {
-                formatDate(dateAddText.text.toString())?.let { it1 ->
-                    addExpenseOrIncome(
-                        Integer.parseInt(sum.toString().trim()),
-                        categoryId,
-                        comment.toString(),
-                        agent.toString(),
-                        it1,
-                        walletId
-                    )
+                if (sum.isNotEmpty()){
+                    formatDate(dateAddText.text.toString())?.let { it1 ->
+                        addExpenseOrIncome(
+                            sum.toInt(),
+                            categoryId,
+                            comment.toString(),
+                            agent.toString(),
+                            it1,
+                            walletId
+                        )
+                    }
+                } else {
+                    toast(requireContext(), "Введите сумму!")
                 }
             }
         } catch (e: Exception){
