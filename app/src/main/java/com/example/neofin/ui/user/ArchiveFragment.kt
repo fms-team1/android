@@ -87,9 +87,10 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        changeRV.adapter = categoryAdapter
-                        changeRV.layoutManager = LinearLayoutManager(requireContext())
+                        changeRV?.adapter = categoryAdapter
+                        changeRV?.layoutManager = LinearLayoutManager(requireContext())
                         categoryAdapter.differ.submitList(it)
+                        categoryAdapter.notifyDataSetChanged()
 
                         categoryAdapter.setOnItemClickListener { adapter ->
                             val mDialogView = LayoutInflater.from(context)
@@ -127,13 +128,10 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                                         adapter.transactionType
                                     )
                                 }
-
                                 mAlertDialog?.dismiss()
-                                getAllCategory()
                             }
                         }
                     }
-                    categoryAdapter.notifyDataSetChanged()
                 }
             }
 
@@ -161,6 +159,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                             "Категория изменена!",
                             Color.parseColor("#4AAF39")
                         )
+                        getAllCategory()
                     }
                     else -> {
                         snackbar(requireView(), "Неизвестная ошибка!", Color.parseColor("#E11616"))
@@ -201,9 +200,10 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        changeRV.adapter = groupAdapter
-                        changeRV.layoutManager = LinearLayoutManager(requireContext())
+                        changeRV?.adapter = groupAdapter
+                        changeRV?.layoutManager = LinearLayoutManager(requireContext())
                         groupAdapter.differ.submitList(it)
+                        groupAdapter.notifyDataSetChanged()
                         groupAdapter.setOnItemClickListener { adapter ->
                             val mDialogView = LayoutInflater.from(context)
                                 .inflate(R.layout.dialog_archive_group, null)
@@ -237,12 +237,10 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                                         )
                                     }
                                 }
-                                getAllGroups()
                                 mAlertDialog?.dismiss()
                             }
                         }
                     }
-                    groupAdapter.notifyDataSetChanged()
                 }
             }
 
@@ -269,6 +267,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                             "Группа изменена!",
                             Color.parseColor("#4AAF39")
                         )
+                        getAllGroups()
                     }
                     else -> {
                         snackbar(requireView(), "Неизвестная ошибка!", Color.parseColor("#E11616"))
@@ -293,11 +292,12 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        changeRV.adapter = walletAdapter
-                        changeRV.layoutManager = LinearLayoutManager(requireContext())
+                        changeRV?.adapter = walletAdapter
+                        changeRV?.layoutManager = LinearLayoutManager(requireContext())
                         it.let {
                             walletAdapter.differ.submitList(it)
                         }
+                        walletAdapter.notifyDataSetChanged()
                         walletAdapter.setOnItemClickListener { adapter ->
                             val mDialogView = LayoutInflater.from(context)
                                 .inflate(R.layout.dialog_archive_wallet, null)
@@ -334,11 +334,9 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                                     )
                                 }
                                 mAlertDialog?.dismiss()
-                                getWallets()
                             }
                         }
                     }
-                    walletAdapter.notifyDataSetChanged()
                 }
             }
 
@@ -365,6 +363,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                             "Кошелек изменен!",
                             Color.parseColor("#4AAF39")
                         )
+                        getWallets()
                     }
                     else -> {
                         snackbar(requireView(), "Неизвестная ошибка!", Color.parseColor("#E11616"))
