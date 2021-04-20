@@ -89,7 +89,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             }
 
             mDialogView?.create_wallet?.setOnClickListener {
-                val balance = mDialogView.et_add_balance.text.toString()
+                val balance = mDialogView.et_add_balance.text.toString().trim()
                 if (balance.isNotEmpty()){
                     addWallet(balance.toInt(), mDialogView.et_add_name.text.toString())
                 } else {

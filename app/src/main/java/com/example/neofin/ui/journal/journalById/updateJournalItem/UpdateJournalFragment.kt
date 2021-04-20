@@ -73,8 +73,8 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                 getCategory(singleSection!!, singleType!!)
                 changeBT?.setOnClickListener {
                     if (updateAmount?.text.toString().isNotEmpty()) {
-                        val amountText = updateAmount?.text.toString()
-                        amountChange = Integer.parseInt(amountText)
+                        val amountText = updateAmount?.text.toString().trim()
+                        amountChange = amountText.toInt()
                     }
                     if (updateComment?.text.toString().isNotEmpty()){
                         commentChange = updateComment?.text.toString()
@@ -88,8 +88,8 @@ class UpdateJournalFragment : Fragment(R.layout.fragment_update_journal) {
                 updateAmount?.hint = "Старое значение: $singleAmount"
                 changeBT?.setOnClickListener {
                     if (updateAmount?.text.toString().isNotEmpty()) {
-                        val amountText = updateAmount?.text.toString()
-                        amountChange = Integer.parseInt(amountText)
+                        val amountText = updateAmount?.text.toString().trim()
+                        amountChange = amountText.toInt()
                     }
                     if (updateComment?.text.toString().isNotEmpty()){
                         commentChange = updateComment?.text.toString()

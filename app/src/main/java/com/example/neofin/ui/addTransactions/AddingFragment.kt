@@ -85,8 +85,6 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                 sectionAdd.setSelection(0)
             }
 
-            val sumTransfer = sumAddTransfer.text.toString()
-            val commentTransfer = commentAddTransfer.text
             addTransferBT?.setOnClickListener {
                 expenseOrIncome?.visibility = View.GONE
                 transferLayout?.visibility = View.VISIBLE
@@ -97,6 +95,8 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
 
 
             sendButtonTransfer.setOnClickListener {
+                val sumTransfer = sumAddTransfer.text.toString()
+                val commentTransfer = commentAddTransfer.text
                 if (sumTransfer.isNotEmpty()) {
                 formatDate(dateAddTextTransfer.text.toString())?.let { it1 ->
                     addTransfer(
@@ -111,11 +111,14 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                 }
             }
 
-            val sum = sumAdd.text.toString()
-            val comment = commentAdd.text
-            val agent = agentAdd.text
+
             sendButton.setOnClickListener {
-                if (sum.isNotEmpty()){
+                val sum = sumAdd.text.toString()
+                val comment = commentAdd.text
+                val agent = agentAdd.text
+                if (sum.isEmpty()){
+                    toast(requireContext(), "Введите сумму!")
+                } else {
                     formatDate(dateAddText.text.toString())?.let { it1 ->
                         addExpenseOrIncome(
                             sum.toInt(),
@@ -126,8 +129,6 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
                             walletId
                         )
                     }
-                } else {
-                    toast(requireContext(), "Введите сумму!")
                 }
             }
         } catch (e: Exception){
