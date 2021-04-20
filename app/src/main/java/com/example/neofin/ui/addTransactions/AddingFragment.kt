@@ -96,12 +96,15 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
             }
 
             sendButtonTransfer.setOnClickListener {
-                addTransfer(
-                    Integer.parseInt(sumTransfer.toString()),
-                    commentTransfer.toString(),
-                    walletFrom,
-                    walletTo
-                )
+                formatDate(dateAddTextTransfer.text.toString())?.let { it1 ->
+                    addTransfer(
+                        Integer.parseInt(sumTransfer.toString()),
+                        commentTransfer.toString(),
+                        it1,
+                        walletFrom,
+                        walletTo
+                    )
+                }
             }
 
             val sum = sumAdd.text
@@ -323,11 +326,11 @@ class AddingFragment : Fragment(R.layout.fragment_adding) {
         })
     }
 
-    private fun addTransfer(amount: Int, comment: String, walletFrom: Int, walletTo: Int) =
+    private fun addTransfer(amount: Int, comment: String, date: String, walletFrom: Int, walletTo: Int) =
         CoroutineScope(Dispatchers.IO).launch{
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
-        val addItems = AddTransfer(amount, comment, walletFrom, walletTo)
+        val addItems = AddTransfer(amount, comment, date, walletFrom, walletTo)
         retIn.addTransfer(token, addItems).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200) {
