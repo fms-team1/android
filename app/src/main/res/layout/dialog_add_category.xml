@@ -65,13 +65,13 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_down"
-                    app:layout_constraintBottom_toBottomOf="@+id/typeAdd"
-                    app:layout_constraintEnd_toEndOf="@+id/typeAdd"
-                    app:layout_constraintTop_toTopOf="@+id/typeAdd" />
+                    app:layout_constraintBottom_toBottomOf="@+id/sectionAdd"
+                    app:layout_constraintEnd_toEndOf="@+id/sectionAdd"
+                    app:layout_constraintTop_toTopOf="@+id/sectionAdd" />
 
                 <Spinner
                     android:layout_marginTop="5dp"
-                    android:id="@+id/typeAdd"
+                    android:id="@+id/sectionAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:background="@drawable/on_focused"
@@ -110,13 +110,13 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_down"
-                    app:layout_constraintBottom_toBottomOf="@+id/sectionAdd"
-                    app:layout_constraintEnd_toEndOf="@+id/sectionAdd"
-                    app:layout_constraintTop_toTopOf="@+id/sectionAdd" />
+                    app:layout_constraintBottom_toBottomOf="@+id/typeAdd"
+                    app:layout_constraintEnd_toEndOf="@+id/typeAdd"
+                    app:layout_constraintTop_toTopOf="@+id/typeAdd" />
 
                 <Spinner
                     android:layout_marginTop="5dp"
-                    android:id="@+id/sectionAdd"
+                    android:id="@+id/typeAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:background="@drawable/on_focused"
