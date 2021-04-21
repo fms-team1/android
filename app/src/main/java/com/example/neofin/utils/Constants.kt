@@ -20,6 +20,7 @@ object Constants {
     const val GET_ALL_CATEGORY = "/category/getAll"
     const val GET_ALL_GROUPS_ARCHIVE = "/group/getAll"
     const val GET_ALL_GROUPS = "/group/getAllActiveGroups"
+    const val GET_ALL_WALLETS = "/wallet/getAll"
     const val CHANGE_PASSWORD ="/user/changePassword"
     const val ADD_USER = "/registration/newAccountant"
     const val ADD_WALLET = "/wallet/add"

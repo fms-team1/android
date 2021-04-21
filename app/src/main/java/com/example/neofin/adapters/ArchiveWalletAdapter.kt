@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neofin.R
+import com.example.neofin.retrofit.data.archiveWallet.ArchiveWallet
 import com.example.neofin.retrofit.data.wallet.GetWalletItem
 import kotlinx.android.synthetic.main.wallet_archive.view.*
 
@@ -14,12 +15,12 @@ class ArchiveWalletAdapter :  RecyclerView.Adapter<ArchiveWalletAdapter.MyViewHo
 
     inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
-    private val differCallback = object : DiffUtil.ItemCallback<GetWalletItem>() {
-        override fun areItemsTheSame(oldItem: GetWalletItem, newItem: GetWalletItem): Boolean {
+    private val differCallback = object : DiffUtil.ItemCallback<ArchiveWallet>() {
+        override fun areItemsTheSame(oldItem: ArchiveWallet, newItem: ArchiveWallet): Boolean {
             return oldItem.name == newItem.name
         }
 
-        override fun areContentsTheSame(oldItem: GetWalletItem, newItem: GetWalletItem): Boolean {
+        override fun areContentsTheSame(oldItem: ArchiveWallet, newItem: ArchiveWallet): Boolean {
             return oldItem == newItem
         }
     }
@@ -40,7 +41,7 @@ class ArchiveWalletAdapter :  RecyclerView.Adapter<ArchiveWalletAdapter.MyViewHo
         return differ.currentList.size
     }
 
-    private var onItemClickListener: ((GetWalletItem) -> Unit)? = null
+    private var onItemClickListener: ((ArchiveWallet) -> Unit)? = null
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = differ.currentList[position]
@@ -59,7 +60,7 @@ class ArchiveWalletAdapter :  RecyclerView.Adapter<ArchiveWalletAdapter.MyViewHo
         }
     }
 
-    fun setOnItemClickListener(listener: (GetWalletItem) -> Unit) {
+    fun setOnItemClickListener(listener: (ArchiveWallet) -> Unit) {
         onItemClickListener = listener
     }
 }

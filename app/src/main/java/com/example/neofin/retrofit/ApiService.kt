@@ -108,6 +108,10 @@ interface ApiService {
     fun getWallets(@Header("Authorization") token: String): Call<GetWallet>
 
     @Headers("Content-Type: application/json")
+    @GET(Constants.GET_ALL_WALLETS)
+    fun getAllWallets(@Header("Authorization") token: String): Call<List<ArchiveWallet>>
+
+    @Headers("Content-Type: application/json")
     @GET(Constants.GET_ALL_AGENTS)
     fun getAllAgents(@Header("Authorization") token: String): Call<AllAgents>
 

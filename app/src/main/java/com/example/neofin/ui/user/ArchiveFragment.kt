@@ -188,6 +188,14 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
             "ACCESSIBLE"
         }
     }
+    
+    fun getName(text: String, oldName: String, newName: String): String {
+        return if (text == ""){
+            oldName
+        } else {
+            newName
+        }
+    }
 
     fun getAllGroups() {
         val retIn = RetrofitBuilder.getInstance()
@@ -284,11 +292,11 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
     fun getWallets() {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
-        retIn.getWallets(token).enqueue(object : Callback<GetWallet> {
+        retIn.getAllWallets(token).enqueue(object : Callback<List<ArchiveWallet>> {
             @SuppressLint("SetTextI18n")
             override fun onResponse(
-                call: Call<GetWallet>,
-                response: Response<GetWallet>
+                call: Call<List<ArchiveWallet>>,
+                response: Response<List<ArchiveWallet>>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -311,6 +319,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                             }
 
                             mDialogView.walletTitle.text = "Название кошелка: " + adapter.name
+                            mDialogView.et_archive_wallet_balance.hint = "Старый баланс: ${adapter.availableBalance}"
 
                             if (adapter.status == "BLOCKED") {
                                 mDialogView.isArchiveWallet.isChecked = true
@@ -322,15 +331,19 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                                     archiveWallet(
                                         getBooleanWallet(mDialogView.isArchiveWallet.isChecked),
                                         adapter.id,
-                                        name,
+                                       null,
                                         null
                                     )
                                 } else {
                                     archiveWallet(
                                         getBooleanWallet(mDialogView.isArchiveWallet.isChecked),
                                         adapter.id,
-                                        adapter.name,
-                                        Integer.parseInt(balance)
+                                        adapter.name?.let { it1 -> getName(name, it1, name) },
+                                        try {
+                                            balance.toInt()
+                                        } catch (e: Exception) {
+                                            adapter.availableBalance
+                                        }
                                     )
                                 }
                                 mAlertDialog?.dismiss()
@@ -340,7 +353,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                 }
             }
 
-            override fun onFailure(call: Call<GetWallet>, t: Throwable) {
+            override fun onFailure(call: Call<List<ArchiveWallet>>, t: Throwable) {
                 logs("Error ArchiveFr, getAllGroup")
             }
 
