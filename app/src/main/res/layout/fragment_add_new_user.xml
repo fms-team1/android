@@ -176,6 +176,8 @@
                     android:layout_height="45dp"
                     android:background="@drawable/on_focused"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:theme="@style/SearchViewStyle"
+                    android:fontFamily="@font/montserrat"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

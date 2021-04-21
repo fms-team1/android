@@ -554,7 +554,7 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                     val activity: FragmentActivity? = activity
                     if (activity != null) {
                         val arrayAdapter =
-                            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,
+                            ArrayAdapter(requireContext(), R.layout.spinner,
                                 agentArray
                             )
 
@@ -563,6 +563,10 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                         } else {
                             logs("listView, FiltersFragment")
                         }
+
+                        searchAgent?.setQuery("", false)
+                        searchAgent?.clearFocus()
+                        searchAgent?.isIconified = true
 
                         searchAgent?.setOnSearchClickListener {
                             listView?.visibility = View.VISIBLE

@@ -31,6 +31,7 @@ object RetrofitBuilder {
         val newRequest = chain.request()
             .newBuilder()
             .url(newUrl)
+            .header("Content-Type", "application/json")
             .build()
 
         chain.proceed(newRequest)

@@ -2,12 +2,16 @@ package com.example.neofin.ui.user
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.neofin.R
@@ -19,7 +23,6 @@ import com.example.neofin.ui.user.data.GroupsIdName
 import com.example.neofin.utils.logs
 import com.example.neofin.utils.snackbar
 import com.example.neofin.utils.spinnerGroup
-import com.example.neofin.utils.toast
 import kotlinx.android.synthetic.main.dialog_add_group.view.*
 import kotlinx.android.synthetic.main.fragment_add_new_user.*
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +31,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
 
@@ -70,8 +74,13 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         try {
             add_user_BT?.setOnClickListener {
                 addNewUser(
-                    user_email.text.toString(), data,  user_name.text.toString(),user_pass.text.toString(),
-                    user_phone.text.toString(), user_surname.text.toString())
+                    user_email.text.toString(),
+                    data,
+                    user_name.text.toString(),
+                    user_pass.text.toString(),
+                    user_phone.text.toString(),
+                    user_surname.text.toString()
+                )
             }
         }catch (e: Exception){
             logs(e.toString())
@@ -80,7 +89,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
     }
 
     private fun dialogCreateGroup() = CoroutineScope(Dispatchers.Main).launch {
-        val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_group,null)
+        val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_group, null)
         val mBuilder = context?.let { it1 ->
             AlertDialog.Builder(it1)
                 .setView(mDialogView)
@@ -97,7 +106,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
         }
     }
 
-    private fun addGroup(name : String) = CoroutineScope(Dispatchers.IO).launch {
+    private fun addGroup(name: String) = CoroutineScope(Dispatchers.IO).launch {
         val retIn = RetrofitBuilder.getInstance()
         val token = RetrofitBuilder.getToken()
         val groupBody = GroupAdd(name)
@@ -105,7 +114,11 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 when {
                     response.code() == 404 -> {
-                        snackbar(requireView(), "Такая группа уже существует!", Color.parseColor("#E11616"))
+                        snackbar(
+                            requireView(),
+                            "Такая группа уже существует!",
+                            Color.parseColor("#E11616")
+                        )
                     }
                     response.code() == 200 -> {
                         snackbar(
@@ -140,7 +153,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
                     val arrayAdapter =
                         ArrayAdapter(
                             requireContext(),
-                            android.R.layout.simple_list_item_1,
+                            R.layout.spinner,
                             groupArray
                         )
                     if (listViewGroup != null) {
@@ -158,6 +171,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
                         listViewGroup?.visibility = View.GONE
                         hintSearchGroup?.visibility = View.VISIBLE
                         searchLayout?.visibility = View.GONE
+                        group_add?.setSelection(0)
                         false
                     }
 
@@ -217,7 +231,11 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
                             Color.parseColor("#4AAF39")
                         )
                     } else {
-                        snackbar(requireView(), "Пользователь не добавлен!", Color.parseColor("#E11616"))
+                        snackbar(
+                            requireView(),
+                            "Пользователь не добавлен!",
+                            Color.parseColor("#E11616")
+                        )
                     }
                 }
 
