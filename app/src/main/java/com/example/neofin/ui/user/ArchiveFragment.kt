@@ -188,7 +188,7 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
             "ACCESSIBLE"
         }
     }
-    
+
     fun getName(text: String, oldName: String, newName: String): String {
         return if (text == ""){
             oldName
