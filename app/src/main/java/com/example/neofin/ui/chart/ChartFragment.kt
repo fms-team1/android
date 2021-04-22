@@ -139,10 +139,10 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         xAxis.valueFormatter = IndexAxisValueFormatter(labelsBar)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
-        xAxis.setDrawGridLines(false)
         xAxis.granularity = 1f
         xAxis.labelCount = labelsBar.size
         xAxis.labelRotationAngle = 360F
+        bar.animateY(1000, Easing.EaseInOutQuad)
         bar.notifyDataSetChanged()
         bar.invalidate()
     }
@@ -157,6 +157,8 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
             ) {
                 val period: Period = parent.selectedItem as Period
                 date2 = period.period
+                getSectionAnalytics(period.period.substringAfter(' '), 0, period.period.substringBefore(' '), type2)
+                getSectionAnalytics(period.period.substringAfter(' '), 1, period.period.substringBefore(' '), type2)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
