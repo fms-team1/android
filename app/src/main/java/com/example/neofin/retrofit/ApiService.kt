@@ -23,6 +23,7 @@ import com.example.neofin.retrofit.data.tokenResponse.TokenResponse
 import com.example.neofin.retrofit.data.transaction.Transaction
 import com.example.neofin.retrofit.data.transactionAdding.AddTransactionOrExpense
 import com.example.neofin.retrofit.data.transactionAdding.AddTransfer
+import com.example.neofin.retrofit.data.updateUser.UpdateUser
 import com.example.neofin.retrofit.data.user.CurrentUser
 import com.example.neofin.retrofit.data.wallet.GetWallet
 import com.example.neofin.utils.Constants
@@ -158,6 +159,10 @@ interface ApiService {
     @PUT(Constants.UPDATE_JOURNAL_ITEM)
     fun changeJournalItem(@Header("Authorization") token: String,
                        @Body request : ChangeJournal) : Call<Void>
+
+    @PUT(Constants.UPDATE_USER)
+    fun changeUser(@Header("Authorization") token: String,
+                          @Body request : UpdateUser) : Call<Void>
 
 
 //    @Headers("Content-Type: application/json")

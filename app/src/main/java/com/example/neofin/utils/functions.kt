@@ -15,6 +15,7 @@ import com.example.neofin.ui.filter.data.*
 import com.example.neofin.ui.journal.journalById.data.CategoryItem
 import com.example.neofin.ui.journal.journalById.data.WalletItem
 import com.example.neofin.ui.user.data.Section
+import com.example.neofin.ui.user.data.StatusName
 import com.example.neofin.ui.user.data.Type
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_filters.*
@@ -71,6 +72,7 @@ fun spinnerArchive(context: Context, spinner: Spinner) {
     group.add("Кошелек")
     group.add("Группа")
     group.add("Категория")
+    group.add("Пользователь")
 
     val adapter = ArrayAdapter(
         context,
@@ -78,6 +80,23 @@ fun spinnerArchive(context: Context, spinner: Spinner) {
     )
 
     spinner.adapter = adapter
+}
+
+fun spinnerStatusUser(context: Context, spinner: Spinner?) {
+    val sectionList: ArrayList<StatusName> = ArrayList()
+
+    sectionList.add(StatusName(null, "Статус"))
+    sectionList.add(StatusName("NEW", "Новый"))
+    sectionList.add(StatusName("APPROVED", "Одобрить"))
+    sectionList.add(StatusName("BLOCKED", "Блокировать"))
+    sectionList.add(StatusName("ARCHIVED", "Архивировать"))
+
+    val adapter = ArrayAdapter(
+        context,
+        R.layout.spinner, sectionList
+    )
+
+    spinner?.adapter = adapter
 }
 
 fun spinnerSectionUser(context: Context, spinner: Spinner) {

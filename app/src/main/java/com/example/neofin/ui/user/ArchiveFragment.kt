@@ -1,32 +1,45 @@
 package com.example.neofin.ui.user
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.neofin.R
 import com.example.neofin.adapters.ArchiveCategoryAdapter
 import com.example.neofin.adapters.ArchiveGroupAdapter
+import com.example.neofin.adapters.ArchiveUserAdapter
 import com.example.neofin.adapters.ArchiveWalletAdapter
 import com.example.neofin.retrofit.RetrofitBuilder
+import com.example.neofin.retrofit.data.allGroups.Groups
+import com.example.neofin.retrofit.data.allUsers.AllUsers
 import com.example.neofin.retrofit.data.archiveCategory.ArchiveCategory
 import com.example.neofin.retrofit.data.archiveGroups.ArchiveGroup
 import com.example.neofin.retrofit.data.archiveWallet.ArchiveWallet
+import com.example.neofin.retrofit.data.updateUser.UpdateUser
 import com.example.neofin.retrofit.data.wallet.GetWallet
+import com.example.neofin.ui.user.data.GroupsIdName
+import com.example.neofin.ui.user.data.Section
+import com.example.neofin.ui.user.data.StatusName
 import com.example.neofin.utils.logs
 import com.example.neofin.utils.snackbar
 import com.example.neofin.utils.spinnerArchive
+import com.example.neofin.utils.spinnerStatusUser
 import kotlinx.android.synthetic.main.dialog_archive_category.view.*
 import kotlinx.android.synthetic.main.dialog_archive_group.view.*
+import kotlinx.android.synthetic.main.dialog_archive_user.view.*
 import kotlinx.android.synthetic.main.dialog_archive_wallet.view.*
+import kotlinx.android.synthetic.main.fragment_add_new_user.*
 import kotlinx.android.synthetic.main.fragment_archive.*
+import kotlinx.android.synthetic.main.fragment_archive.closeBT
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +52,13 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
     private val categoryAdapter by lazy { ArchiveCategoryAdapter() }
     private val groupAdapter by lazy { ArchiveGroupAdapter() }
     private val walletAdapter by lazy { ArchiveWalletAdapter() }
+    private val userAdapter by lazy { ArchiveUserAdapter() }
+    var status : String? = null
+    var nameUser : String? = null
+    var surnameUser : String? = null
+    var phoneUser : String? = null
+    var emailUser : String? = null
+    val data: MutableList<Int> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,17 +77,26 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                 parent: AdapterView<*>,
                 view: View?, position: Int, id: Long
             ) {
-                if (parent.selectedItem == "Кошелек") {
-                    changeRV.visibility = View.VISIBLE
-                    getWallets()
-                } else if (parent.selectedItem == "Группа") {
-                    changeRV.visibility = View.VISIBLE
-                    getAllGroups()
-                } else if (parent.selectedItem == "Категория"){
-                    changeRV.visibility = View.VISIBLE
-                    getAllCategory()
-                } else {
-                    changeRV.visibility = View.INVISIBLE
+                when (parent.selectedItem) {
+                    "Кошелек" -> {
+                        changeRV.visibility = View.VISIBLE
+                        getWallets()
+                    }
+                    "Группа" -> {
+                        changeRV.visibility = View.VISIBLE
+                        getAllGroups()
+                    }
+                    "Категория" -> {
+                        changeRV.visibility = View.VISIBLE
+                        getAllCategory()
+                    }
+                    "Пользователь" -> {
+                        changeRV.visibility = View.VISIBLE
+                        getAllUser()
+                    }
+                    else -> {
+                        changeRV.visibility = View.INVISIBLE
+                    }
                 }
             }
 
@@ -390,4 +419,190 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
 
         })
     }
+
+    fun getAllUser() {
+        val retIn = RetrofitBuilder.getInstance()
+        val token = RetrofitBuilder.getToken()
+        retIn.getAllUsers(token).enqueue(object : Callback<AllUsers> {
+            override fun onResponse(call: Call<AllUsers>, response: Response<AllUsers>) {
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        changeRV?.adapter = userAdapter
+                        changeRV?.layoutManager = LinearLayoutManager(requireContext())
+                        userAdapter.differ.submitList(it)
+                        userAdapter.notifyDataSetChanged()
+                        userAdapter.setOnItemClickListener { adapter ->
+                            val mDialogView = LayoutInflater.from(context)
+                                .inflate(R.layout.dialog_archive_user, null)
+                            val mBuilder = context?.let { it1 ->
+                                AlertDialog.Builder(it1)
+                                    .setView(mDialogView)
+                            }
+                            val mAlertDialog = mBuilder?.show()
+                            mDialogView?.cancelUser?.setOnClickListener {
+                                mAlertDialog?.dismiss()
+                            }
+
+                            spinnerUser(requireContext(), mDialogView.statusUser)
+                            getGroups(mDialogView.searchGroupUser, mDialogView.listViewGroupUser, mDialogView.hintSearchUser)
+
+                            mDialogView.et_archive_name.hint = "Старое имя: " + adapter.name
+                            mDialogView.et_archive_surname.hint = "Старая фамилия: " + adapter.surname
+                            mDialogView.et_archive_email.hint = "Старая почта: " + adapter.email
+                            mDialogView.et_archive_phone.hint = "Старый номер: " + adapter.phoneNumber
+
+                            mDialogView?.changeUser?.setOnClickListener {
+                                if (mDialogView.et_archive_name.text.isNotEmpty()){
+                                    nameUser = mDialogView.et_archive_name.text.toString()
+                                }
+                                if (mDialogView.et_archive_surname.text.isNotEmpty()) {
+                                    surnameUser = mDialogView.et_archive_surname.text.toString()
+                                }
+                                if (mDialogView.et_archive_email.text.isNotEmpty()) {
+                                    emailUser = mDialogView.et_archive_email.text.toString()
+                                }
+                                if (mDialogView.et_archive_phone.text.isNotEmpty()) {
+                                    phoneUser = mDialogView.et_archive_phone.text.toString()
+                                }
+                                if (data.size > 0) {
+                                    archiveUser(emailUser, data, adapter.id, nameUser, phoneUser, surnameUser, status)
+                                } else {
+                                    archiveUser(emailUser, null, adapter.id, nameUser, phoneUser, surnameUser, status)
+                                }
+
+                                mAlertDialog?.dismiss()
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<AllUsers>, t: Throwable) {
+                logs("Error ArchiveFr, getAllUser")
+            }
+
+        })
+    }
+
+    private fun archiveUser(email : String?, groups : List<Int>?,
+                            id : Int, name : String?,
+                            number: String?, surname: String?,
+                            status: String?) = CoroutineScope(Dispatchers.IO).launch {
+        val retIn = RetrofitBuilder.getInstance()
+        val token = RetrofitBuilder.getToken()
+        val userBody = UpdateUser(email, groups, id, name, number, surname, status)
+        retIn.changeUser(token, userBody).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                when {
+                    response.code() == 404 -> {
+                        snackbar(requireView(), "Ошибка изменения!", Color.parseColor("#E11616"))
+                    }
+                    response.code() == 200 -> {
+                        snackbar(
+                            requireView(),
+                            "Пользователь изменен!",
+                            Color.parseColor("#4AAF39")
+                        )
+                        getAllUser()
+                    }
+                    else -> {
+                        snackbar(requireView(), "Неизвестная ошибка!", Color.parseColor("#E11616"))
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                logs("Error ArchiveFr, archiveUser")
+            }
+        })
+    }
+
+    private fun getGroups(searchView: SearchView?, listView: ListView?, textView: TextView?) = CoroutineScope(Dispatchers.IO).launch {
+        val retIn = RetrofitBuilder.getInstance()
+        val token = RetrofitBuilder.getToken()
+        retIn.getAllGroups(token).enqueue(object : Callback<List<Groups>> {
+            override fun onResponse(call: Call<List<Groups>>, response: Response<List<Groups>>) {
+                if (response.isSuccessful) {
+                    val groupArray: ArrayList<GroupsIdName> = ArrayList()
+                    groupArray.clear()
+                    response.body()?.forEach {
+                        groupArray.add(GroupsIdName(it.id, it.name))
+                    }
+                    val arrayAdapter =
+                        ArrayAdapter(
+                            requireContext(),
+                            R.layout.spinner,
+                            groupArray
+                        )
+                    if (listView != null) {
+                        listView.adapter = arrayAdapter
+                    } else {
+                        logs("listViewGroup, AddNewUserFr")
+                    }
+
+                    searchView?.setOnSearchClickListener {
+                        listView?.visibility = View.VISIBLE
+                        textView?.visibility = View.GONE
+                    }
+
+                    searchView?.setOnCloseListener {
+                        listView?.visibility = View.GONE
+                        textView?.visibility = View.VISIBLE
+                        false
+                    }
+
+                    searchView?.setOnQueryTextListener(object :
+                        SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            arrayAdapter.filter.filter(query)
+                            return false
+                        }
+
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            arrayAdapter.filter.filter(newText)
+                            return false
+                        }
+                    })
+
+                    if (listView != null) {
+                        listView.onItemClickListener =
+                            AdapterView.OnItemClickListener { _, _, i, _ ->
+                                arrayAdapter.getItem(i)?.id?.let { data.add(it) }
+                                searchView?.setQuery("${arrayAdapter.getItem(i)?.name}", true)
+                                listView.visibility = View.GONE
+                            }
+                    } else {
+                        logs("Error in AddNewUserFr, getGroups")
+                    }
+                } else {
+                    logs("Error in AddNewUserFr, getGroups")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Groups>>, t: Throwable) {
+                logs("Error in AddNewUserFr, getGroups")
+            }
+
+        })
+    }
+
+    fun spinnerUser(context: Context, spinner: Spinner?) {
+        spinnerStatusUser(context, spinner)
+        spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val sectionName: StatusName = parent.selectedItem as StatusName
+                status = sectionName.backName
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+    }
+
 }

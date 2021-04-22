@@ -24,7 +24,7 @@ import retrofit2.Response
 import retrofit2.Callback
 
 class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
-    @SuppressLint("CommitPrefEdits")
+    @SuppressLint("CommitPrefEdits", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = (activity as AppCompatActivity).supportActionBar
@@ -56,7 +56,7 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
                 val password = et_new_password.text.toString().trim()
                 if (password.isEmpty()) {
                     error_update?.visibility  = View.VISIBLE
-                    error_update?.text = "Введите пароль!"
+                    error_update?.text = "Поля не должны быть пустыми!"
                 } else {
                     editor?.putString("password",password)
                     editor?.apply()
@@ -67,7 +67,7 @@ class UpdatePasswordFragment: Fragment(R.layout.fragment_update_password) {
                 et_new_password.setBackgroundResource(R.drawable.error_edit_text)
                 et_new_password.requestFocus()
                 error_update?.visibility  = View.VISIBLE
-                error_update?.text = "Пароли не совпадают!"
+                error_update?.text = "Пароли не совпадают!\nПароль должен содержать 1 заглавную букву, 1 символ, 1 число"
             }
         }
     }
