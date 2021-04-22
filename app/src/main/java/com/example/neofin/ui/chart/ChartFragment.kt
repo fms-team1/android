@@ -142,7 +142,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         xAxis.granularity = 1f
         xAxis.labelCount = labelsBar.size
         xAxis.labelRotationAngle = 360F
-        bar.animateY(1000, Easing.EaseInOutQuad)
+        bar.animateY(50)
         bar.notifyDataSetChanged()
         bar.invalidate()
     }
