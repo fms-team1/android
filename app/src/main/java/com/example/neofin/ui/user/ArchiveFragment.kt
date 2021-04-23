@@ -448,7 +448,6 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
 
                             mDialogView.et_archive_name.hint = "Старое имя: " + adapter.name
                             mDialogView.et_archive_surname.hint = "Старая фамилия: " + adapter.surname
-                            mDialogView.et_archive_email.hint = "Старая почта: " + adapter.email
                             mDialogView.et_archive_phone.hint = "Старый номер: " + adapter.phoneNumber
 
                             mDialogView?.changeUser?.setOnClickListener {
@@ -458,16 +457,13 @@ class ArchiveFragment : Fragment(R.layout.fragment_archive) {
                                 if (mDialogView.et_archive_surname.text.isNotEmpty()) {
                                     surnameUser = mDialogView.et_archive_surname.text.toString()
                                 }
-                                if (mDialogView.et_archive_email.text.isNotEmpty()) {
-                                    emailUser = mDialogView.et_archive_email.text.toString()
-                                }
                                 if (mDialogView.et_archive_phone.text.isNotEmpty()) {
                                     phoneUser = mDialogView.et_archive_phone.text.toString()
                                 }
                                 if (data.size > 0) {
-                                    archiveUser(emailUser, data, adapter.id, nameUser, phoneUser, surnameUser, status)
+                                    archiveUser(adapter.email, data, adapter.id, nameUser, phoneUser, surnameUser, status)
                                 } else {
-                                    archiveUser(emailUser, null, adapter.id, nameUser, phoneUser, surnameUser, status)
+                                    archiveUser(adapter.email, null, adapter.id, nameUser, phoneUser, surnameUser, status)
                                 }
 
                                 mAlertDialog?.dismiss()

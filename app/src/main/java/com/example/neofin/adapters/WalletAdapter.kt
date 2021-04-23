@@ -29,12 +29,12 @@ class WalletAdapter: RecyclerView.Adapter<WalletAdapter.MyViewHolder>() {
                 holder.itemView.logoWallet.setImageResource(R.drawable.money)
             }
             2 -> {
-                holder.itemView.logoWallet.setImageResource(R.drawable.demir)
-            }
-            5 -> {
                 holder.itemView.logoWallet.setImageResource(R.drawable.o)
             }
             3 -> {
+                holder.itemView.logoWallet.setImageResource(R.drawable.demir)
+            }
+            4 -> {
                 holder.itemView.logoWallet.setImageResource(R.drawable.elsom)
             }
             else -> {

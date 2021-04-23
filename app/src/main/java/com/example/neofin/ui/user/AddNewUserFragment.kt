@@ -78,7 +78,7 @@ class AddNewUserFragment: Fragment(R.layout.fragment_add_new_user) {
                     data,
                     user_name.text.toString(),
                     user_pass.text.toString(),
-                    user_phone.text.toString(),
+                    "${user_phone_add.text} ${user_phone.text}",
                     user_surname.text.toString()
                 )
             }
