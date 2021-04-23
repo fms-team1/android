@@ -548,7 +548,11 @@ class FiltersFragment : Fragment(R.layout.fragment_filters) {
                 if (response.isSuccessful) {
                     val agentArray: ArrayList<AgentIdName> = ArrayList()
                     response.body()?.forEach {
-                        agentArray.add(AgentIdName(it.id, "${it.name} ${it.surname}"))
+                        if (it.surname == null) {
+                            agentArray.add(AgentIdName(it.id, it.name))
+                        } else {
+                            agentArray.add(AgentIdName(it.id, "${it.name} ${it.surname}"))
+                        }
                     }
 
                     val activity: FragmentActivity? = activity
