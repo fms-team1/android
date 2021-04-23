@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.neofin.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_addingFragment"
+            app:destination="@id/addingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_user"
+        android:name="com.example.neofin.ui.user.UserFragment"
+        android:label="@string/title_user"
+        tools:layout="@layout/fragment_user" />
+
+    <fragment
+        android:id="@+id/addingFragment"
+        android:name="com.example.neofin.ui.addTransactions.AddingFragment"
+        android:label="@string/title_add"
+        tools:layout="@layout/fragment_adding" >
+        <action
+            android:id="@+id/action_addingFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_journal"
+        android:name="com.example.neofin.ui.journal.NewJournalFragment"
+        android:label="@string/title_journal"
+        tools:layout="@layout/fragment_journal" >
+        <action
+            android:id="@+id/action_journalFragment_to_journalByIdFragment"
+            app:destination="@id/journalByIdFragment" />
+        <action
+            android:id="@+id/action_navigation_journal_to_filtersFragment"
+            app:destination="@id/filtersFragment" />
+        <action
+            android:id="@+id/action_navigation_journal_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/journalByIdFragment"
+        android:name="com.example.neofin.ui.journal.journalById.JournalByIdFragment"
+        android:label="@string/title_journalByIdFragment"
+        tools:layout="@layout/fragment_journal_by_id" />
+
+    <fragment
+        android:id="@+id/navigation_chart"
+        android:name="com.example.neofin.ui.chart.ChartFragment"
+        android:label="@string/title_chart"
+        tools:layout="@layout/fragment_chart" />
+
+    <fragment
+        android:id="@+id/filtersFragment"
+        android:name="com.example.neofin.ui.filter.FiltersFragment"
+        android:label="@string/title_filters"
+        tools:layout="@layout/fragment_filters" >
+        <action
+            android:id="@+id/action_filtersFragment_to_navigation_journal"
+            app:destination="@id/navigation_journal" />
+    </fragment>
+    <fragment
+        android:id="@+id/filteredJournalFragment"
+        android:name="com.example.neofin.ui.filteredJournal.FilteredJournalFragment"
+        android:label="fragment_filtered_journal"
+        tools:layout="@layout/fragment_filtered_journal" />
+    <fragment
+        android:id="@+id/addNewUserFragment"
+        android:name="com.example.neofin.ui.user.AddNewUserFragment"
+        android:label="AddNewUserFragment" />
+    <fragment
+        android:id="@+id/allJournalFragment"
+        android:name="com.example.neofin.ui.journal.all.AllJournalFragment"
+        android:label="fragment_all_journal"
+        tools:layout="@layout/fragment_all_journal" />
+    <fragment
+        android:id="@+id/neobisJournalFragment"
+        android:name="com.example.neofin.ui.journal.neobis.NeobisJournalFragment"
+        android:label="fragment_neobis_journal"
+        tools:layout="@layout/fragment_neobis_journal" />
+    <fragment
+        android:id="@+id/neolabsJournalFragment"
+        android:name="com.example.neofin.ui.journal.neolabs.NeolabsJournalFragment"
+        android:label="fragment_neolabs_journal"
+        tools:layout="@layout/fragment_neolabs_journal" />
+    <fragment
+        android:id="@+id/updatePasswordFragment"
+        android:name="com.example.neofin.ui.user.UpdatePasswordFragment"
+        android:label="fragment_update_password"
+        tools:layout="@layout/fragment_update_password" />
+    <fragment
+        android:id="@+id/archiveFragment"
+        android:name="com.example.neofin.ui.user.ArchiveFragment"
+        android:label="fragment_archive"
+        tools:layout="@layout/fragment_archive" />
+    <fragment
+        android:id="@+id/updateJournalFragment"
+        android:name="com.example.neofin.ui.journal.journalById.updateJournalItem.UpdateJournalFragment"
+        android:label="fragment_update_journal"
+        tools:layout="@layout/fragment_update_journal" />
+</navigation>

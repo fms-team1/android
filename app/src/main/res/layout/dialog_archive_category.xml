@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/categoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Название категории"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+    <EditText
+        android:id="@+id/et_archive_category_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/on_focused"
+        android:fontFamily="@font/montserrat"
+        android:hint="Новое название"
+        android:textSize="14sp"
+        android:padding="10dp"
+        android:textCursorDrawable="@drawable/cursor" />
+    <CheckBox
+        android:id="@+id/isArchiveCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Архивировать"
+        android:textSize="14sp" />
+    <Button
+        android:id="@+id/create_category"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#1778E9"
+        android:fontFamily="@font/montserrat"
+        android:text="Изменить"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/cancel_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/montserrat"
+        android:layout_gravity="center"
+        android:text="Отменить"
+        android:textColor="#F24D4D"
+        android:visibility="visible"
+        android:layout_marginBottom="20dp"/>
+
+</LinearLayout>

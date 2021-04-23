@@ -1,0 +1,7 @@
+package com.example.neofin.retrofit.data.user
+
+data class Role(
+    val id: Int,
+    val permissions: List<String>,
+    val role: String
+)

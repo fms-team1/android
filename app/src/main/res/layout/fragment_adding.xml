@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.addTransactions.AddingFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="14dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/backBT"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_back" />
+
+                <Button
+                    android:id="@+id/addExpenseBT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Расход"
+                    android:layout_toRightOf="@+id/backBT"
+                    android:textAllCaps="false"
+                    android:textColor="#1778E9"
+                    android:textFontWeight="600"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toEndOf="@+id/backBT" />
+
+                <Button
+                    android:id="@+id/addIncomeBT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Доход"
+                    android:layout_toRightOf="@+id/addExpenseBT"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textFontWeight="600"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toEndOf="@+id/addExpenseBT" />
+
+                <Button
+                    android:id="@+id/addTransferBT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Перевод"
+                    android:layout_toRightOf="@+id/addIncomeBT"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textFontWeight="600"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toEndOf="@+id/addIncomeBT" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/transferLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="50dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Сумма"
+                        android:textColor="@color/black"
+                        android:textFontWeight="600" />
+
+                    <EditText
+                        android:id="@+id/sumAddTransfer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/on_focused"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="Введите сумму"
+                        android:inputType="number"
+                        android:padding="10dp"
+                        android:textCursorDrawable="@drawable/cursor"
+                        android:textFontWeight="600" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Дата"
+                        android:textColor="@color/black"
+                        android:textFontWeight="500" />
+
+                    <TextView
+                        android:id="@+id/dateAddTextTransfer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_rectangle_small"
+                        android:drawableRight="@drawable/ic_date"
+                        android:drawableTint="#358AED"
+                        android:gravity="center_vertical"
+                        android:padding="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Со счета"
+                        android:textColor="@color/black"
+                        android:textFontWeight="600" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_down"
+                            app:layout_constraintBottom_toBottomOf="@+id/walletAddFrom"
+                            app:layout_constraintEnd_toEndOf="@+id/walletAddFrom"
+                            app:layout_constraintTop_toTopOf="@+id/walletAddFrom" />
+
+                        <Spinner
+                            android:id="@+id/walletAddFrom"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:background="@drawable/on_focused"
+                            android:padding="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/montserrat"
+                        android:text="На счет"
+                        android:textColor="@color/black"
+                        android:textFontWeight="600" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_down"
+                            app:layout_constraintBottom_toBottomOf="@+id/walletAddTo"
+                            app:layout_constraintEnd_toEndOf="@+id/walletAddTo"
+                            app:layout_constraintTop_toTopOf="@+id/walletAddTo" />
+
+                        <Spinner
+                            android:id="@+id/walletAddTo"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:background="@drawable/on_focused"
+                            android:padding="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Примечание"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:textFontWeight="600" />
+
+                    <EditText
+                        android:id="@+id/commentAddTransfer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/on_focused_big"
+                        android:gravity="top"
+                        android:textSize="14sp"
+                        android:padding="10dp"
+                        android:textCursorDrawable="@drawable/cursor" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/sendButtonTransfer"
+                    android:layout_width="185dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#1778E9"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Добавить"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textFontWeight="600" />
+            </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/expenseOrIncome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="55dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="14dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:backgroundTint="@color/white"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Организация"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textFontWeight="600" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/ic_down"
+                                app:layout_constraintBottom_toBottomOf="@+id/sectionAdd"
+                                app:layout_constraintEnd_toEndOf="@+id/sectionAdd"
+                                app:layout_constraintTop_toTopOf="@+id/sectionAdd" />
+
+                            <Spinner
+                                android:id="@+id/sectionAdd"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/on_focused"
+                                android:padding="10dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expenseOrIncomeAdditional"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/white"
+                                android:fontFamily="@font/montserrat"
+                                android:text="Сумма"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:textFontWeight="500" />
+
+                            <EditText
+                                android:id="@+id/sumAdd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/on_focused"
+                                android:fontFamily="@font/montserrat"
+                                android:hint="Введите сумму"
+                                android:textSize="14sp"
+                                android:inputType="number"
+                                android:padding="10dp"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textFontWeight="600" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/categoryLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:backgroundTint="@color/white"
+                                android:fontFamily="@font/montserrat"
+                                android:text="Категория расходов"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:textFontWeight="500" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/ic_down"
+                                    app:layout_constraintBottom_toBottomOf="@+id/categoryAdd"
+                                    app:layout_constraintEnd_toEndOf="@+id/categoryAdd"
+                                    app:layout_constraintTop_toTopOf="@+id/categoryAdd" />
+
+                                <Spinner
+                                    android:id="@+id/categoryAdd"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/on_focused"
+                                    android:padding="10dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:backgroundTint="@color/white"
+                                android:fontFamily="@font/montserrat"
+                                android:text="Дата"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:textFontWeight="500" />
+
+                            <TextView
+                                android:id="@+id/dateAddText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edit_text_rectangle_small"
+                                android:drawableRight="@drawable/ic_date"
+                                android:drawableTint="#358AED"
+                                android:textSize="14sp"
+                                android:gravity="center_vertical"
+                                android:padding="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:backgroundTint="@color/white"
+                                android:fontFamily="@font/montserrat"
+                                android:text="Контрагент"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:textFontWeight="500" />
+
+                            <EditText
+                                android:id="@+id/agentAdd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/on_focused"
+                                android:fontFamily="@font/montserrat"
+                                android:hint="Введите контрагента"
+                                android:padding="10dp"
+                                android:textSize="14sp"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:textFontWeight="600" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:backgroundTint="@color/white"
+                                android:fontFamily="@font/montserrat"
+                                android:text="Кошелек"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:textFontWeight="500" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/ic_down"
+                                    app:layout_constraintBottom_toBottomOf="@+id/walletAdd"
+                                    app:layout_constraintEnd_toEndOf="@+id/walletAdd"
+                                    app:layout_constraintTop_toTopOf="@+id/walletAdd" />
+
+                                <Spinner
+                                    android:id="@+id/walletAdd"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:background="@drawable/on_focused"
+                                    android:padding="10dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/white"
+                                android:fontFamily="@font/montserrat"
+                                android:text="Примечание"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:textFontWeight="600" />
+
+                            <EditText
+                                android:id="@+id/commentAdd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:textSize="14sp"
+                                android:background="@drawable/on_focused_big"
+                                android:gravity="top"
+                                android:padding="10dp"
+                                android:textCursorDrawable="@drawable/cursor" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/sendButton"
+                            android:layout_width="185dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:backgroundTint="#1778E9"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Добавить"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textFontWeight="600" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

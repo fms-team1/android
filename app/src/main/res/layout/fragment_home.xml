@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".ui.home.HomeFragment">
+
+    <ProgressBar
+        android:id="@+id/homePb"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/noInternet"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/rectangle_9"
+                android:layout_width="159.75dp"
+                android:layout_height="72.91dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/rec_main_card"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Доходы"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="@+id/rectangle_9"
+                app:layout_constraintStart_toStartOf="@+id/rectangle_9"
+                app:layout_constraintTop_toTopOf="@+id/rectangle_9" />
+
+            <TextView
+                android:id="@+id/income"
+                android:layout_width="159.75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/montserrat"
+                android:text="200"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="22sp"
+                android:autoSizeStepGranularity="2sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="@+id/rectangle_9"
+                app:layout_constraintEnd_toEndOf="@+id/rectangle_9"
+                app:layout_constraintStart_toStartOf="@+id/rectangle_9" />
+
+            <View
+                android:id="@+id/rectangle_10"
+                android:layout_width="159.75dp"
+                android:layout_height="72.91dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/rec_main_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Расходы"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="@+id/rectangle_10"
+                app:layout_constraintStart_toStartOf="@+id/rectangle_10"
+                app:layout_constraintTop_toTopOf="@+id/rectangle_10" />
+
+            <TextView
+                android:id="@+id/expense"
+                android:layout_width="159.75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/montserrat"
+                android:text="200"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="22sp"
+                android:autoSizeStepGranularity="2sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="@+id/rectangle_10"
+                app:layout_constraintEnd_toEndOf="@+id/rectangle_10"
+                app:layout_constraintStart_toStartOf="@+id/rectangle_10" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rectangle_9">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="95dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/year"
+                        android:layout_width="95dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/button_rec"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/yearTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Год"
+                        android:textAllCaps="false"
+                        android:textColor="@drawable/button_state_text"
+                        android:textFontWeight="400"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/year"
+                        app:layout_constraintEnd_toEndOf="@+id/year"
+                        app:layout_constraintStart_toStartOf="@+id/year"
+                        app:layout_constraintTop_toTopOf="@+id/year" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="95dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/month"
+                        android:layout_width="95dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/button_rec"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/monthTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Месяц"
+                        android:textAllCaps="false"
+                        android:textColor="@drawable/button_state_text"
+                        android:textFontWeight="400"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/month"
+                        app:layout_constraintEnd_toEndOf="@+id/month"
+                        app:layout_constraintStart_toStartOf="@+id/month"
+                        app:layout_constraintTop_toTopOf="@+id/month" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="95dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/week"
+                        android:layout_width="95dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/button_rec"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/weekTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Неделя"
+                        android:textAllCaps="false"
+                        android:textColor="@drawable/button_state_text"
+                        android:textFontWeight="400"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/week"
+                        app:layout_constraintEnd_toEndOf="@+id/week"
+                        app:layout_constraintStart_toStartOf="@+id/week"
+                        app:layout_constraintTop_toTopOf="@+id/week" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/walletsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="@drawable/card_wallet_rectangle">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_marginTop="14dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Кошелек"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@id/balText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginEnd="14dp"
+                            android:layout_marginRight="14dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="Баланс"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/walletRV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/balText" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/lastTransact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Последние транзакции"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/walletRV" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="55dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lastTransact" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
